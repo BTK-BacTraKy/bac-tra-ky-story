@@ -1,84 +1,71 @@
-# Bác Trà Ký — Mở Bánh · Mở Chuyện — Game V5 (Big Update)
+# BÁC TRÀ KÝ — V4.5 STABLE
 
-Website tĩnh tương tác dùng cho hành trình QR của Bác Trà Ký. Mục tiêu của bản V5 là **giảm cảm giác “thô”**, nâng trải nghiệm thành một microsite kể chuyện – chơi game có bản sắc hơn, đồng thời giữ ranh giới rõ giữa **sử liệu / truyền thuyết / phần sáng tạo gameplay**.
+Đây là bản **phục hồi nền và mỹ thuật V4**, không sử dụng thiết kế sáng màu của V5. Mục đích của bản này là trở về phiên bản người dùng thích và sửa lỗi có chọn lọc.
 
-## Big update ở V5
+## Giữ nguyên từ V4
 
-### 1) Nâng cấp giao diện tổng thể
-- Làm lại **hero/home** theo hướng storybook: màu giấy – mực – son đỏ nhất quán hơn với chất liệu thương hiệu.
-- Header sạch hơn, bố cục bớt rối, có nav rõ ràng: Trang chủ / Giang Xá xưa / Game làm bánh / Tư liệu.
-- Thêm các thẻ giới thiệu, khối thông tin và cách trình bày giúp trang nhìn giống **sản phẩm hoàn chỉnh** hơn demo.
-- Tinh chỉnh lại nhiều panel, nút, khung, bóng đổ, khoảng trắng, bo góc và phân cấp chữ.
+- Nền toàn màn hình làng Giang Xá xưa (`assets/village.webp`), tông màu nâu trầm và chữ vàng ngà.
+- Hai lựa chọn: **Theo bước Lý Nam Đế** và **Tự tay làm Bánh Bác**.
+- Game lịch sử: nhặt tín vật, ấn ký, trượt tranh 3×3, xoay đường 3×3 và mở sớ Vạn Xuân.
+- Game bánh: kéo hình nguyên liệu vào giỏ, giữ nhiệt, xếp lớp, cuộn bánh, dâng lên vua để thắng/thua.
+- Logo bảng trắng đúng file cũ (`assets/official-logo.png`).
 
-### 2) Nâng cấp cảm giác “game”
-- Thêm **màn chuyển cảnh** (transition curtain) giữa các chặng để trải nghiệm liền mạch hơn.
-- Chỉnh lại phần giới thiệu của hai hành trình để nhấn mạnh đây là **giải đố + thao tác**, không phải trắc nghiệm.
-- Cập nhật trạng thái tiến độ game bánh theo logic dễ hiểu hơn.
+## Các điểm sửa có chọn lọc
 
-### 3) Vẫn giữ gameplay cốt lõi đã tốt ở V4
-#### Hành trình I — Theo bước Lý Nam Đế
-- Tìm vật phẩm trong tranh.
-- Mở ấn ký bằng thứ tự đúng.
-- Ghép/trượt tranh 3×3.
-- Xoay đường để nối lối đi.
-- Mở cuộn sớ về Vạn Xuân năm 544.
+1. Sửa đếm chặng game bánh từ **1/4 → 1/5**, khớp 5 chặng thật.
+2. Không làm mất vị trí lời thoại Lý Bí mỗi khi nhặt tín vật trong tranh.
+3. Thêm phần tử liên kết **Beacons** vào header, mặc định ẩn nếu chưa cấu hình; không làm lỗi khi có link.
+4. Chỉ bổ sung CSS nhỏ cho ẩn/hiện link, thao tác chạm và thứ tự hiển thị; **không ghi đè nền, màu hoặc layout của V4 bằng CSS V5**.
+5. Tăng phiên bản CSS/JS thành `v=4.5.1` để giảm trường hợp trình duyệt giữ mã cũ.
 
-#### Hành trình II — Tự tay làm Bánh Bác
-- Kéo **hình** nguyên liệu vào giỏ (chuột / chạm ngón tay).
-- Giữ nhiệt để “bác” bột.
-- Xếp đúng các lớp bánh.
-- Vuốt để cuộn bánh.
-- Mang bánh lên ngự án để vua nếm và nhận phán quyết thắng / thua.
+## Kiểm thử tự động trong trình duyệt Chromium
 
-## Những lỗi / điểm yếu đã được xử lý trong V5
+- Vào game lịch sử, nhặt đủ 3 tín vật, nhập ấn ký, chuyển từ chương 1 sang 2.
+- Mở/đóng sổ tư liệu, xác nhận có liên kết nguồn.
+- Đưa một màn ghép hình gần hoàn thành về đúng trạng thái, kiểm tra chuyển sang chương tiếp theo.
+- Hoàn thành cơ chế nối đường, kiểm tra tới chương 4.
+- Kéo ảnh nguyên liệu bằng chuột vào giỏ: vật phẩm đi theo con trỏ và giỏ nhận đúng 1 vật phẩm.
+- Đưa đúng nguyên liệu, hoàn thành quy trình thử nghiệm và dâng bánh: **WIN**.
+- Thay một nguyên liệu bằng phô mai rồi dâng bánh: **LOSE**, có giải thích nguyên liệu sai.
+- Sau khi kết thúc, bấm thử lại: game trở về 0/6 nguyên liệu.
+- Mô phỏng viewport 390 px cho trang chủ và game bánh: không có tràn ngang.
+- Các kịch bản trên không xuất hiện lỗi JavaScript (`pageerror`).
 
-1. **Progress của game bánh chưa rõ** → đã sửa cách hiển thị chặng.
-2. **Điều hướng ở đầu trang chưa đúng trải nghiệm** → nav giờ có logic rõ hơn.
-3. **Thiếu cảm giác chuyển cảnh** → thêm overlay chuyển chương.
-4. **Trang nhìn còn “poster ghép”** → tinh chỉnh lại hệ card, phân cấp chữ, layout và nền.
-5. **Nguồn phần Giang Xá còn hơi mỏng ở phần giới thiệu** → bổ sung thêm nguồn về lễ hội Giang Xá cấp huyện trong `SOURCES.md`.
+**Giới hạn kiểm thử:** Trình duyệt được kiểm tra bằng bản dựng HTML/CSS/JS nội tuyến trong Chromium do môi trường kiểm thử không cho mở URL cục bộ. Kéo-thả trên điện thoại vật lý và toàn bộ hành trình giữ nhiệt theo thời gian thực vẫn cần nhóm kiểm tra trước khi công khai.
 
-## Cấu trúc thư mục khi upload GitHub Pages
+## Đăng lên GitHub Pages (đúng thư mục ROOT)
 
-Sau khi giải nén, upload **toàn bộ nội dung bên trong** thư mục này lên **thư mục gốc** repository:
+Giải nén `BTK-V4-5-STABLE-GitHub-ROOT.zip` rồi upload **các file bên trong** (không upload nguyên ZIP, không đặt thêm một thư mục bọc ngoài) vào repository đang dùng:
 
-```text
+```
 index.html
 styles.css
 game.js
 .nojekyll
 README.md
 SOURCES.md
+QA-CHECKLIST.md
 assets/
 ```
 
-## Đăng lên GitHub Pages
+Trong GitHub: **Settings → Pages → Deploy from a branch → main → /(root)**. Sau khi **Actions** báo thành công, kiểm tra bằng tab ẩn danh hoặc `Ctrl + F5`.
 
-1. Giải nén file ZIP.
-2. Chọn toàn bộ nội dung bên trong thư mục đã giải nén.
-3. Upload lên **root** của repository GitHub Pages đang dùng.
-4. Vào **Settings → Pages**.
-5. Chọn **Deploy from a branch** → `main` → `/(root)`.
-6. Sau khi deploy xong, mở bằng tab ẩn danh hoặc `Ctrl + F5` để tránh cache CSS/JS cũ.
+## Kết nối Beacons
 
-## Thay liên kết Beacons (nếu cần)
-
-Trong `game.js`, tìm:
+Trong `game.js` ở đầu file:
 
 ```js
 const SETTINGS={beaconsUrl:''};
 ```
 
-Điền link thật của nhóm:
+Đổi sang link Beacons **thật** của BTK, ví dụ theo cấu trúc:
 
 ```js
-const SETTINGS={beaconsUrl:'https://beacons.ai/ten-trang-cua-nhom'};
+const SETTINGS={beaconsUrl:'https://beacons.ai/ten-trang-thuc-te'};
 ```
 
-## Lưu ý lịch sử
+Khi cấu hình đúng URL bắt đầu bằng `https://`, header sẽ hiển thị nút mở Beacons.
 
-- **Có nguồn**: khởi nghĩa năm 542, dựng nước Vạn Xuân năm 544, tư liệu văn hóa – lễ hội – di tích Giang Xá, bài báo về Bánh Bác.
-- **Truyền thuyết / ký ức địa phương**: câu chuyện Bánh Bác dâng vua, một số chi tiết gắn với Giang Xá và tuổi trẻ Lý Bí.
-- **Hư cấu gameplay**: tín vật, mật thư, lời thoại, mini-game, ngự điện, cảnh vua trực tiếp nếm bánh của người chơi.
+## Giới hạn lịch sử
 
-Chi tiết nguồn nằm trong `SOURCES.md`.
+Sự kiện 542 và 544 có tư liệu; chuyện Bánh Bác dâng vua và một số tình tiết Giang Xá là truyền tụng địa phương. Cảnh vua nếm/chấm bánh, vật phẩm, mật thư, lời thoại và giải đố là hư cấu cho game. Xem `SOURCES.md`.
