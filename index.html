@@ -3,294 +3,339 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#7c2f2f" />
-  <title>Bác Trà Ký | Mở Bánh – Mở Chuyện</title>
-  <meta name="description" content="Microsite trải nghiệm của Bác Trà Ký: khám phá Giang Xá xưa, truyền thuyết bánh dâng vua và hành trình tìm hiểu Bánh Bác Giang Xá." />
+  <meta name="theme-color" content="#842f33" />
+  <title>Bác Trà Ký | Giang Xá xưa · Bánh Bác · Mini game</title>
+  <meta name="description" content="Khám phá Giang Xá xưa, câu chuyện về Lý Nam Đế, Bánh Bác Giang Xá và mini game làm bánh của Bác Trà Ký." />
   <style>
     :root{
-      --wine:#7c2f2f;
-      --wine-dark:#5e2325;
-      --paper:#f5efe5;
-      --paper-deep:#ede3d3;
-      --ink:#453832;
-      --muted:#75675c;
-      --gold:#c49a62;
-      --line:#deccb4;
-      --leaf:#4f6350;
-      --shadow:0 18px 50px rgba(74,50,37,.14);
-      --radius:26px;
-      --max:1200px;
+      --paper:#f7f1e8;
+      --paper-2:#efe4d2;
+      --paper-3:#fdf8f1;
+      --ink:#4e3e36;
+      --muted:#7c6c61;
+      --wine:#842f33;
+      --wine-dark:#642427;
+      --gold:#c39661;
+      --line:#deccb2;
+      --leaf:#58664f;
+      --shadow:0 18px 50px rgba(75,51,37,.13);
+      --radius:28px;
+      --max:1240px;
     }
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
-    body{
-      margin:0;
-      color:var(--ink);
-      background:
-        radial-gradient(circle at 10% 10%, rgba(255,255,255,.6), transparent 22%),
-        radial-gradient(circle at 100% 0%, rgba(233,205,163,.20), transparent 18%),
-        var(--paper);
-      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
-      line-height:1.65;
-      overflow-x:hidden;
-    }
+    body{margin:0;background:var(--paper);color:var(--ink);font-family:"Segoe UI",system-ui,-apple-system,sans-serif;line-height:1.6;overflow-x:hidden}
     body.modal-open{overflow:hidden}
-    img{max-width:100%;display:block}
-    button,input,textarea{font:inherit}
+    img{display:block;max-width:100%}
+    button,input{font:inherit}
     a{text-decoration:none;color:inherit}
-    .grain{
-      position:fixed;inset:0;pointer-events:none;opacity:.12;z-index:100;
-      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.17'/%3E%3C/svg%3E");
-    }
-    .container{width:min(var(--max), calc(100% - 32px)); margin:0 auto; position:relative;}
-    .serif{font-family: Georgia, "Times New Roman", serif}
+    .serif{font-family:Georgia,"Times New Roman",serif}
+    .container{width:min(var(--max), calc(100% - 28px)); margin:0 auto}
+    .grain{position:fixed;inset:0;pointer-events:none;opacity:.1;z-index:1;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.15'/%3E%3C/svg%3E")}
+    .section{padding:80px 0; position:relative; z-index:2}
+    .section.soft{background:linear-gradient(180deg, rgba(239,228,210,.58), rgba(247,241,232,0) 58%)}
+    .section-title{text-align:center; max-width:850px; margin:0 auto 38px}
+    .section-title .kicker{display:inline-block; padding:8px 12px; border-radius:999px; background:#fbf5ea; border:1px solid #e1d1bb; color:#9a6b3e; font-size:.8rem; letter-spacing:.16em; text-transform:uppercase; font-weight:800; margin-bottom:12px}
+    .section-title h2{margin:0 0 12px; color:var(--wine); font-size:clamp(2rem, 4vw, 3.2rem); line-height:1.1; font-weight:700}
+    .section-title p{margin:0; color:var(--muted)}
 
-    /* header */
-    .site-header{
-      position:sticky; top:0; z-index:50;
-      backdrop-filter: blur(10px);
-      background:rgba(245,239,229,.82);
-      border-bottom:1px solid rgba(201,176,141,.25);
-    }
-    .nav{
-      min-height:76px; display:flex; align-items:center; justify-content:space-between; gap:18px;
-    }
-    .brand{display:flex; align-items:center; gap:12px; min-width:0}
-    .brand img{width:42px; height:42px; object-fit:contain; flex:none}
+    .header{position:sticky; top:0; z-index:40; background:rgba(247,241,232,.88); backdrop-filter:blur(10px); border-bottom:1px solid rgba(214,196,170,.55)}
+    .nav{display:flex; align-items:center; justify-content:space-between; gap:18px; min-height:78px}
+    .brand{display:flex; align-items:center; gap:14px; min-width:0}
+    .brand-mark{background:#fff; border:1px solid #e8dcc9; border-radius:18px; padding:10px 14px; box-shadow:0 8px 18px rgba(90,63,41,.08)}
+    .brand-mark img{width:170px; height:auto; object-fit:contain}
     .brand-text{min-width:0}
-    .brand-title{font-size:1.25rem; color:var(--wine); font-weight:800; letter-spacing:.01em}
-    .brand-sub{font-size:.7rem; color:var(--muted); letter-spacing:.18em; text-transform:uppercase; white-space:nowrap}
-    .nav-links{display:flex; align-items:center; flex-wrap:wrap; justify-content:flex-end; gap:10px 18px; font-size:.92rem; color:#5f5048}
+    .brand-title{margin:0; color:var(--wine); font-size:1.45rem; font-weight:700; line-height:1.05}
+    .brand-sub{font-size:.72rem; color:#7d6e63; letter-spacing:.16em; text-transform:uppercase; margin-top:4px}
+    .nav-links{display:flex; flex-wrap:wrap; gap:10px 18px; align-items:center; justify-content:flex-end; font-size:.95rem; color:#5e5149}
     .nav-links a:hover{color:var(--wine)}
-    .pill{display:inline-flex; align-items:center; justify-content:center; gap:8px; border-radius:999px; padding:12px 18px; font-weight:700; transition:.2s ease; border:1px solid transparent}
-    .pill-primary{background:var(--wine); color:#fff9f1}
-    .pill-primary:hover{background:var(--wine-dark); transform:translateY(-1px)}
-    .pill-outline{border-color:#d8c1a6; background:rgba(255,251,244,.8); color:var(--wine)}
-    .pill-outline:hover{background:#fffdf8; transform:translateY(-1px)}
+    .btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; border:1px solid transparent; border-radius:999px; padding:13px 20px; font-weight:700; cursor:pointer; transition:.2s ease; background:none}
+    .btn:hover{transform:translateY(-1px)}
+    .btn.primary{background:var(--wine); color:#fffaf4}
+    .btn.primary:hover{background:var(--wine-dark)}
+    .btn.secondary{border-color:#d8c2a5; background:#fff9ef; color:var(--wine)}
+    .btn.secondary:hover{background:#fffcf7}
+    .btn.ghost{border-color:#dac5a9; color:#795541; background:rgba(255,251,244,.65)}
 
-    /* hero */
-    .hero{position:relative; min-height:calc(100vh - 76px); display:grid; align-items:center; overflow:hidden}
-    .hero::before{
-      content:""; position:absolute; inset:0;
-      background:
-        linear-gradient(120deg, rgba(247,241,231,.95) 0%, rgba(247,241,231,.88) 33%, rgba(247,241,231,.60) 58%, rgba(247,241,231,.22) 100%),
-        url('assets/brand-scene.png') center/cover no-repeat;
-      filter:saturate(0.96) contrast(1.02);
-      transform:scale(1.03);
-    }
-    .hero::after{
-      content:""; position:absolute; inset:0;
-      background:linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(245,239,229,.16) 60%, rgba(245,239,229,.9) 100%);
-    }
-    .hero-inner{position:relative; z-index:2; display:grid; grid-template-columns:1.05fr .95fr; gap:30px; align-items:center; padding:54px 0 74px}
-    .eyebrow{display:inline-flex; align-items:center; gap:10px; padding:8px 12px; border-radius:999px; background:rgba(255,249,240,.72); border:1px solid rgba(199,162,110,.45); color:#8a5d2f; font-size:.82rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase}
-    .hero-copy h1{font-size:clamp(2.7rem, 6vw, 4.8rem); line-height:1.04; margin:18px 0 12px; color:var(--wine); font-weight:700}
-    .hero-copy .lead{font-size:1.05rem; max-width:620px; color:#5d4f46; margin:0 0 20px}
-    .hero-copy .small-note{max-width:620px; font-size:.95rem; color:#7a6b62; margin:0 0 28px}
-    .hero-actions{display:flex; flex-wrap:wrap; gap:14px}
-    .hero-art{display:flex; justify-content:flex-end; align-items:center}
-    .art-frame{
-      width:min(560px, 100%); background:rgba(255,251,244,.78); border:1px solid rgba(205,181,150,.65);
-      box-shadow:var(--shadow); border-radius:34px; overflow:hidden; padding:16px;
-    }
-    .art-frame img{width:100%; border-radius:22px; aspect-ratio:1/1; object-fit:cover}
-    .art-caption{display:flex; justify-content:space-between; gap:16px; align-items:center; padding:14px 6px 2px}
-    .art-caption strong{font-size:1rem; color:var(--wine)}
-    .art-caption span{font-size:.85rem; color:var(--muted)}
+    .hero{position:relative; min-height:calc(100vh - 78px); display:grid; align-items:center; overflow:hidden}
+    .hero::before{content:""; position:absolute; inset:0; background:linear-gradient(116deg, rgba(247,241,232,.96) 0%, rgba(247,241,232,.88) 35%, rgba(247,241,232,.58) 60%, rgba(247,241,232,.18) 100%), url('assets/brand-scene.png') center/cover no-repeat; transform:scale(1.03)}
+    .hero::after{content:""; position:absolute; inset:auto 0 0; height:34%; background:linear-gradient(to bottom, rgba(247,241,232,0), rgba(247,241,232,.95));}
+    .hero-grid{position:relative; z-index:2; display:grid; grid-template-columns:1.05fr .95fr; gap:32px; align-items:center; padding:48px 0 68px}
+    .eyebrow{display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius:999px; background:rgba(255,251,244,.75); border:1px solid rgba(199,162,110,.38); color:#926336; font-size:.82rem; letter-spacing:.14em; text-transform:uppercase; font-weight:800}
+    .hero-copy h1{margin:18px 0 12px; font-size:clamp(2.6rem, 6vw, 5rem); line-height:1.03; color:var(--wine); font-weight:700}
+    .hero-copy .lead{font-size:1.06rem; max-width:620px; color:#5c5047; margin:0 0 14px}
+    .hero-copy .sublead{font-size:.97rem; max-width:640px; color:#796b60; margin:0 0 26px}
+    .hero-actions{display:flex; flex-wrap:wrap; gap:12px}
+    .hero-side{display:flex; justify-content:flex-end}
+    .hero-card{width:min(540px,100%); background:rgba(255,250,244,.84); border:1px solid #e5d6c2; border-radius:32px; box-shadow:var(--shadow); overflow:hidden; padding:20px}
+    .hero-card .logo-board{background:#fff; border:1px solid #ebdfcf; border-radius:22px; padding:22px 26px; display:flex; justify-content:center; box-shadow:0 10px 22px rgba(88,60,38,.08)}
+    .hero-card .logo-board img{width:min(100%, 380px); object-fit:contain}
+    .hero-card .slogan{padding:18px 10px 6px; text-align:center; color:#77685c; font-size:clamp(1rem, 2.3vw, 1.35rem); letter-spacing:.22em; text-transform:uppercase; line-height:1.35; word-break:break-word}
+    .hero-card .artshot{margin-top:14px; border-radius:22px; overflow:hidden; border:1px solid #eadccc}
+    .hero-card .artshot img{width:100%; aspect-ratio:16/10; object-fit:cover}
 
-    /* intro */
-    .section{padding:74px 0}
-    .section.soft{background:linear-gradient(180deg, rgba(237,227,211,.55), rgba(245,239,229,0) 55%)}
-    .section-title{text-align:center; max-width:820px; margin:0 auto 34px}
-    .section-title .kicker{display:inline-block; margin-bottom:10px; color:#a4713d; font-size:.82rem; letter-spacing:.18em; text-transform:uppercase; font-weight:800}
-    .section-title h2{margin:0 0 12px; color:var(--wine); font-weight:700; font-size:clamp(2rem, 4vw, 3.2rem); line-height:1.12}
-    .section-title p{margin:0; color:var(--muted); font-size:1rem}
+    .quick-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
+    .quick-card{background:#fffaf2; border:1px solid var(--line); border-radius:24px; padding:20px; box-shadow:0 10px 24px rgba(88,60,38,.08)}
+    .quick-card .icon{width:46px;height:46px;border-radius:14px;background:#f1e0c7;color:var(--wine);display:grid;place-items:center;font-weight:800;font-size:1.1rem;margin-bottom:12px}
+    .quick-card h3{margin:0 0 8px; color:var(--wine); font-size:1.22rem}
+    .quick-card p{margin:0; color:#6a5c53}
 
-    /* chooser */
-    .path-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:24px}
-    .path-card{
-      position:relative; background:linear-gradient(180deg, #fffaf1, #f4ead8); border:1px solid #dfccb0; border-radius:30px;
-      box-shadow:var(--shadow); overflow:hidden; display:flex; flex-direction:column;
-    }
-    .path-card::before,.path-card::after{
-      content:""; position:absolute; left:16px; right:16px; height:14px; border-radius:999px;
-      background:linear-gradient(180deg, #c89d67, #9f7342);
-      box-shadow:inset 0 2px 4px rgba(255,255,255,.35), 0 4px 8px rgba(93,59,34,.18);
-      z-index:1;
-    }
-    .path-card::before{top:12px}
-    .path-card::after{bottom:12px}
-    .path-visual{padding:34px 24px 0; position:relative; z-index:2}
-    .path-visual img{width:100%; aspect-ratio:16/10; object-fit:cover; border-radius:20px; border:1px solid rgba(208,186,156,.8)}
-    .path-body{padding:22px 24px 28px; display:flex; flex-direction:column; gap:12px; position:relative; z-index:2}
-    .path-body h3{margin:0; font-size:1.9rem; line-height:1.12; color:var(--wine); font-weight:700}
-    .path-body p{margin:0; color:var(--muted)}
-    .path-body ul{margin:0; padding-left:18px; color:#65594f}
-    .path-actions{display:flex; flex-wrap:wrap; gap:12px; margin-top:4px}
+    .story-layout{display:grid; grid-template-columns:1.08fr .92fr; gap:26px; align-items:start}
+    .story-stage{position:relative; min-height:560px; background:linear-gradient(180deg, #fffdf8, #f7ecdb); border:1px solid var(--line); border-radius:32px; overflow:hidden; box-shadow:var(--shadow)}
+    .story-stage .bg{position:absolute; inset:0; background:url('assets/brand-scene.png') center/cover no-repeat; filter:sepia(.16) saturate(.9) opacity(.35)}
+    .story-stage .mist{position:absolute; inset:auto 0 0; height:44%; background:linear-gradient(to bottom, rgba(255,255,255,0), rgba(250,243,232,.86) 54%, rgba(250,243,232,1));}
+    .scene-decor{position:absolute; inset:0; pointer-events:none}
+    .sun{position:absolute; top:48px; right:70px; width:112px; height:112px; border-radius:50%; background:radial-gradient(circle at 35% 35%, rgba(255,219,163,.96), rgba(233,183,109,.76) 55%, rgba(233,183,109,.22) 72%, transparent 74%); opacity:.8}
+    .cloud{position:absolute; background:rgba(223,196,156,.52); filter:blur(1px); height:18px; border-radius:999px; animation:floatCloud 10s ease-in-out infinite}
+    .cloud::before,.cloud::after{content:""; position:absolute; background:inherit; height:18px; border-radius:999px}
+    .cloud::before{width:62px; left:-10px; top:-6px}
+    .cloud::after{width:48px; right:-10px; top:6px}
+    .cloud.c1{width:70px; top:88px; left:60px}
+    .cloud.c2{width:90px; top:150px; right:180px; animation-delay:-4s}
+    .story-character{position:absolute; bottom:110px; left:48px; width:225px; border-radius:20px; overflow:hidden; border:1px solid rgba(215,194,166,.75); box-shadow:0 16px 32px rgba(57,34,23,.12); background:#fff7ec; animation:floatCard 4s ease-in-out infinite}
+    .story-character img{width:100%; aspect-ratio:4/5; object-fit:cover; object-position:left center}
+    .story-note{position:absolute; right:32px; top:34px; width:min(48%, 300px); background:rgba(255,251,244,.88); border:1px solid #e3d2bc; border-radius:22px; padding:16px 18px; box-shadow:0 10px 22px rgba(70,44,31,.08)}
+    .story-note .label{display:inline-flex; padding:6px 10px; border-radius:999px; background:#f2e1c7; color:#966439; font-size:.75rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; margin-bottom:10px}
+    .story-note h3{margin:0 0 8px; color:var(--wine); font-size:1.2rem; line-height:1.2}
+    .story-note p{margin:0; color:#6b5f56; font-size:.94rem}
+    .dialogue-box{position:absolute; left:28px; right:28px; bottom:24px; background:rgba(255,250,243,.94); border:1px solid #e2ceb1; border-radius:24px; padding:18px 18px 16px; box-shadow:0 10px 24px rgba(71,45,32,.10)}
+    .dialogue-meta{display:flex; justify-content:space-between; gap:12px; align-items:center; margin-bottom:10px}
+    .dialogue-meta strong{color:var(--wine); font-size:1rem}
+    .dialogue-meta span{font-size:.82rem; color:#96745a; font-weight:700}
+    .dialogue-text{margin:0; color:#5b5048; min-height:84px}
+    .story-controls{display:flex; justify-content:space-between; gap:12px; margin-top:14px; flex-wrap:wrap}
+    .progress-row{display:flex; gap:10px; margin-top:14px}
+    .progress-dot{flex:1; height:8px; border-radius:999px; background:#e7dac7; overflow:hidden; position:relative}
+    .progress-dot.active::after{content:""; position:absolute; inset:0; background:linear-gradient(90deg, #d8b386, var(--wine));}
 
-    /* banh bac */
-    .banh-layout{display:grid; grid-template-columns:1.08fr .92fr; gap:28px; align-items:stretch}
-    .feature-card{background:rgba(255,251,244,.82); border:1px solid var(--line); border-radius:30px; box-shadow:var(--shadow); overflow:hidden}
-    .feature-card .feature-media{position:relative}
-    .feature-card .feature-media img{width:100%; aspect-ratio:16/10; object-fit:cover}
-    .feature-card .feature-copy{padding:26px}
-    .feature-card h3{margin:0 0 10px; color:var(--wine); font-size:2rem; line-height:1.15; font-weight:700}
-    .feature-card p{margin:0 0 16px; color:#62564d}
-    .tag-list{display:flex; flex-wrap:wrap; gap:10px}
-    .tag{padding:8px 12px; border-radius:999px; background:#f2e3cd; color:#855739; font-weight:700; font-size:.88rem}
-    .info-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:16px}
-    .info-card{background:#fff9f0; border:1px solid var(--line); border-radius:24px; padding:18px 18px 20px; box-shadow:0 8px 22px rgba(95,69,54,.08)}
-    .info-card .num{display:inline-flex; align-items:center; justify-content:center; width:40px; height:40px; border-radius:50%; background:#f0ddc0; color:var(--wine); font-weight:800; margin-bottom:12px}
-    .info-card h4{margin:0 0 8px; color:var(--wine); font-size:1.1rem}
-    .info-card p{margin:0; color:#6b5d54; font-size:.95rem}
+    .story-panel{display:flex; flex-direction:column; gap:18px}
+    .panel-card{background:#fffaf2; border:1px solid var(--line); border-radius:28px; padding:22px; box-shadow:0 10px 24px rgba(88,60,38,.08)}
+    .panel-card h3{margin:0 0 8px; color:var(--wine); font-size:1.5rem}
+    .panel-card p{margin:0 0 14px; color:#6b5e54}
+    .choice-grid{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+    .choice-btn{padding:14px; border-radius:18px; border:1px solid #dcc7aa; background:#fff; text-align:left; color:#6b5b50; cursor:pointer; transition:.2s ease}
+    .choice-btn:hover,.choice-btn.active{background:#f6ead8; border-color:#cfa26f; transform:translateY(-1px)}
+    .fact-box{min-height:116px; background:#f8efdf; border:1px dashed #d5b38a; border-radius:18px; padding:14px 16px; color:#6a5b50}
 
-    /* media gallery */
-    .media-layout{display:grid; grid-template-columns:1fr 1fr; gap:26px; align-items:start}
-    .gallery-strip{display:grid; grid-template-columns:repeat(3,1fr); gap:14px}
-    .gallery-strip figure{margin:0; background:#fff9f0; border:1px solid var(--line); border-radius:22px; padding:10px; box-shadow:0 8px 20px rgba(95,69,54,.08)}
-    .gallery-strip img{border-radius:14px; width:100%; aspect-ratio:4/3; object-fit:cover}
-    .gallery-strip figcaption{padding:10px 6px 2px; font-size:.9rem; color:#6e6157}
-    .video-card{background:#fff9f0; border:1px solid var(--line); border-radius:28px; overflow:hidden; box-shadow:var(--shadow)}
-    .video-frame{position:relative; aspect-ratio:16/9; background:#c9b499; display:grid; place-items:center; overflow:hidden}
-    .video-frame img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:.78}
-    .video-frame .play-badge{position:relative; z-index:2; width:86px; height:86px; border-radius:50%; background:rgba(124,47,47,.88); display:grid; place-items:center; color:#fff; font-size:1.8rem; box-shadow:0 12px 24px rgba(0,0,0,.25)}
-    .video-body{padding:22px 22px 24px}
-    .video-body h3{margin:0 0 10px; color:var(--wine); font-size:1.6rem}
-    .video-body p{margin:0 0 14px; color:#675a51}
-    .video-note{font-size:.88rem; color:#8a7b6e; background:#f6eddc; border:1px dashed #d0b590; padding:10px 12px; border-radius:14px}
-    .video-embed-wrap{display:none}
-    .video-embed-wrap.active{display:block}
-    .video-embed-wrap video,.video-embed-wrap iframe{width:100%; aspect-ratio:16/9; border:0; display:block; background:#000}
+    .game-wrap{display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:start}
+    .game-card{background:#fffaf2; border:1px solid var(--line); border-radius:30px; overflow:hidden; box-shadow:var(--shadow)}
+    .game-head{padding:22px 22px 14px; border-bottom:1px solid #eee1cd; background:linear-gradient(180deg, #fffdf8, #fbf2e5)}
+    .game-head .stage{display:inline-flex; padding:7px 12px; border-radius:999px; background:#f1dfc7; color:#935f38; font-size:.78rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; margin-bottom:10px}
+    .game-head h3{margin:0 0 8px; color:var(--wine); font-size:1.55rem}
+    .game-head p{margin:0; color:#706258}
+    .game-body{padding:20px 22px 24px}
+    .ingredient-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:12px}
+    .ingredient{border:1px solid #dcc7aa; border-radius:20px; background:#fff; padding:14px; cursor:pointer; transition:.18s ease; position:relative}
+    .ingredient:hover{transform:translateY(-1px); background:#fffdf8}
+    .ingredient.selected{border-color:#bf8147; background:#f7ecdb; box-shadow:0 8px 18px rgba(98,62,35,.08)}
+    .ingredient .name{font-weight:800; color:#6a4330; margin-bottom:4px}
+    .ingredient .desc{font-size:.9rem; color:#7c6a60}
+    .ingredient .tick{position:absolute; top:10px; right:10px; width:24px; height:24px; border-radius:50%; background:#ead8bf; color:transparent; display:grid; place-items:center; font-size:.85rem; font-weight:800}
+    .ingredient.selected .tick{background:var(--wine); color:#fff}
+    .feedback{margin-top:14px; min-height:30px; font-weight:700}
+    .feedback.ok{color:#2f7a52}
+    .feedback.warn{color:#9c6239}
 
-    /* CTA */
-    .cta-panel{
-      position:relative; overflow:hidden; background:linear-gradient(135deg, rgba(124,47,47,.98), rgba(91,35,35,.96)); color:#fff5ea;
-      border-radius:34px; box-shadow:var(--shadow); padding:38px 34px;
-    }
-    .cta-panel::before{content:""; position:absolute; inset:auto -40px -80px auto; width:260px; height:260px; border-radius:50%; background:rgba(255,210,156,.12)}
-    .cta-grid{display:grid; grid-template-columns:1.15fr .85fr; gap:28px; align-items:center; position:relative; z-index:2}
-    .cta-panel h2{margin:0 0 14px; font-size:clamp(2rem, 4vw, 3rem); line-height:1.1}
-    .cta-panel p{margin:0 0 20px; max-width:690px; color:#f6e2d3}
-    .cta-box{background:rgba(255,250,244,.10); border:1px solid rgba(255,227,184,.24); border-radius:26px; padding:24px}
-    .cta-box h3{margin:0 0 10px; font-size:1.3rem}
-    .cta-box ul{margin:0; padding-left:18px; color:#f1dfd2}
-    .cta-actions{display:flex; flex-wrap:wrap; gap:12px; margin-top:18px}
+    .sequence-list{display:grid; gap:10px}
+    .seq-item{display:flex; align-items:center; gap:12px; padding:14px 16px; background:#fff; border:1px solid #dcc7aa; border-radius:18px; cursor:grab}
+    .seq-item .drag{width:34px; height:34px; border-radius:10px; background:#f0e1cb; color:var(--wine); display:grid; place-items:center; font-weight:800}
+    .seq-item strong{display:block; color:#66382b}
+    .seq-item span{font-size:.9rem; color:#7b6c61}
+    .seq-item.dragging{opacity:.5}
 
-    .footer{padding:28px 0 44px; text-align:center; color:#887a6d; font-size:.92rem}
+    .finish-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:12px}
+    .finish-card{padding:14px; border-radius:18px; border:1px solid #dbc6aa; background:#fff; cursor:pointer; text-align:center; transition:.2s ease}
+    .finish-card:hover,.finish-card.selected{background:#f8ecd9; border-color:#c8925b; transform:translateY(-1px)}
+    .finish-card .emoji{font-size:2rem; margin-bottom:10px}
+    .finish-card strong{display:block; color:#714236; margin-bottom:4px}
+    .score-board{margin-top:16px; background:#f7ecdc; border:1px solid #d7b287; border-radius:18px; padding:16px 18px; color:#6e5647}
+    .score-board h4{margin:0 0 8px; color:var(--wine); font-size:1.1rem}
 
-    /* scroll modal */
-    .scroll-overlay{position:fixed; inset:0; background:rgba(45,28,24,.56); backdrop-filter:blur(6px); display:none; align-items:center; justify-content:center; padding:24px; z-index:200}
+    .media-layout{display:grid; grid-template-columns:.95fr 1.05fr; gap:24px}
+    .gallery{display:grid; gap:14px}
+    .gallery .frame{background:#fffaf2; border:1px solid var(--line); border-radius:24px; padding:10px; box-shadow:0 10px 24px rgba(88,60,38,.08)}
+    .gallery .frame img{width:100%; border-radius:16px; object-fit:cover}
+    .gallery .frame.large img{aspect-ratio:16/10}
+    .gallery .frame.small-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+    .gallery .frame.small-grid img{aspect-ratio:1/1}
+    .video-card{background:#fffaf2; border:1px solid var(--line); border-radius:30px; overflow:hidden; box-shadow:var(--shadow)}
+    .video-preview{position:relative; aspect-ratio:16/9; background:#ccb79c}
+    .video-preview img{width:100%; height:100%; object-fit:cover; opacity:.82}
+    .video-preview .play{position:absolute; inset:0; display:grid; place-items:center}
+    .video-preview .play span{width:84px; height:84px; border-radius:50%; display:grid; place-items:center; background:rgba(132,47,51,.88); color:#fff; font-size:1.8rem; box-shadow:0 12px 24px rgba(0,0,0,.24)}
+    .video-embed{display:none}
+    .video-embed.active{display:block}
+    .video-embed video,.video-embed iframe{width:100%; aspect-ratio:16/9; border:0; display:block; background:#000}
+    .video-copy{padding:22px}
+    .video-copy h3{margin:0 0 8px; color:var(--wine); font-size:1.5rem}
+    .video-copy p{margin:0 0 12px; color:#6f6157}
+    .helper{font-size:.9rem; background:#f8efdf; border:1px dashed #d5b48d; border-radius:16px; padding:12px; color:#7a665a}
+
+    .cta{background:linear-gradient(135deg, rgba(132,47,51,.98), rgba(100,36,39,.96)); color:#fff8ef; border-radius:34px; box-shadow:var(--shadow); padding:36px; position:relative; overflow:hidden}
+    .cta::before{content:""; position:absolute; width:280px; height:280px; border-radius:50%; right:-80px; bottom:-120px; background:rgba(255,215,160,.11)}
+    .cta-grid{position:relative; z-index:2; display:grid; grid-template-columns:1.1fr .9fr; gap:28px; align-items:center}
+    .cta h2{margin:0 0 12px; font-size:clamp(2rem, 4vw, 3rem); line-height:1.08}
+    .cta p{margin:0 0 18px; color:#f3dfd2}
+    .cta-box{background:rgba(255,250,244,.09); border:1px solid rgba(255,228,188,.24); border-radius:24px; padding:22px}
+    .cta-box ul{margin:0; padding-left:18px; color:#f6e5d6}
+    .footer{padding:28px 0 44px; color:#8b7a6c; text-align:center; font-size:.92rem}
+
+    .scroll-overlay{position:fixed; inset:0; background:rgba(42,29,22,.58); backdrop-filter:blur(6px); display:none; align-items:center; justify-content:center; padding:16px; z-index:80}
     .scroll-overlay.open{display:flex}
-    .scroll-shell{width:min(980px, 100%); max-height:min(92vh, 960px); overflow:auto; padding:24px}
-    .scroll-sheet{
-      position:relative; background:linear-gradient(180deg, #fff8ed 0%, #f5ead6 100%); color:var(--ink);
-      border-radius:28px; border:1px solid #dcbf93; box-shadow:0 28px 80px rgba(24,15,11,.35); overflow:hidden;
-      transform-origin:top center; animation:unroll .75s cubic-bezier(.2,.9,.2,1);
-    }
-    @keyframes unroll{
-      0%{transform:translateY(32px) scaleY(.05); opacity:0}
-      45%{transform:translateY(10px) scaleY(1.02); opacity:1}
-      100%{transform:translateY(0) scaleY(1); opacity:1}
-    }
-    .scroll-sheet::before,.scroll-sheet::after{
-      content:""; position:absolute; left:18px; right:18px; height:16px; border-radius:999px; z-index:5;
-      background:linear-gradient(180deg, #cca168, #986c3f);
-      box-shadow:inset 0 2px 4px rgba(255,255,255,.35), 0 5px 10px rgba(91,54,29,.22);
-    }
-    .scroll-sheet::before{top:12px}
-    .scroll-sheet::after{bottom:12px}
-    .scroll-header{position:relative; z-index:2; padding:44px 40px 22px; display:flex; justify-content:space-between; gap:20px; align-items:flex-start}
-    .scroll-header .meta{display:flex; flex-direction:column; gap:8px}
-    .scroll-header .meta .badge{display:inline-flex; width:max-content; padding:8px 12px; border-radius:999px; background:#efe0c9; color:#99663b; font-weight:800; letter-spacing:.08em; text-transform:uppercase; font-size:.78rem}
-    .scroll-header h3{margin:0; color:var(--wine); font-size:clamp(2rem, 4vw, 2.9rem); line-height:1.08}
-    .scroll-header p{margin:0; color:#66584f; max-width:620px}
-    .close-btn{border:1px solid #d7b991; width:44px; height:44px; border-radius:50%; background:#fff8ee; color:var(--wine); font-size:1.2rem; font-weight:800; flex:none}
-    .scroll-hero{display:grid; grid-template-columns:1.1fr .9fr; gap:24px; padding:0 40px 24px; align-items:center}
-    .scroll-hero img{width:100%; aspect-ratio:16/10; object-fit:cover; border-radius:24px; border:1px solid #ddc19a}
-    .scroll-hero .note{background:#fbf3e5; border:1px solid #e0ccb0; border-radius:22px; padding:18px 18px 20px}
-    .scroll-hero .note h4{margin:0 0 8px; color:var(--wine); font-size:1.2rem}
-    .scroll-hero .note p{margin:0; color:#6d5e53}
-    .chapter-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:16px; padding:0 40px 28px}
-    .chapter{background:#fffaf1; border:1px solid #e0ccb0; border-radius:22px; padding:18px; box-shadow:0 8px 22px rgba(95,69,54,.08)}
-    .chapter .step{display:inline-flex; width:34px; height:34px; align-items:center; justify-content:center; border-radius:50%; background:#f1dfc6; color:var(--wine); font-weight:800; margin-bottom:12px}
-    .chapter h5{margin:0 0 8px; color:var(--wine); font-size:1.05rem}
-    .chapter p{margin:0; color:#6e6056; font-size:.95rem}
-    .scroll-footer{display:flex; justify-content:space-between; flex-wrap:wrap; gap:14px; align-items:center; padding:0 40px 44px}
-    .scroll-footnote{max-width:520px; font-size:.88rem; color:#7a6d63}
+    .scroll-shell{width:min(980px,100%); max-height:94vh; overflow:auto; padding:8px}
+    .scroll-sheet{position:relative; background:linear-gradient(180deg,#fff9ef,#f5ead7); border:1px solid #d9be98; border-radius:28px; overflow:hidden; box-shadow:0 28px 80px rgba(17,10,8,.35); animation:unroll .72s cubic-bezier(.2,.9,.2,1)}
+    @keyframes unroll{0%{transform:translateY(26px) scaleY(.05);opacity:0}40%{transform:translateY(8px) scaleY(1.03);opacity:1}100%{transform:translateY(0) scaleY(1);opacity:1}}
+    .scroll-sheet::before,.scroll-sheet::after{content:""; position:absolute; left:14px; right:14px; height:16px; border-radius:999px; background:linear-gradient(180deg,#cca068,#9d6f3f); box-shadow:inset 0 2px 4px rgba(255,255,255,.3), 0 5px 10px rgba(95,57,29,.18)}
+    .scroll-sheet::before{top:12px}.scroll-sheet::after{bottom:12px}
+    .scroll-header{padding:42px 34px 20px; display:flex; justify-content:space-between; gap:18px; align-items:flex-start}
+    .scroll-header .badge{display:inline-flex; padding:7px 12px; border-radius:999px; background:#f2e1c7; color:#9b673a; font-size:.76rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; margin-bottom:10px}
+    .scroll-header h3{margin:0 0 8px; color:var(--wine); font-size:clamp(2rem,4vw,2.8rem); line-height:1.08}
+    .scroll-header p{margin:0; color:#6c5c52}
+    .close{width:44px;height:44px;border-radius:50%;border:1px solid #d8bc95;background:#fff8ee;color:var(--wine);font-size:1.2rem;font-weight:800;cursor:pointer}
+    .scroll-grid{display:grid; grid-template-columns:1fr 1fr; gap:18px; padding:0 34px 26px}
+    .scroll-grid img{width:100%; aspect-ratio:16/10; object-fit:cover; border-radius:22px; border:1px solid #decaad}
+    .scroll-note{background:#fdf4e7; border:1px solid #e2ceb1; border-radius:22px; padding:16px 18px; color:#6d5d53}
+    .scroll-note h4{margin:0 0 8px; color:var(--wine); font-size:1.15rem}
+    .chapter-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px; padding:0 34px 30px}
+    .chapter{background:#fffaf1; border:1px solid #e0cdb0; border-radius:20px; padding:16px}
+    .chapter .num{display:inline-flex; width:34px; height:34px; border-radius:50%; align-items:center; justify-content:center; background:#efdec4; color:var(--wine); font-weight:800; margin-bottom:12px}
+    .chapter h5{margin:0 0 8px; color:var(--wine); font-size:1.03rem}
+    .chapter p{margin:0; color:#6f6056; font-size:.95rem}
+    .scroll-footer{display:flex; justify-content:space-between; gap:14px; align-items:center; flex-wrap:wrap; padding:0 34px 40px}
+    .scroll-footer .note{font-size:.88rem; color:#7c6d61; max-width:580px}
 
-    .hide{display:none !important}
+    @keyframes floatCloud{0%,100%{transform:translateX(0)}50%{transform:translateX(18px)}}
+    @keyframes floatCard{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 
-    @media (max-width: 980px){
-      .hero-inner,.banh-layout,.media-layout,.cta-grid,.scroll-hero{grid-template-columns:1fr}
+    @media (max-width: 1080px){
+      .hero-grid,.story-layout,.game-wrap,.media-layout,.cta-grid,.scroll-grid{grid-template-columns:1fr}
       .hero{min-height:auto}
-      .hero-art{justify-content:flex-start}
-      .path-grid,.chapter-grid,.info-grid{grid-template-columns:1fr}
-      .gallery-strip{grid-template-columns:1fr 1fr}
+      .hero-side{justify-content:flex-start}
+      .quick-grid{grid-template-columns:1fr 1fr 1fr}
+      .story-note{position:static; margin:26px 24px 0; width:auto}
+      .story-character{width:190px}
     }
-    @media (max-width: 640px){
-      .container{width:min(var(--max), calc(100% - 20px))}
-      .nav{padding:8px 0; align-items:flex-start; flex-direction:column}
-      .nav-links{width:100%; justify-content:flex-start; font-size:.88rem}
-      .hero-inner{padding:34px 0 50px}
-      .section{padding:58px 0}
-      .hero-copy .lead,.hero-copy .small-note,.section-title p{font-size:.96rem}
-      .gallery-strip{grid-template-columns:1fr}
-      .scroll-header,.scroll-hero,.chapter-grid,.scroll-footer{padding-left:20px; padding-right:20px}
-      .scroll-shell{padding:8px}
-      .scroll-sheet::before,.scroll-sheet::after{left:10px; right:10px}
-      .hero-actions,.path-actions,.cta-actions{flex-direction:column; align-items:stretch}
-      .pill{justify-content:center}
-      .art-frame{padding:12px; border-radius:24px}
-      .feature-card h3,.path-body h3{font-size:1.65rem}
+    @media (max-width: 760px){
+      .container{width:min(var(--max), calc(100% - 18px))}
+      .nav{padding:10px 0; align-items:flex-start; flex-direction:column}
+      .nav-links{width:100%; justify-content:flex-start}
+      .brand{flex-direction:column; align-items:flex-start}
+      .brand-mark img{width:190px}
+      .hero-grid{padding:34px 0 46px}
+      .hero-actions,.story-controls{flex-direction:column; align-items:stretch}
+      .quick-grid,.choice-grid,.finish-grid,.chapter-grid,.ingredient-grid{grid-template-columns:1fr}
+      .story-stage{min-height:600px}
+      .story-character{position:static; width:min(220px, calc(100% - 48px)); margin:80px auto 0}
+      .story-note{margin:20px}
+      .dialogue-box{left:18px; right:18px; bottom:18px}
+      .scroll-header,.scroll-grid,.chapter-grid,.scroll-footer{padding-left:18px; padding-right:18px}
+      .hero-card .slogan{font-size:1rem; letter-spacing:.16em}
     }
   </style>
 </head>
 <body>
   <div class="grain" aria-hidden="true"></div>
-  <header class="site-header">
+  <header class="header">
     <div class="container nav">
-      <a href="#top" class="brand" aria-label="Về đầu trang Bác Trà Ký">
-        <img src="assets/btk-logo-small.png" alt="Logo Bác Trà Ký" />
+      <a href="#top" class="brand" aria-label="Trang chủ Bác Trà Ký">
+        <div class="brand-mark"><img src="assets/official-logo.png" alt="Logo FPT Education và Bác Trà Ký trên nền trắng" /></div>
         <div class="brand-text">
-          <div class="brand-title serif">Bác Trà Ký</div>
+          <h1 class="brand-title serif">Bác Trà Ký</h1>
           <div class="brand-sub">Gìn giữ tinh hoa – Tiếp nối giá trị</div>
         </div>
       </a>
-      <nav class="nav-links" aria-label="Điều hướng chính">
-        <a href="#hanh-trinh">Hành trình</a>
-        <a href="#banh-bac">Bánh Bác</a>
+      <nav class="nav-links">
+        <a href="#giangxa">Giang Xá xưa</a>
+        <a href="#game">Game làm bánh</a>
         <a href="#media">Ảnh &amp; video</a>
-        <a href="#ket-noi" class="pill pill-outline">Quay về Beacons</a>
+        <a href="#ket-noi" class="btn secondary">Quay về Beacons</a>
       </nav>
     </div>
   </header>
 
   <main id="top">
     <section class="hero">
-      <div class="container hero-inner">
+      <div class="container hero-grid">
         <div class="hero-copy">
-          <div class="eyebrow">Microsite trải nghiệm · GitHub Pages</div>
-          <h1 class="serif">Mở Bánh –<br />Mở Chuyện</h1>
-          <p class="lead">
-            Từ làng Giang Xá xưa đến chiếc Bánh Bác hôm nay, mỗi lớp bánh là một lát cắt của ký ức.
-            Hãy bắt đầu bằng một hành trình khám phá, rồi gặp lại chiếc bánh trong vai trò trung tâm của câu chuyện.
-          </p>
-          <p class="small-note">
-            Trang này được thiết kế như một trải nghiệm văn hóa số cho Bác Trà Ký: giàu hình ảnh, có cảm giác như mở một cuốn ký sự cổ,
-            đồng thời vẫn đủ rõ để dẫn người dùng về sản phẩm thật.
-          </p>
+          <div class="eyebrow">Microsite version 2 · story + game</div>
+          <h1 class="serif">Giang Xá xưa,<br />Bánh Bác nay</h1>
+          <p class="lead">Một hành trình để người xem bước vào bối cảnh làng Giang Xá, tìm hiểu câu chuyện gắn với Lý Nam Đế, rồi tự tay thử “làm” Bánh Bác qua mini game tương tác.</p>
+          <p class="sublead">Bản này được làm theo hướng giàu chi tiết hơn: logo sạch hơn, cấu trúc rõ hơn, có tuyến kể chuyện, có game làm bánh, có khu vực ảnh – video để bạn tiếp tục đắp thêm nội dung thật sau này.</p>
           <div class="hero-actions">
-            <a href="#hanh-trinh" class="pill pill-primary">Bắt đầu khám phá</a>
-            <a href="#banh-bac" class="pill pill-outline">Xem nhanh Bánh Bác</a>
+            <a class="btn primary" href="#giangxa">Bắt đầu khám phá Giang Xá</a>
+            <a class="btn secondary" href="#game">Vào game làm bánh</a>
           </div>
         </div>
-        <div class="hero-art">
-          <div class="art-frame">
-            <img src="assets/brand-scene.png" alt="Mỹ thuật nhận diện Bác Trà Ký với sắc đỏ trầm và phong cảnh Giang Xá" />
-            <div class="art-caption">
-              <div>
-                <strong class="serif">Giang Xá trong nét vẽ BTK</strong>
-                <span>Bối cảnh mở đầu để người dùng bước vào câu chuyện.</span>
+        <div class="hero-side">
+          <div class="hero-card">
+            <div class="logo-board"><img src="assets/official-logo.png" alt="Logo chính thức của Bác Trà Ký" /></div>
+            <div class="slogan">Gìn giữ tinh hoa – Tiếp nối giá trị</div>
+            <div class="artshot"><img src="assets/brand-scene.png" alt="Phong cách mỹ thuật Bác Trà Ký" /></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="quick-grid">
+          <article class="quick-card"><div class="icon">01</div><h3 class="serif">Khám phá Giang Xá</h3><p>Tuyến kể chuyện tương tác theo từng cảnh, giúp người xem đi qua làng xưa, di tích và lớp văn hóa gắn với Lý Nam Đế.</p></article>
+          <article class="quick-card"><div class="icon">02</div><h3 class="serif">Mở sớ câu chuyện</h3><p>Mỗi nhánh có thể mở thêm một “cuộn sớ” với nội dung chi tiết hơn, giống như đọc một đoạn tư liệu được minh họa.</p></article>
+          <article class="quick-card"><div class="icon">03</div><h3 class="serif">Chơi game làm bánh</h3><p>Người xem chọn nguyên liệu, sắp xếp công đoạn và hoàn thiện phần trình bày để tạo nên một trải nghiệm sản phẩm thú vị hơn.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="giangxa" class="section soft">
+      <div class="container">
+        <div class="section-title">
+          <div class="kicker">Giang Xá xưa</div>
+          <h2 class="serif">Một câu chuyện tương tác về làng, về lịch sử và về chiếc bánh</h2>
+          <p>Phần này được làm theo tinh thần kể chuyện kiểu visual novel / story game nhẹ: người xem nhấn đi tiếp, mở lựa chọn và theo dõi diễn tiến từng cảnh. Nội dung giữ tông kể chuyện, nhưng vẫn nhắc rõ đây là những dấu ấn văn hóa và câu chuyện được lưu truyền.</p>
+        </div>
+
+        <div class="story-layout">
+          <div class="story-stage">
+            <div class="bg"></div>
+            <div class="mist"></div>
+            <div class="scene-decor">
+              <div class="sun"></div>
+              <div class="cloud c1"></div>
+              <div class="cloud c2"></div>
+            </div>
+            <div class="story-note">
+              <div class="label" id="sceneLabel">Cảnh 1 · Bước vào làng</div>
+              <h3 class="serif" id="sceneTitle">Cổng làng mở ra</h3>
+              <p id="sceneSummary">Mỗi chuyến đi đều bắt đầu từ một cánh cửa. Với Bác Trà Ký, cánh cửa ấy là Giang Xá – nơi chiếc Bánh Bác được nhớ đến không chỉ như một món quà, mà như một phần ký ức địa phương.</p>
+            </div>
+            <div class="story-character"><img src="assets/brand-scene.png" alt="Cảnh minh họa về không gian Giang Xá" /></div>
+            <div class="dialogue-box">
+              <div class="dialogue-meta"><strong id="sceneSpeaker">Người kể chuyện</strong><span id="sceneMeta">1 / 4</span></div>
+              <p class="dialogue-text" id="sceneDialogue">“Nếu muốn hiểu Bánh Bác, trước hết hãy thử bước chậm qua Giang Xá xưa – nơi những lớp ký ức, lễ hội và truyền thuyết vẫn còn được kể lại trong đời sống hôm nay.”</p>
+              <div class="story-controls">
+                <button class="btn ghost" id="prevScene">Lùi lại</button>
+                <div style="display:flex; gap:10px; flex-wrap:wrap">
+                  <button class="btn secondary" id="openChronicle">Mở sớ cùng cảnh này</button>
+                  <button class="btn primary" id="nextScene">Đi tiếp</button>
+                </div>
+              </div>
+              <div class="progress-row" id="sceneProgress"></div>
+            </div>
+          </div>
+
+          <div class="story-panel">
+            <div class="panel-card">
+              <h3 class="serif">Chạm để mở thêm một lớp thông tin</h3>
+              <p>Mỗi cảnh có hai “mảnh ghép” nhỏ để người xem chủ động mở ra. Đây là cách làm cho phần lịch sử – văn hóa bớt nặng chữ và có cảm giác như đang khám phá từng lớp chuyện.</p>
+              <div class="choice-grid" id="choiceGrid"></div>
+              <div class="fact-box" id="factBox">Hãy chọn một mảnh ghép ở trên để xem thêm nội dung của cảnh hiện tại.</div>
+            </div>
+            <div class="panel-card">
+              <h3 class="serif">Hai nhánh bổ sung</h3>
+              <p>Ngoài tuyến chuyện trên, bạn vẫn có thể mở nhanh hai cuộn sớ riêng để xem khung nội dung tổng quan cho <strong>Giang Xá xưa</strong> hoặc <strong>Truyền thuyết bánh dâng vua</strong>.</p>
+              <div class="hero-actions">
+                <button class="btn primary open-scroll" data-story="giangxa">Mở sớ Giang Xá</button>
+                <button class="btn secondary open-scroll" data-story="dangvua">Mở sớ dâng vua</button>
               </div>
             </div>
           </div>
@@ -298,110 +343,67 @@
       </div>
     </section>
 
-    <section id="hanh-trinh" class="section soft">
+    <section id="game" class="section">
       <div class="container">
         <div class="section-title">
-          <div class="kicker">Chọn hành trình</div>
-          <h2 class="serif">Hai lối vào, một điểm gặp ở chiếc Bánh Bác</h2>
-          <p>
-            Trang chủ chỉ giữ đúng hai cửa khám phá lớn để người xem không bị rối: một cửa đi qua không gian làng Giang Xá,
-            một cửa đi qua truyền thuyết được lưu truyền quanh Bánh Bác.
-          </p>
-        </div>
-        <div class="path-grid">
-          <article class="path-card">
-            <div class="path-visual">
-              <img src="assets/brand-scene.png" alt="Minh họa làng Giang Xá xưa" />
-            </div>
-            <div class="path-body">
-              <h3 class="serif">Giang Xá xưa</h3>
-              <p>Khám phá miền quê, dấu tích văn hóa, nếp làng và những lát cắt lịch sử còn được kể lại đến hôm nay.</p>
-              <ul>
-                <li>Không gian làng cổ và miền quê ven đô</li>
-                <li>Dấu ấn Lý Nam Đế trong ký ức địa phương</li>
-                <li>Lễ hội, nếp làng và sinh hoạt cộng đồng</li>
-              </ul>
-              <div class="path-actions">
-                <button class="pill pill-primary open-scroll" data-story="giangxa">Mở sớ hành trình</button>
-                <a href="#banh-bac" class="pill pill-outline">Đi thẳng đến Bánh Bác</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="path-card">
-            <div class="path-visual">
-              <img src="assets/banh-bac-products.png" alt="Hình ảnh Bánh Bác của Bác Trà Ký" />
-            </div>
-            <div class="path-body">
-              <h3 class="serif">Truyền thuyết bánh dâng vua</h3>
-              <p>Lần theo câu chuyện được lưu truyền trong dân gian để thấy chiếc bánh đi từ lời kể, nghề bánh đến diện mạo hôm nay.</p>
-              <ul>
-                <li>Câu chuyện được truyền miệng qua nhiều thế hệ</li>
-                <li>Ý nghĩa và sức hấp dẫn của chiếc bánh nhiều lớp</li>
-                <li>Từ truyền thuyết đến hiện tại của Bác Trà Ký</li>
-              </ul>
-              <div class="path-actions">
-                <button class="pill pill-primary open-scroll" data-story="dangvua">Mở sớ câu chuyện</button>
-                <a href="#banh-bac" class="pill pill-outline">Đi thẳng đến Bánh Bác</a>
-              </div>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="banh-bac" class="section">
-      <div class="container">
-        <div class="section-title">
-          <div class="kicker">Điểm gặp chung</div>
-          <h2 class="serif">Chiếc Bánh Bác kể chuyện</h2>
-          <p>
-            Sau khi đi qua một trong hai hành trình, người xem gặp lại chiếc bánh như trung tâm của câu chuyện: một sản phẩm mang hương vị,
-            kỹ thuật chế biến, bản sắc hình thức và ký ức địa phương.
-          </p>
+          <div class="kicker">Mini game làm bánh</div>
+          <h2 class="serif">Thử làm Bánh Bác cùng Bác Trà Ký</h2>
+          <p>Game được chia thành ba chặng: chọn nguyên liệu, xếp đúng thứ tự công đoạn và hoàn thiện cách trình bày. Nó không thay thế quy trình làm bánh thật, nhưng giúp người xem ghi nhớ những chi tiết cốt lõi về sản phẩm.</p>
         </div>
 
-        <div class="banh-layout">
-          <article class="feature-card">
-            <div class="feature-media">
-              <img src="assets/banh-bac-products.png" alt="Bánh Bác và sản phẩm của Bác Trà Ký" />
-            </div>
-            <div class="feature-copy">
-              <h3 class="serif">Khám phá chiếc bánh từ hình thức đến câu chuyện</h3>
-              <p>
-                Tại đây, người dùng có thể nhìn thấy màu đỏ gấc, lớp nếp, nhân đậu xanh, hình thức nhiều lớp và mối liên hệ giữa chiếc bánh với làng Giang Xá.
-                Phần này cũng là nơi phù hợp để đặt mini-game thử chọn nguyên liệu, chọn công đoạn đặc trưng hoặc xem video về người làm bánh thật.
-              </p>
-              <div class="tag-list">
-                <span class="tag">Gấc</span>
-                <span class="tag">Bột nếp</span>
-                <span class="tag">Đậu xanh</span>
-                <span class="tag">Vừng</span>
-                <span class="tag">Kỹ thuật “bác” bánh</span>
+        <div class="game-wrap">
+          <div style="display:grid; gap:20px">
+            <article class="game-card">
+              <div class="game-head"><div class="stage">Chặng 1</div><h3 class="serif">Chọn nguyên liệu chính</h3><p>Hãy chọn những nguyên liệu phù hợp nhất với câu chuyện của Bánh Bác truyền thống. Bạn cần chọn đúng <strong>4 nguyên liệu</strong>.</p></div>
+              <div class="game-body">
+                <div class="ingredient-grid" id="ingredientGrid"></div>
+                <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:14px">
+                  <button class="btn primary" id="checkIngredients">Kiểm tra lựa chọn</button>
+                  <button class="btn ghost" id="resetIngredients">Chọn lại</button>
+                </div>
+                <div class="feedback" id="ingredientFeedback"></div>
               </div>
-            </div>
-          </article>
+            </article>
 
-          <div class="info-grid">
-            <article class="info-card">
-              <div class="num">01</div>
-              <h4 class="serif">Nguyên liệu &amp; hương vị</h4>
-              <p>Giới thiệu những yếu tố quen thuộc tạo nên chiếc bánh và cách chúng hình thành sắc – hương – vị đặc trưng.</p>
+            <article class="game-card">
+              <div class="game-head"><div class="stage">Chặng 2</div><h3 class="serif">Sắp xếp công đoạn</h3><p>Kéo thả các bước dưới đây để tạo thành một trình tự hợp lý cho việc hình thành chiếc Bánh Bác.</p></div>
+              <div class="game-body">
+                <div class="sequence-list" id="sequenceList"></div>
+                <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:14px">
+                  <button class="btn primary" id="checkSequence">Kiểm tra thứ tự</button>
+                  <button class="btn ghost" id="shuffleSequence">Xáo lại</button>
+                </div>
+                <div class="feedback" id="sequenceFeedback"></div>
+              </div>
             </article>
-            <article class="info-card">
-              <div class="num">02</div>
-              <h4 class="serif">Kỹ thuật chế biến</h4>
-              <p>Nơi phù hợp để giải thích công đoạn “bác” bột và nhấn mạnh nét nghề thủ công của Giang Xá.</p>
+          </div>
+
+          <div style="display:grid; gap:20px">
+            <article class="game-card">
+              <div class="game-head"><div class="stage">Chặng 3</div><h3 class="serif">Hoàn thiện phần trình bày</h3><p>Hãy chọn cách kết thúc phù hợp nhất với tinh thần trải nghiệm của Bác Trà Ký.</p></div>
+              <div class="game-body">
+                <div class="finish-grid" id="finishGrid">
+                  <button class="finish-card" data-finish="1"><div class="emoji">🎁</div><strong>Đóng hộp quà</strong><span>Phù hợp để biếu tặng</span></button>
+                  <button class="finish-card" data-finish="2"><div class="emoji">🍵</div><strong>Kết hợp cùng trà</strong><span>Tạo trải nghiệm thưởng thức</span></button>
+                  <button class="finish-card" data-finish="3"><div class="emoji">📖</div><strong>Kể thêm câu chuyện</strong><span>Giúp chiếc bánh có chiều sâu hơn</span></button>
+                </div>
+                <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:14px">
+                  <button class="btn primary" id="finishGame">Hoàn tất game</button>
+                  <button class="btn ghost" id="resetGame">Chơi lại từ đầu</button>
+                </div>
+                <div class="score-board" id="scoreBoard">
+                  <h4 class="serif">Tiến độ</h4>
+                  <div id="scoreText">Bạn chưa hoàn thành cả 3 chặng. Hãy bắt đầu từ việc chọn nguyên liệu nhé.</div>
+                </div>
+              </div>
             </article>
-            <article class="info-card">
-              <div class="num">03</div>
-              <h4 class="serif">Người giữ hương vị</h4>
-              <p>Gắn thêm video, ảnh hoặc lời kể của người làm bánh thật để tăng sự chân thực và chiều sâu cho trải nghiệm.</p>
-            </article>
-            <article class="info-card">
-              <div class="num">04</div>
-              <h4 class="serif">Phiên bản BTK hôm nay</h4>
-              <p>Liên kết câu chuyện truyền thống với hướng phát triển hiện tại của Bác Trà Ký: bao bì, quà tặng và trải nghiệm thương hiệu.</p>
+
+            <article class="game-card">
+              <div class="game-head"><div class="stage">Phần thưởng</div><h3 class="serif">Kết quả sau khi chơi</h3><p>Khi hoàn thành, khu vực này sẽ hiện lời chúc mừng và gợi ý cách nối game với trải nghiệm thật của BTK.</p></div>
+              <div class="game-body">
+                <img src="assets/products.png" alt="Bánh Bác Bác Trà Ký" style="border-radius:20px; border:1px solid #eadccc; width:100%; aspect-ratio:16/10; object-fit:cover; margin-bottom:14px" />
+                <div class="helper" id="resultHint">Gợi ý: sau khi chơi xong, bạn có thể dùng chính kết quả này như một điểm chốt để dẫn khách về Beacons, menu hoặc bài viết giới thiệu sản phẩm.</div>
+              </div>
             </article>
           </div>
         </div>
@@ -412,74 +414,45 @@
       <div class="container">
         <div class="section-title">
           <div class="kicker">Ảnh &amp; video</div>
-          <h2 class="serif">Một website “nặng” theo đúng tinh thần giàu chi tiết</h2>
-          <p>
-            Bạn nói đúng: với microsite này, sự phong phú về hình ảnh và video có thể trở thành một điểm cộng. Vì vậy bản dựng được thiết kế để dễ thêm media,
-            kể cả khi dùng nhiều ảnh hoặc gắn video chất lượng cao.
-          </p>
+          <h2 class="serif">Kho media để tiếp tục làm site giàu chi tiết hơn</h2>
+          <p>Mình giữ sẵn một khu để bạn có thể thêm video reel, video cơ sở làm bánh hoặc clip kể chuyện Giang Xá sau này. Nếu chưa có video, khối này vẫn hiển thị tốt bằng poster tĩnh.</p>
         </div>
-
         <div class="media-layout">
-          <div>
-            <div class="gallery-strip">
-              <figure>
-                <img src="assets/brand-scene.png" alt="Mỹ thuật thương hiệu Bác Trà Ký" />
-                <figcaption>Mỹ thuật thương hiệu: logo, làng xưa và sắc màu chủ đạo.</figcaption>
-              </figure>
-              <figure>
-                <img src="assets/banh-bac-products.png" alt="Sản phẩm Bánh Bác của Bác Trà Ký" />
-                <figcaption>Ảnh sản phẩm: hộp bánh, lát cắt và tinh thần quà tặng.</figcaption>
-              </figure>
-              <figure>
-                <img src="assets/banh-bac-box.png" alt="Hộp Bánh Bác đậu xanh" />
-                <figcaption>Ảnh close-up: phiên bản nhân đậu xanh làm điểm nhấn.</figcaption>
-              </figure>
-            </div>
+          <div class="gallery">
+            <div class="frame large"><img src="assets/brand-scene.png" alt="Cảnh mỹ thuật chủ đạo" /></div>
+            <div class="frame small-grid"><img src="assets/products.png" alt="Ảnh sản phẩm Bánh Bác" /><img src="assets/box-dau-xanh.png" alt="Hộp Bánh Bác đậu xanh" /></div>
           </div>
-
-          <div class="video-card">
-            <div class="video-frame" id="video-preview">
-              <img src="assets/brand-scene.png" alt="Ảnh đại diện cho video câu chuyện Bác Trà Ký" />
-              <div class="play-badge" aria-hidden="true">▶</div>
-            </div>
-            <div class="video-embed-wrap" id="video-embed-wrap"></div>
-            <div class="video-body">
+          <article class="video-card">
+            <div class="video-preview" id="videoPreview"><img src="assets/brand-scene.png" alt="Poster video" /><div class="play"><span>▶</span></div></div>
+            <div class="video-embed" id="videoEmbed"></div>
+            <div class="video-copy">
               <h3 class="serif">Khối video kể chuyện</h3>
-              <p>
-                Khu vực này có thể dùng để chèn video giới thiệu cơ sở làm bánh, một clip ngắn về làng Giang Xá hoặc reel dựng theo concept “Mở Bánh – Mở Chuyện”.
-              </p>
-              <div class="video-note">
-                <strong>Gợi ý triển khai:</strong> điền link YouTube embed hoặc đường dẫn MP4 trong phần cấu hình ở cuối file.
-                Nếu chưa có video, khối này vẫn hiển thị đẹp dưới dạng poster tĩnh.
-              </div>
+              <p>Hãy dùng phần này để gắn video về làng Giang Xá, công đoạn làm bánh hoặc một clip motion ngắn theo concept “Mở Bánh – Mở Chuyện”.</p>
+              <div class="helper">Cấu hình video ở cuối file <strong>index.html</strong>. Bạn có thể điền link YouTube embed hoặc dẫn tới file MP4 đặt trong thư mục <strong>assets/</strong>.</div>
             </div>
-          </div>
+          </article>
         </div>
       </div>
     </section>
 
     <section id="ket-noi" class="section">
       <div class="container">
-        <div class="cta-panel">
+        <div class="cta">
           <div class="cta-grid">
             <div>
-              <h2 class="serif">Kết thúc câu chuyện, quay về với sản phẩm thật</h2>
-              <p>
-                Microsite này không thay Beacons. Nó đóng vai trò như một không gian kể chuyện giàu cảm xúc và hình ảnh,
-                sau đó dẫn người xem quay lại menu, kênh mua hàng hoặc các nền tảng chính của Bác Trà Ký.
-              </p>
-              <div class="cta-actions">
-                <a class="pill pill-primary" id="beacons-link" href="#" target="_blank" rel="noopener">Quay về Beacons</a>
-                <a class="pill pill-outline" href="#top">Lên đầu trang</a>
+              <h2 class="serif">Chốt hành trình bằng một điểm dẫn về thương hiệu thật</h2>
+              <p>Microsite này nên đóng vai trò là một trải nghiệm văn hóa số của Bác Trà Ký. Sau khi người xem đọc chuyện và chơi game, hãy đưa họ quay về Beacons, menu hoặc kênh bán hàng chính thức.</p>
+              <div class="hero-actions">
+                <a class="btn primary" id="beaconsLink" href="#" target="_blank" rel="noopener">Quay về Beacons</a>
+                <a class="btn secondary" href="#top">Lên đầu trang</a>
               </div>
             </div>
             <div class="cta-box">
-              <h3 class="serif">Checklist trước khi public</h3>
               <ul>
-                <li>Thay link Beacons thật của BTK</li>
-                <li>Điền video YouTube hoặc MP4 nếu có</li>
-                <li>Thêm ảnh/video người làm bánh thật để tăng độ tin cậy</li>
-                <li>Giữ cách diễn đạt “truyền thuyết / câu chuyện lưu truyền” cho tuyến dâng vua</li>
+                <li>Logo nền trắng đã được làm to hơn và đặt trên bảng riêng để nhìn sạch hơn.</li>
+                <li>Phần tiêu đề và slogan đã chỉnh lại để không bị cắt chữ hoặc vỡ bố cục.</li>
+                <li>Game làm bánh đã có 3 chặng với logic JS riêng.</li>
+                <li>Tuyến Giang Xá xưa đã được làm theo kiểu kể chuyện tương tác từng cảnh.</li>
               </ul>
             </div>
           </div>
@@ -488,169 +461,345 @@
     </section>
   </main>
 
-  <footer class="footer">
-    <div class="container">
-      Bác Trà Ký · Gìn giữ tinh hoa – Tiếp nối giá trị · Microsite concept for GitHub Pages
-    </div>
-  </footer>
+  <footer class="footer">Bác Trà Ký · Gìn giữ tinh hoa – Tiếp nối giá trị · GitHub Pages concept v2</footer>
 
   <div class="scroll-overlay" id="scrollOverlay" aria-hidden="true">
     <div class="scroll-shell">
       <div class="scroll-sheet" role="dialog" aria-modal="true" aria-labelledby="scrollTitle">
         <div class="scroll-header">
-          <div class="meta">
+          <div>
             <div class="badge" id="scrollBadge">Hành trình</div>
-            <h3 class="serif" id="scrollTitle">Tiêu đề câu chuyện</h3>
-            <p id="scrollIntro">Mô tả mở đầu sẽ xuất hiện ở đây.</p>
+            <h3 class="serif" id="scrollTitle">Tiêu đề</h3>
+            <p id="scrollIntro">Đoạn mô tả mở đầu.</p>
           </div>
-          <button class="close-btn" id="closeScroll" aria-label="Đóng sớ">×</button>
+          <button class="close" id="closeScroll">×</button>
         </div>
-        <div class="scroll-hero">
-          <img id="scrollImage" src="assets/brand-scene.png" alt="Hình minh họa cho câu chuyện" />
-          <div class="note">
-            <h4 class="serif" id="scrollNoteTitle">Gợi ý triển khai</h4>
-            <p id="scrollNoteBody">Phần ghi chú này giúp nhóm hiểu nên viết gì ở từng tuyến nội dung.</p>
-          </div>
+        <div class="scroll-grid">
+          <img id="scrollImage" src="assets/brand-scene.png" alt="Minh họa cho cuộn sớ" />
+          <div class="scroll-note"><h4 class="serif" id="scrollNoteTitle">Ghi chú</h4><p id="scrollNoteBody">Nội dung.</p></div>
         </div>
-        <div class="chapter-grid" id="chapterGrid"></div>
-        <div class="scroll-footer">
-          <div class="scroll-footnote" id="scrollFootnote">
-            Ghi chú nguồn hoặc lưu ý ngắn về cách diễn đạt sẽ hiện ở đây.
-          </div>
-          <div class="path-actions">
-            <a href="#banh-bac" class="pill pill-primary" id="continueBanh">Tiếp tục đến Bánh Bác</a>
-            <button class="pill pill-outline" id="closeScroll2">Đóng sớ</button>
-          </div>
-        </div>
+        <div class="chapter-grid" id="scrollChapters"></div>
+        <div class="scroll-footer"><div class="note" id="scrollFootnote">Ghi chú cuối.</div><div style="display:flex; gap:10px; flex-wrap:wrap"><a href="#game" class="btn primary">Qua game làm bánh</a><button class="btn secondary" id="closeScroll2">Đóng sớ</button></div></div>
       </div>
     </div>
   </div>
 
   <script>
-    // ==============================================================
-    // CẤU HÌNH NHANH
-    // 1) Dán link Beacons thật vào beaconsUrl.
-    // 2) Nếu có video: điền videoEmbed (YouTube dạng nhúng) HOẶC videoSrc (MP4).
-    // ============================================================== 
     const SITE_CONFIG = {
       beaconsUrl: "",
-      videoEmbed: "", // Ví dụ: "https://www.youtube.com/embed/VIDEO_ID"
-      videoSrc: "",   // Ví dụ: "assets/giang-xa-story.mp4"
+      videoEmbed: "",
+      videoSrc: "",
       videoPoster: "assets/brand-scene.png"
     };
 
+    // =========================================
+    // STORY GAME: GIANG XA
+    // =========================================
+    const scenes = [
+      {
+        label:'Cảnh 1 · Bước vào làng',
+        title:'Cổng làng mở ra',
+        summary:'Giang Xá được mở ra như một cánh cửa dẫn vào câu chuyện của chiếc bánh. Trước khi hiểu Bánh Bác, người xem được đi qua không gian làng xưa và cảm giác về một miền quê có ký ức riêng.',
+        speaker:'Người kể chuyện',
+        dialogue:'“Nếu muốn hiểu chiếc bánh, trước hết hãy bước vào nơi nó được nhớ đến, được làm ra và được kể lại qua nhiều lớp đời sống.”',
+        choices:[
+          {label:'Giang Xá là gì?', fact:'Bạn có thể giới thiệu Giang Xá như một làng cổ thuộc Hoài Đức, Hà Nội – nơi lưu giữ nhiều lớp ký ức địa phương, lễ hội và truyền thuyết.'},
+          {label:'Vì sao bắt đầu từ làng?', fact:'Vì BTK không chỉ bán một món bánh. BTK kể câu chuyện về chiếc bánh trong mối liên hệ với không gian văn hóa đã làm nên căn tính của nó.'}
+        ],
+        chronicle:'giangxa'
+      },
+      {
+        label:'Cảnh 2 · Dấu ấn lịch sử',
+        title:'Theo dấu Lý Nam Đế',
+        summary:'Phần này mở ra mối liên hệ giữa Giang Xá với những dấu ấn lịch sử – văn hóa gắn với Lý Nam Đế trong ký ức địa phương và không gian di tích.',
+        speaker:'Người kể chuyện',
+        dialogue:'“Ở đây, tên tuổi Lý Nam Đế không chỉ còn trong trang sử, mà còn sống lại qua truyền thuyết, di tích và sự tưởng nhớ của cộng đồng.”',
+        choices:[
+          {label:'Nên viết thế nào?', fact:'Bạn nên dùng cách diễn đạt mềm và đúng: “dấu ấn”, “ký ức địa phương”, “không gian văn hóa gắn với Lý Nam Đế”, tránh khẳng định vượt quá tư liệu.'},
+          {label:'Cho người xem thấy gì?', fact:'Có thể dùng minh họa đình, mái cổ, mặt trời, mây, các thẻ kể chuyện ngắn hoặc clip ngắn để tạo cảm giác đang khám phá từng lớp lịch sử.'}
+        ],
+        chronicle:'giangxa'
+      },
+      {
+        label:'Cảnh 3 · Lễ hội và đời sống',
+        title:'Từ nếp làng đến mâm lễ',
+        summary:'Bánh Bác không chỉ là món ăn. Nó còn đi vào cỗ lễ, phát lộc, ký ức hội làng và những dịp cộng đồng quây quần.',
+        speaker:'Người kể chuyện',
+        dialogue:'“Khi chiếc bánh bước vào lễ hội và nếp sinh hoạt, nó trở thành một phần của đời sống văn hóa – chứ không chỉ là một món quà để ăn.”',
+        choices:[
+          {label:'Điểm nhấn thị giác', fact:'Bạn có thể thêm các thẻ minh họa về đình làng, cỗ lễ, bánh lễ, trống hội hoặc dòng chữ nhỏ mô tả mối liên hệ giữa bánh và sinh hoạt cộng đồng.'},
+          {label:'Vì sao cần cảnh này?', fact:'Cảnh này giúp người xem hiểu vì sao Bánh Bác có “gốc”, có chuyện để kể, từ đó hợp lý hóa định hướng phát triển thương hiệu của BTK.'}
+        ],
+        chronicle:'dangvua'
+      },
+      {
+        label:'Cảnh 4 · Gặp lại chiếc bánh',
+        title:'Bánh Bác bước ra hiện tại',
+        summary:'Khép lại tuyến Giang Xá xưa bằng cách dẫn người xem đến chiếc Bánh Bác hôm nay: được nhìn lại, được đóng gói, được thưởng thức và được kể tiếp dưới tên gọi Bác Trà Ký.',
+        speaker:'Bác Trà Ký',
+        dialogue:'“Giữ lại cốt cách của chiếc bánh xưa, nhưng kể nó bằng một ngôn ngữ gần hơn với người trẻ hôm nay – đó là cách chúng mình tiếp nối câu chuyện.”',
+        choices:[
+          {label:'Liên hệ với BTK', fact:'Đây là chỗ để chuyển mượt sang phần sản phẩm, trải nghiệm bánh – trà, hộp quà, QR code và mini game của chính microsite.'},
+          {label:'Bước tiếp theo?', fact:'Sau cảnh này, người xem nên được dẫn thẳng tới game làm bánh hoặc phần media để biến trải nghiệm kể chuyện thành tương tác cụ thể.'}
+        ],
+        chronicle:'dangvua'
+      }
+    ];
+    let sceneIndex = 0;
+    const sceneLabel = document.getElementById('sceneLabel');
+    const sceneTitle = document.getElementById('sceneTitle');
+    const sceneSummary = document.getElementById('sceneSummary');
+    const sceneSpeaker = document.getElementById('sceneSpeaker');
+    const sceneMeta = document.getElementById('sceneMeta');
+    const sceneDialogue = document.getElementById('sceneDialogue');
+    const choiceGrid = document.getElementById('choiceGrid');
+    const factBox = document.getElementById('factBox');
+    const progressWrap = document.getElementById('sceneProgress');
+
+    function renderScene(){
+      const s = scenes[sceneIndex];
+      sceneLabel.textContent = s.label;
+      sceneTitle.textContent = s.title;
+      sceneSummary.textContent = s.summary;
+      sceneSpeaker.textContent = s.speaker;
+      sceneMeta.textContent = `${sceneIndex + 1} / ${scenes.length}`;
+      sceneDialogue.textContent = s.dialogue;
+      factBox.textContent = 'Hãy chọn một mảnh ghép ở trên để xem thêm nội dung của cảnh hiện tại.';
+      choiceGrid.innerHTML = s.choices.map((c, i) => `<button class="choice-btn" data-choice="${i}">${c.label}</button>`).join('');
+      progressWrap.innerHTML = scenes.map((_, i) => `<div class="progress-dot ${i <= sceneIndex ? 'active' : ''}"></div>`).join('');
+      choiceGrid.querySelectorAll('.choice-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          choiceGrid.querySelectorAll('.choice-btn').forEach(b=>b.classList.remove('active'));
+          btn.classList.add('active');
+          factBox.textContent = s.choices[Number(btn.dataset.choice)].fact;
+        });
+      });
+    }
+    renderScene();
+    document.getElementById('nextScene').addEventListener('click', ()=>{ sceneIndex = (sceneIndex + 1) % scenes.length; renderScene(); });
+    document.getElementById('prevScene').addEventListener('click', ()=>{ sceneIndex = (sceneIndex - 1 + scenes.length) % scenes.length; renderScene(); });
+    document.getElementById('openChronicle').addEventListener('click', ()=> openStory(scenes[sceneIndex].chronicle));
+
+    // =========================================
+    // SCROLL STORIES
+    // =========================================
     const STORY_DATA = {
-      giangxa: {
-        badge: "Giang Xá xưa",
-        title: "Giang Xá xưa – Dấu xưa còn kể",
-        intro: "Tuyến nội dung này giúp người xem bước vào không gian làng quê, di tích, nếp làng và những lớp ký ức gắn với Giang Xá.",
-        image: "assets/brand-scene.png",
-        noteTitle: "Vai trò của tuyến này",
-        noteBody: "Đây là nơi tạo chiều sâu văn hóa cho microsite. Hãy ưu tiên kể chuyện bằng ngôn ngữ cô đọng, giàu hình ảnh và tôn trọng các chi tiết có thể kiểm chứng.",
-        footnote: "Gợi ý cách viết: dùng các cụm như “dấu tích”, “ký ức địa phương”, “những câu chuyện còn được kể lại”. Khi nói về Lý Nam Đế, nên bám vào các dấu ấn văn hóa và không gian tưởng niệm còn hiện diện.",
-        chapters: [
-          {title: "Một miền quê ven đô", body: "Giới thiệu Giang Xá như một làng quê giàu tầng văn hóa, có mối liên hệ với Hoài Đức và Hà Nội hôm nay."},
-          {title: "Dấu ấn Lý Nam Đế", body: "Trình bày đây là tuyến khám phá các dấu ấn còn được tưởng nhớ trong không gian văn hóa địa phương."},
-          {title: "Lễ hội và nếp làng", body: "Đưa người xem đến đình, lễ hội, cỗ lễ và sinh hoạt cộng đồng như bối cảnh để hiểu chiếc bánh trong đời sống."},
-          {title: "Từ làng quê đến chiếc bánh", body: "Kết nối mạch kể về làng sang câu chuyện Bánh Bác như một thức quà gắn với ký ức của Giang Xá."}
+      giangxa:{
+        badge:'Giang Xá xưa',
+        title:'Giang Xá xưa – dấu xưa còn kể',
+        intro:'Cuộn sớ này giúp nhóm trình bày tuyến nội dung về không gian làng xưa, những dấu tích văn hóa và mối liên hệ giữa Giang Xá với câu chuyện của chiếc bánh.',
+        image:'assets/brand-scene.png',
+        noteTitle:'Cách triển khai phù hợp',
+        noteBody:'Hãy kể theo kiểu một hành trình khám phá nhẹ nhàng: từ cổng làng, mái đình, nếp lễ, ký ức cộng đồng đến chiếc bánh. Nội dung nên giàu hình ảnh, không quá học thuật trên giao diện web.',
+        footnote:'Gợi ý diễn đạt: dùng các từ như “ký ức địa phương”, “dấu ấn văn hóa”, “không gian kể chuyện” để vừa mềm mại vừa an toàn.',
+        chapters:[
+          {title:'Không gian làng xưa', body:'Mở đầu bằng cảnh làng, bờ nước, mái đình, đường làng hoặc nét quê để dựng bối cảnh cho câu chuyện.'},
+          {title:'Dấu ấn lịch sử', body:'Liên hệ Giang Xá với những lớp truyền thuyết và ký ức gắn với Lý Nam Đế, nhưng giữ giọng điệu thận trọng.'},
+          {title:'Lễ hội và nếp làng', body:'Nêu vai trò của sinh hoạt cộng đồng, cỗ lễ, phát lộc hay hội làng trong việc duy trì ký ức về chiếc bánh.'},
+          {title:'Từ làng đến thương hiệu', body:'Kết lại bằng cách nối Giang Xá với BTK: phát triển cách kể lại câu chuyện trong bối cảnh đương đại.'}
         ]
       },
-      dangvua: {
-        badge: "Truyền thuyết bánh dâng vua",
-        title: "Truyền thuyết bánh dâng vua – Một câu chuyện được lưu truyền",
-        intro: "Tuyến nội dung này phù hợp để khai thác sức hấp dẫn kể chuyện của Bánh Bác, nhưng nên trình bày dưới dạng truyền thuyết hoặc câu chuyện được lưu truyền.",
-        image: "assets/banh-bac-products.png",
-        noteTitle: "Cách diễn đạt an toàn",
-        noteBody: "Không nên khẳng định cứng “Bánh Bác dâng vua” như một sự kiện lịch sử chắc chắn. Hãy dùng ngôn ngữ mềm: truyền thuyết, câu chuyện dân gian, ký ức địa phương, lời kể được lưu truyền.",
-        footnote: "Gợi ý cuối tuyến: từ câu chuyện lưu truyền, dẫn người xem đến Bánh Bác hiện tại và cách BTK kể tiếp câu chuyện ấy bằng thương hiệu đương đại.",
-        chapters: [
-          {title: "Câu chuyện được lưu truyền", body: "Mở đầu bằng cách xác định đây là một truyền thuyết/câu chuyện dân gian gắn với vùng đất Giang Xá."},
-          {title: "Vì sao chiếc bánh đặc biệt", body: "Liên hệ truyền thuyết với hình thức nhiều lớp, sắc đỏ gấc và cảm giác khác biệt của chiếc bánh."},
-          {title: "Từ lời kể đến nghề bánh", body: "Cho thấy điều còn lại quan trọng nhất không chỉ là truyền thuyết mà là việc nghề bánh vẫn được người dân gìn giữ."},
-          {title: "Bánh Bác hôm nay", body: "Khép lại bằng cách nối câu chuyện xưa với Bác Trà Ký hôm nay: gìn giữ tinh hoa và tiếp nối giá trị."}
+      dangvua:{
+        badge:'Truyền thuyết bánh dâng vua',
+        title:'Chuyện bánh dâng vua – một câu chuyện được lưu truyền',
+        intro:'Cuộn sớ này là tuyến kể chuyện hấp dẫn hơn, phù hợp để tạo màu sắc cho microsite. Tuy nhiên, nội dung nên được giữ trong khung “truyền thuyết” hoặc “câu chuyện dân gian được lưu truyền”.',
+        image:'assets/products.png',
+        noteTitle:'Lưu ý khi kể chuyện',
+        noteBody:'Không nên trình bày như một khẳng định lịch sử tuyệt đối. Hãy để câu chuyện mở ra như một lời kể xưa, rồi dẫn dắt người xem về nghề bánh và chiếc bánh hiện tại.',
+        footnote:'Đây là chỗ rất hợp để BTK thể hiện “kể chuyện mới”: dùng truyền thuyết như chất liệu cảm hứng, không biến nó thành tuyên bố cứng.',
+        chapters:[
+          {title:'Lời kể mở đầu', body:'Mở bằng giọng kể mềm: “Ở Giang Xá, người ta vẫn kể nhau nghe...” để tạo không khí truyền thuyết.'},
+          {title:'Vì sao chiếc bánh đặc biệt', body:'Liên hệ hình thức nhiều lớp, màu đỏ gấc, nhân đậu xanh và tính khác biệt của chiếc bánh với câu chuyện được lưu truyền.'},
+          {title:'Từ lời kể đến nghề bánh', body:'Nhấn rằng điều còn lại rõ nhất không chỉ là lời kể, mà là nghề bánh và cách người dân tiếp tục làm ra chiếc bánh.'},
+          {title:'Bác Trà Ký hôm nay', body:'Khép lại bằng BTK như một người kể chuyện mới: giữ tinh hoa, tiếp nối giá trị và mang chiếc bánh đến gần hơn với người trẻ.'}
         ]
       }
     };
+    const overlay = document.getElementById('scrollOverlay');
+    const scrollBadge = document.getElementById('scrollBadge');
+    const scrollTitle = document.getElementById('scrollTitle');
+    const scrollIntro = document.getElementById('scrollIntro');
+    const scrollImage = document.getElementById('scrollImage');
+    const scrollNoteTitle = document.getElementById('scrollNoteTitle');
+    const scrollNoteBody = document.getElementById('scrollNoteBody');
+    const scrollChapters = document.getElementById('scrollChapters');
+    const scrollFootnote = document.getElementById('scrollFootnote');
+    function openStory(key){
+      const data = STORY_DATA[key]; if(!data) return;
+      scrollBadge.textContent = data.badge;
+      scrollTitle.textContent = data.title;
+      scrollIntro.textContent = data.intro;
+      scrollImage.src = data.image;
+      scrollNoteTitle.textContent = data.noteTitle;
+      scrollNoteBody.textContent = data.noteBody;
+      scrollChapters.innerHTML = data.chapters.map((c,i)=>`<article class="chapter"><div class="num">${String(i+1).padStart(2,'0')}</div><h5 class="serif">${c.title}</h5><p>${c.body}</p></article>`).join('');
+      scrollFootnote.textContent = data.footnote;
+      overlay.classList.add('open'); document.body.classList.add('modal-open');
+    }
+    function closeStory(){ overlay.classList.remove('open'); document.body.classList.remove('modal-open'); }
+    document.querySelectorAll('.open-scroll').forEach(btn => btn.addEventListener('click', ()=> openStory(btn.dataset.story)));
+    document.getElementById('closeScroll').addEventListener('click', closeStory);
+    document.getElementById('closeScroll2').addEventListener('click', closeStory);
+    overlay.addEventListener('click', e=>{ if(e.target===overlay) closeStory(); });
+    document.addEventListener('keydown', e=>{ if(e.key==='Escape' && overlay.classList.contains('open')) closeStory(); });
 
-    const beaconsLink = document.getElementById('beacons-link');
-    if (SITE_CONFIG.beaconsUrl && SITE_CONFIG.beaconsUrl.startsWith('http')) {
-      beaconsLink.href = SITE_CONFIG.beaconsUrl;
-      document.querySelectorAll('a[href="#"]').forEach(a => {
-        if (a.id === 'beacons-link') return;
+    // =========================================
+    // GAME: INGREDIENTS
+    // =========================================
+    const ingredientData = [
+      {name:'Bột nếp', desc:'Tạo lớp bánh dẻo thơm', correct:true},
+      {name:'Gấc', desc:'Tạo sắc đỏ đặc trưng', correct:true},
+      {name:'Đậu xanh', desc:'Nhân truyền thống quen thuộc', correct:true},
+      {name:'Vừng', desc:'Phủ ngoài, tăng nhận diện', correct:true},
+      {name:'Socola', desc:'Hấp dẫn nhưng không phải cốt lõi truyền thống', correct:false},
+      {name:'Phô mai', desc:'Không phải nguyên liệu nền của phiên bản truyền thống', correct:false},
+      {name:'Whipping cream', desc:'Không thuộc tinh thần sản phẩm gốc', correct:false},
+      {name:'Cà phê', desc:'Không phải thành phần chính của Bánh Bác', correct:false}
+    ];
+    const ingredientGrid = document.getElementById('ingredientGrid');
+    const ingredientFeedback = document.getElementById('ingredientFeedback');
+    let ingredientState = new Set();
+    function renderIngredients(){
+      ingredientGrid.innerHTML = ingredientData.map((item,idx)=>`
+        <button class="ingredient ${ingredientState.has(idx)?'selected':''}" data-idx="${idx}">
+          <span class="tick">✓</span>
+          <div class="name">${item.name}</div>
+          <div class="desc">${item.desc}</div>
+        </button>`).join('');
+      ingredientGrid.querySelectorAll('.ingredient').forEach(btn=>btn.addEventListener('click',()=>{
+        const i = Number(btn.dataset.idx);
+        if(ingredientState.has(i)) ingredientState.delete(i); else ingredientState.add(i);
+        renderIngredients();
+      }));
+    }
+    renderIngredients();
+    let stage1Passed=false, stage2Passed=false, stage3Passed=false; let finishChoice=null;
+    document.getElementById('checkIngredients').addEventListener('click',()=>{
+      const selected=[...ingredientState];
+      const correctSelected=selected.filter(i=>ingredientData[i].correct).length;
+      const wrongSelected=selected.filter(i=>!ingredientData[i].correct).length;
+      if(correctSelected===4 && wrongSelected===0 && selected.length===4){
+        ingredientFeedback.textContent='Chính xác! Bạn đã chọn đúng 4 nguyên liệu cốt lõi của Bánh Bác truyền thống.';
+        ingredientFeedback.className='feedback ok'; stage1Passed=true;
+      } else {
+        ingredientFeedback.textContent='Chưa đúng hẳn. Hãy thử chọn đúng 4 nguyên liệu cốt lõi và bỏ các lựa chọn không phù hợp.';
+        ingredientFeedback.className='feedback warn'; stage1Passed=false;
+      }
+      updateScore();
+    });
+    document.getElementById('resetIngredients').addEventListener('click',()=>{ ingredientState = new Set(); renderIngredients(); ingredientFeedback.textContent=''; ingredientFeedback.className='feedback'; stage1Passed=false; updateScore(); });
+
+    // =========================================
+    // GAME: SEQUENCE
+    // =========================================
+    const sequenceData = [
+      {id:'a', title:'Chuẩn bị nếp và gấc', desc:'Tạo phần nền dẻo và sắc đỏ đặc trưng'},
+      {id:'b', title:'Làm nhân đậu xanh', desc:'Chuẩn bị phần nhân bùi ngọt ở giữa'},
+      {id:'c', title:'Bác bột', desc:'Công đoạn đặc trưng cần sự khéo léo của người làm bánh'},
+      {id:'d', title:'Xếp lớp và cuộn bánh', desc:'Tạo mặt cắt nhiều lớp dễ nhận diện'},
+      {id:'e', title:'Phủ vừng và hoàn thiện', desc:'Bước cuối để chiếc bánh thành hình'}
+    ];
+    const correctSequence = sequenceData.map(x=>x.id);
+    let currentSequence = [...sequenceData].sort(()=>Math.random()-0.5);
+    const sequenceList = document.getElementById('sequenceList');
+    const sequenceFeedback = document.getElementById('sequenceFeedback');
+    function renderSequence(){
+      sequenceList.innerHTML='';
+      currentSequence.forEach(item=>{
+        const el=document.createElement('div');
+        el.className='seq-item'; el.draggable=true; el.dataset.id=item.id;
+        el.innerHTML=`<div class="drag">↕</div><div><strong>${item.title}</strong><span>${item.desc}</span></div>`;
+        sequenceList.appendChild(el);
       });
+      addDnD();
+    }
+    function addDnD(){
+      let dragged = null;
+      sequenceList.querySelectorAll('.seq-item').forEach(item=>{
+        item.addEventListener('dragstart',()=>{ dragged=item; item.classList.add('dragging'); });
+        item.addEventListener('dragend',()=>{ item.classList.remove('dragging'); dragged=null; });
+        item.addEventListener('dragover',e=>{ e.preventDefault(); });
+        item.addEventListener('drop',e=>{
+          e.preventDefault();
+          if(!dragged || dragged===item) return;
+          const ids=[...sequenceList.children].map(c=>c.dataset.id);
+          const from=ids.indexOf(dragged.dataset.id); const to=ids.indexOf(item.dataset.id);
+          const moved=currentSequence.splice(from,1)[0]; currentSequence.splice(to,0,moved); renderSequence();
+        });
+      });
+    }
+    renderSequence();
+    document.getElementById('checkSequence').addEventListener('click',()=>{
+      const isCorrect = currentSequence.map(x=>x.id).join(',')===correctSequence.join(',');
+      if(isCorrect){
+        sequenceFeedback.textContent='Rất tốt! Bạn đã sắp đúng mạch công đoạn cơ bản của chiếc Bánh Bác.';
+        sequenceFeedback.className='feedback ok'; stage2Passed=true;
+      } else {
+        sequenceFeedback.textContent='Thứ tự này chưa ổn lắm. Hãy thử nghĩ lại xem nên chuẩn bị, bác bột và hoàn thiện theo trình tự nào.';
+        sequenceFeedback.className='feedback warn'; stage2Passed=false;
+      }
+      updateScore();
+    });
+    document.getElementById('shuffleSequence').addEventListener('click',()=>{ currentSequence=[...sequenceData].sort(()=>Math.random()-0.5); renderSequence(); sequenceFeedback.textContent=''; sequenceFeedback.className='feedback'; stage2Passed=false; updateScore(); });
+
+    // =========================================
+    // GAME: FINISH
+    // =========================================
+    document.querySelectorAll('.finish-card').forEach(card=>card.addEventListener('click',()=>{
+      document.querySelectorAll('.finish-card').forEach(c=>c.classList.remove('selected'));
+      card.classList.add('selected'); finishChoice = card.dataset.finish;
+    }));
+    const resultHint = document.getElementById('resultHint');
+    function updateScore(){
+      const scoreText = document.getElementById('scoreText');
+      scoreText.innerHTML = `Chặng 1: <strong>${stage1Passed ? 'đã xong' : 'chưa xong'}</strong> · Chặng 2: <strong>${stage2Passed ? 'đã xong' : 'chưa xong'}</strong> · Chặng 3: <strong>${stage3Passed ? 'đã xong' : 'chưa xong'}</strong>`;
+    }
+    updateScore();
+    document.getElementById('finishGame').addEventListener('click',()=>{
+      if(!finishChoice){
+        resultHint.textContent='Hãy chọn ít nhất một cách hoàn thiện phần trình bày trước khi chốt game.';
+        return;
+      }
+      stage3Passed = true;
+      let extra = '';
+      if(finishChoice === '1') extra = 'Bạn chọn đóng hộp quà – rất hợp với vai trò quà tặng của sản phẩm.';
+      if(finishChoice === '2') extra = 'Bạn chọn kết hợp cùng trà – đây cũng là một hướng trải nghiệm rất hợp với BTK.';
+      if(finishChoice === '3') extra = 'Bạn chọn kể thêm câu chuyện – đây chính là thứ làm nên chiều sâu cho trải nghiệm thương hiệu.';
+      if(stage1Passed && stage2Passed){
+        resultHint.innerHTML = `<strong>Chúc mừng!</strong> Bạn đã hoàn thành mini game làm Bánh Bác. ${extra} Đây là chỗ rất phù hợp để đặt nút quay về menu / Beacons / đặt hàng.`;
+      } else {
+        resultHint.innerHTML = `<strong>Bạn đã hoàn thành bước cuối</strong>, nhưng hãy quay lại hoàn thiện thêm chặng 1 và chặng 2 để có trải nghiệm trọn vẹn hơn. ${extra}`;
+      }
+      updateScore();
+    });
+    document.getElementById('resetGame').addEventListener('click',()=>{
+      ingredientState = new Set(); renderIngredients(); ingredientFeedback.textContent=''; ingredientFeedback.className='feedback';
+      currentSequence=[...sequenceData].sort(()=>Math.random()-0.5); renderSequence(); sequenceFeedback.textContent=''; sequenceFeedback.className='feedback';
+      document.querySelectorAll('.finish-card').forEach(c=>c.classList.remove('selected'));
+      finishChoice=null; stage1Passed=false; stage2Passed=false; stage3Passed=false; updateScore(); resultHint.textContent='Gợi ý: sau khi chơi xong, bạn có thể dùng chính kết quả này như một điểm chốt để dẫn khách về Beacons, menu hoặc bài viết giới thiệu sản phẩm.';
+    });
+
+    // =========================================
+    // VIDEO / BEACONS
+    // =========================================
+    const beaconsLink = document.getElementById('beaconsLink');
+    if(SITE_CONFIG.beaconsUrl && SITE_CONFIG.beaconsUrl.startsWith('http')){
+      beaconsLink.href = SITE_CONFIG.beaconsUrl;
     } else {
       beaconsLink.href = '#';
-      beaconsLink.addEventListener('click', (e) => {
-        e.preventDefault();
-        alert('Hãy điền link Beacons thật của Bác Trà Ký trong phần SITE_CONFIG ở cuối file index.html.');
-      });
+      beaconsLink.addEventListener('click', (e)=>{ e.preventDefault(); alert('Hãy điền link Beacons thật của bạn trong phần SITE_CONFIG ở cuối file index.html.'); });
     }
-
-    // Video block
-    const videoWrap = document.getElementById('video-embed-wrap');
-    const videoPreview = document.getElementById('video-preview');
-    if (SITE_CONFIG.videoEmbed) {
-      videoWrap.classList.add('active');
-      videoWrap.innerHTML = `<iframe src="${SITE_CONFIG.videoEmbed}" title="Video Bác Trà Ký" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
-      videoPreview.classList.add('hide');
-    } else if (SITE_CONFIG.videoSrc) {
-      videoWrap.classList.add('active');
-      videoWrap.innerHTML = `<video controls poster="${SITE_CONFIG.videoPoster}"><source src="${SITE_CONFIG.videoSrc}" type="video/mp4">Trình duyệt không hỗ trợ phát video.</video>`;
-      videoPreview.classList.add('hide');
+    const videoEmbed = document.getElementById('videoEmbed');
+    const videoPreview = document.getElementById('videoPreview');
+    if(SITE_CONFIG.videoEmbed){
+      videoEmbed.classList.add('active');
+      videoEmbed.innerHTML = `<iframe src="${SITE_CONFIG.videoEmbed}" title="Video Bác Trà Ký" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
+      videoPreview.style.display='none';
+    } else if (SITE_CONFIG.videoSrc){
+      videoEmbed.classList.add('active');
+      videoEmbed.innerHTML = `<video controls poster="${SITE_CONFIG.videoPoster}"><source src="${SITE_CONFIG.videoSrc}" type="video/mp4">Trình duyệt của bạn không hỗ trợ video.</video>`;
+      videoPreview.style.display='none';
     }
-
-    // Scroll modal
-    const overlay = document.getElementById('scrollOverlay');
-    const closeButtons = [document.getElementById('closeScroll'), document.getElementById('closeScroll2')];
-    const chapterGrid = document.getElementById('chapterGrid');
-    const mapTargets = {
-      badge: document.getElementById('scrollBadge'),
-      title: document.getElementById('scrollTitle'),
-      intro: document.getElementById('scrollIntro'),
-      image: document.getElementById('scrollImage'),
-      noteTitle: document.getElementById('scrollNoteTitle'),
-      noteBody: document.getElementById('scrollNoteBody'),
-      footnote: document.getElementById('scrollFootnote')
-    };
-
-    function openStory(key) {
-      const data = STORY_DATA[key];
-      if (!data) return;
-      mapTargets.badge.textContent = data.badge;
-      mapTargets.title.textContent = data.title;
-      mapTargets.intro.textContent = data.intro;
-      mapTargets.image.src = data.image;
-      mapTargets.noteTitle.textContent = data.noteTitle;
-      mapTargets.noteBody.textContent = data.noteBody;
-      mapTargets.footnote.textContent = data.footnote;
-      chapterGrid.innerHTML = data.chapters.map((item, idx) => `
-        <article class="chapter">
-          <div class="step">${String(idx + 1).padStart(2, '0')}</div>
-          <h5 class="serif">${item.title}</h5>
-          <p>${item.body}</p>
-        </article>
-      `).join('');
-      overlay.classList.add('open');
-      overlay.setAttribute('aria-hidden', 'false');
-      document.body.classList.add('modal-open');
-    }
-
-    function closeStory() {
-      overlay.classList.remove('open');
-      overlay.setAttribute('aria-hidden', 'true');
-      document.body.classList.remove('modal-open');
-    }
-
-    document.querySelectorAll('.open-scroll').forEach(btn => {
-      btn.addEventListener('click', () => openStory(btn.dataset.story));
-    });
-    closeButtons.forEach(btn => btn.addEventListener('click', closeStory));
-    overlay.addEventListener('click', (e) => {
-      if (e.target === overlay) closeStory();
-    });
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && overlay.classList.contains('open')) closeStory();
-    });
   </script>
 </body>
 </html>

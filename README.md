@@ -1,61 +1,67 @@
-# Bác Trà Ký – Microsite GitHub Pages
+# Bác Trà Ký – GitHub Pages Version 2
 
-Bản này là phiên bản triển khai phong cách **Mở Bánh – Mở Chuyện**, có:
+## Điểm mới trong bản này
 
-- Trang mở đầu với bối cảnh Giang Xá xưa
-- Hai nhánh chính:
-  - Giang Xá xưa
-  - Truyền thuyết bánh dâng vua
-- Hiệu ứng **mở sớ / cuộn thư** bằng popup animation
-- Khu **Khám phá Bánh Bác**
-- Khu **Ảnh & video**
-- CTA quay về Beacons
+- Sửa lại phần **logo / slogan** để hiển thị sạch hơn.
+- Thêm **tuyến kể chuyện Giang Xá xưa** theo dạng story game nhẹ.
+- Thêm **mini game làm Bánh Bác** gồm 3 chặng:
+  1. Chọn nguyên liệu
+  2. Sắp xếp công đoạn
+  3. Hoàn thiện phần trình bày
+- Giữ sẵn khu **ảnh & video** để bạn gắn YouTube hoặc MP4.
 
-## Cách dùng nhanh
+## Cách upload lên GitHub Pages
 
-1. Upload toàn bộ thư mục này lên GitHub repository.
-2. Đảm bảo `index.html` nằm ở thư mục gốc.
-3. Bật **GitHub Pages** ở nhánh `main` và thư mục `/(root)`.
-4. Mở `index.html` và sửa phần `SITE_CONFIG` ở cuối file:
+1. Giải nén file ZIP.
+2. Upload toàn bộ file lên repository GitHub.
+3. Đảm bảo `index.html` nằm ở thư mục gốc.
+4. Vào **Settings → Pages**:
+   - Source: **Deploy from a branch**
+   - Branch: **main**
+   - Folder: **/(root)**
+
+## Chỉnh nhanh cấu hình
+
+Mở `index.html`, tìm đoạn:
 
 ```js
 const SITE_CONFIG = {
-  beaconsUrl: "https://beacons.ai/...",
+  beaconsUrl: "",
   videoEmbed: "",
   videoSrc: "",
   videoPoster: "assets/brand-scene.png"
 };
 ```
 
-## Gợi ý thêm video
+### Link Beacons
+```js
+beaconsUrl: "https://beacons.ai/your-link"
+```
 
-### Cách 1 – YouTube embed
-Dán link dạng:
-
+### Video YouTube embed
 ```js
 videoEmbed: "https://www.youtube.com/embed/VIDEO_ID"
 ```
 
-### Cách 2 – File MP4
-Chép file video vào thư mục `assets/` rồi sửa:
-
+### Hoặc video MP4 tự host
 ```js
 videoSrc: "assets/ten-video.mp4"
 ```
 
 ## Tài nguyên ảnh hiện có
 
-- `assets/brand-scene.png` – mỹ thuật thương hiệu / logo / Giang Xá
-- `assets/banh-bac-products.png` – ảnh sản phẩm Bánh Bác
-- `assets/banh-bac-box.png` – ảnh close-up hộp bánh
-- `assets/btk-logo-small.png` – logo nhỏ
+- `assets/official-logo.png` – logo FPT + Bác Trà Ký nền trắng
+- `assets/brand-scene.png` – visual phong cách BTK
+- `assets/products.png` – ảnh sản phẩm tổng quan
+- `assets/box-dau-xanh.png` – hộp Bánh Bác đậu xanh
 
 ## Lưu ý nội dung
 
-Tuyến “bánh dâng vua” nên được diễn đạt như:
+Tuyến “bánh dâng vua” nên tiếp tục được kể như:
 
 - truyền thuyết
 - câu chuyện được lưu truyền
+- lời kể dân gian
 - ký ức địa phương
 
-Không nên viết như một sự kiện lịch sử đã được xác nhận tuyệt đối.
+tránh dùng như một khẳng định lịch sử tuyệt đối.
