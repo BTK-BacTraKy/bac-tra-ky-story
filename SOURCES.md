@@ -17,3 +17,9 @@
 3. **Bánh Bác, thao tác bác bột, lớp đỏ–trắng, truyền thuyết dâng vua**: phóng sự Quân đội nhân dân (2025), có ghi lời người làm bánh.
 4. **Nơi sinh Lý Bí còn có quan điểm khác nhau**: nguồn Bảo tàng Lịch sử Quốc gia (2013); game không tuyên bố Giang Xá là quê gốc của ông.
 5. **Tranh, câu nói và trò giải đố**: nội dung hư cấu sáng tạo. Không phải nguồn sử liệu.
+
+## V4 – nguồn áp dụng cho phần chọn nguyên liệu và dâng vua
+
+**Phạm Vy and Nguyễn Đào (2025)** ghi nhận lời thợ bánh Nguyễn Thị Điều về gạo nếp cái hoa vàng, gấc nếp, đỗ xanh, mỡ lợn, đường kính, vừng; thao tác "bác" bột trên chảo mỡ, và nguyên tắc "đỏ trước, trắng sau", nhân đậu xanh ở giữa. Cũng tại đây, câu chuyện chiếc bánh được làm để tỏ lòng biết ơn Lý Nam Đế được ghi nhận dưới dạng **lời kể của người dân**.
+
+Trong V4, hình ảnh vua Lý Nam Đế trực tiếp thử bánh, nói lời khen/chê và quyết định thắng/thua **là tình huống giả tưởng nhằm tạo gameplay**, không phải sự kiện sử liệu. Thông số nhiệt và thao tác kéo vuốt cũng là quy tắc trò chơi, không phải hướng dẫn chế biến bánh ngoài đời thực.

@@ -1,43 +1,28 @@
-# BÁC TRÀ KÝ — THEO BƯỚC LÝ NAM ĐẾ · MỞ BÁNH – MỞ CHUYỆN
+# Bác Trà Ký — Mở Bánh · Mở Chuyện — Game V4
 
-**Phiên bản game giải đố thực sự**, được thiết kế cho khách quét mã QR trên Beacons rồi nhấn đường dẫn số 2 để khám phá. Đây là một website tĩnh (HTML/CSS/JavaScript), có thể đăng bằng GitHub Pages.
+Website tĩnh tương tác phục vụ khách hàng quét mã QR trên bao bì → Beacons → **thanh liên kết số 2**. Dùng HTML/CSS/JS, không cần backend hoặc tài khoản.
 
-## Có gì trong game?
+## Điểm mới của V4
 
-### I. THEO BƯỚC LÝ NAM ĐẾ (chơi khoảng 5–12 phút)
-1. **Giang Xá – Linh Bảo:** tìm **3 tín vật phát sáng** trên tranh, quan sát gợi ý và mở khóa ấn ký theo thứ tự.
-2. **Mật thư khởi nghĩa:** chơi **sliding puzzle 8 mảnh + 1 ô trống**, ghép lại hình minh họa. Có nút xem tranh gốc.
-3. **Đường đi qua màn sương:** **xoay 9 ống nối đường** để tạo lối từ góc xuất phát đến đích. Đây là bản đồ giải đố tượng trưng, không phải đường hành quân có thật.
-4. **Vạn Xuân 544:** mở cuộn sớ về mốc lịch sử, dẫn sang game Bánh Bác.
+**Mini-game làm Bánh Bác đã chuyển thành 5 phân đoạn có quyết định và thao tác vật lý:**
 
-Các tranh, tín vật, mật thư và đối thoại được sáng tạo để phục vụ trò chơi. Sự kiện cuộc khởi nghĩa năm 542 và việc lập nước Vạn Xuân năm 544 dựa trên nguồn lịch sử chính thống. Tuyến Giang Xá – Linh Bảo dựa trên tư liệu di sản và truyền tụng địa phương, có thuyết minh giới hạn chứng cứ.
+1. **Kéo HÌNH nguyên liệu vào giỏ** (không kéo chữ): 10 hình bát nguyên liệu khác nhau, 6 chỗ chứa. Dùng Pointer Events: chuột và ngón tay đều di chuyển hình theo con trỏ. Giỏ đặt phía trên và cố định khi cuộn để dễ thả. Có thể chạm món trong giỏ để lấy ra; chạm hình để chọn nếu khó kéo.
+2. **Giữ lửa để “bác” bột:** điều khiển mức nhiệt và nhấn giữ. Nhiệt giảm theo thời gian; nhiệt sai làm giảm chất lượng bánh.
+3. **Kéo các hình lớp bánh vào vị trí:** lớp đỏ gấc, lớp nếp trắng và nhân đậu xanh (theo thứ tự từ ngoài vào trong).
+4. **Vuốt cuộn bánh:** vuốt từ trái sang phải ba lần, có kiểm tra độ dài, hướng và thời gian.
+5. **Kéo hình bánh lên ngự án để dâng cho Lý Nam Đế (hoặc bấm nút hỗ trợ):** vua nhận bánh, “nếm” và đưa ra phán quyết **WIN** nếu các thao tác đúng, **LOSE** nếu chọn sai nguyên liệu, giữ nhiệt hỏng, xếp lớp sai hoặc cuộn quá vụng. Kết thúc có hoạt ảnh, tiếng chiêng hoặc âm thanh thất bại, lời nhận xét và lựa chọn chơi lại.
 
-### II. THỬ TÀI LÀM BÁNH BÁC (chơi khoảng 2–4 phút)
-1. **Chọn nguyên liệu:** chọn đúng 4 nguyên liệu tiêu biểu trên mâm, tránh lựa chọn nhiễu.
-2. **Giữ nhiệt & bác bột:** nhấn + / − để điều khiển nhiệt, giữ kim trong vùng xanh 42–68, **nhấn và giữ** để bác bột. Giữ sai nhiệt quá 3 lần sẽ phải thử lại chặng.
-3. **Xếp lớp bánh:** chạm chọn rồi chạm vị trí đặt, hoặc kéo thả các lớp đỏ – trắng – nhân đậu xanh. Sau khi đúng sẽ mở thành phẩm và cuộn sớ về truyền thuyết Bánh Bác.
+Có các tệp âm thanh `.wav` tổng hợp riêng, được bật qua nút **Âm** trên thanh đầu trang. Trò chơi sẽ không tự phát âm khi chưa có thao tác bật của người dùng.
 
-**Lưu ý:** Mini-game không phải công thức, hướng dẫn sản xuất hay cách xử lý chảo thật. Không thử thao tác trên chảo mỡ nóng bằng tay. Kỹ thuật và trình tự thực tế phải tham khảo người làm bánh tại Giang Xá.
+**Tuyến lịch sử Giang Xá – Lý Nam Đế của V3** vẫn giữ nguyên: nhặt vật phẩm, giải ấn ký, trượt tranh 3×3, nối đường 3×3, mở sớ Vạn Xuân. Các cảnh câu đố và lời thoại là hư cấu, lấy cảm hứng từ lịch sử và văn hóa địa phương.
 
-## Upload lên GitHub Pages (tránh 404)
+## Đăng lên GitHub Pages
 
-1. Giải nén file ZIP, **không** tải nguyên ZIP lên repository.
-2. Đưa **tất cả các file ngay ở thư mục gốc** lên repository GitHub; nhất là `index.html`, `styles.css`, `game.js` và thư mục `assets/`.
-3. GitHub → **Settings → Pages** → Deploy from a branch → `main` → `/(root)` → Save.
-4. Mở link GitHub Pages ở Settings → Pages → Visit site. Trong Beacons, dùng URL này làm link thứ hai: **✦ MỞ BÁNH – MỞ CHUYỆN**.
-5. Quét mã QR đã in → Beacons → link thứ hai để kiểm thử trên iPhone/Android trước khi chia sẻ rộng.
+1. **Giải nén** file ZIP trước.
+2. Chọn **toàn bộ nội dung bên trong** thư mục đã giải nén để upload vào **thư mục gốc** của repository đang dùng. Không upload riêng ZIP hoặc đặt toàn bộ vào thư mục con `btk-v4-royal`.
+3. Trong repository phải thấy các mục này ở cấp đầu tiên:
 
-## Chỉnh nội dung / ảnh
-
-- `index.html`: trang, các màn, khối nội dung, cách trình bày.
-- `styles.css`: bảng màu, animation, responsive.
-- `game.js`: các chương chơi, luật giải đố, lời thoại và game làm bánh.
-- `assets/`: ảnh do công cụ tạo minh họa, hình nhận diện và ảnh sản phẩm.
-- Trong `game.js`, `SETTINGS.beaconsUrl` hiện để trống vì chưa có URL chính thức. Khi bạn thay bằng đường dẫn Beacons hợp lệ dạng `https://beacons.ai/...`, nút **↗ Beacons** sẽ tự xuất hiện trên thanh đầu trang.
-
-### Cấu trúc
-
-```
+```text
 index.html
 styles.css
 game.js
@@ -46,27 +31,42 @@ README.md
 SOURCES.md
 assets/
   official-logo.png
-  village.webp
-  temple.webp
-  warcamp.webp
-  river.webp
-  lybi-face.webp
-  products.png
-  ...
+  ingredients/ (10 ảnh PNG)
+  layers/ (3 ảnh PNG)
+  sfx/ (7 hiệu ứng âm thanh .wav)
+  ... tranh game .webp
 ```
 
-## Quy định về tính chính xác
+4. Settings → Pages → **Deploy from a branch**, `main`, `/(root)`.
+5. Khi Actions triển khai thành công, mở trang bằng `Ctrl + F5` hoặc tab ẩn danh để tránh nạp CSS/JS cũ từ bộ nhớ cache.
+6. Thử **trên điện thoại thật**: vào Beacons bằng mã QR, nhấn thanh số 2 rồi kéo ảnh nguyên liệu vào giỏ; bật âm; thử cả một lần chọn sai để thấy nhánh LOSE.
 
-- Lý Bí và Lý Nam Đế là cùng một nhân vật trong hai giai đoạn: trước và sau khi xưng đế năm 544.
-- **Sự kiện xác thực**: cuộc khởi nghĩa do Lý Bí lãnh đạo năm 542; xưng đế, lập nước Vạn Xuân năm 544.
-- **Tư liệu địa phương/truyền thuyết**: mối liên hệ tuổi trẻ của Lý Bí với chùa Linh Bảo, Giang Xá, câu chuyện bánh dâng vua.
-- **Hư cấu gameplay**: ấn ký, mật thư chia mảnh, bản đồ nối ống, lời thoại nhân vật, bối cảnh tranh gợi cảm hứng. Không trình bày là mô hình tái dựng chính xác làng Giang Xá thế kỷ VI.
-- Có nút **Sổ tư liệu** ở từng chương và một trang tư liệu riêng trong game; xem nguồn trong `SOURCES.md`.
+## Thay liên kết Beacons
 
-## Về hình ảnh
+Mở `game.js`, tìm:
 
-Các minh họa bối cảnh được tạo riêng phục vụ game và mang tính nghệ thuật, không phải ảnh di tích hiện tại hay hình phục dựng khảo cổ. Logo FPT x Bác Trà Ký là hình ảnh nhóm cung cấp; ảnh Bánh Bác cũng lấy từ tư liệu nhóm đã cung cấp trước đó. Không sử dụng ảnh minh họa để chứng minh sự kiện lịch sử.
+```js
+const SETTINGS={beaconsUrl:''};
+```
 
-## Kiểm thử
+Điền đường dẫn của nhóm (không dùng đường dẫn ví dụ dưới đây nếu chưa phải link thật):
 
-Đã kiểm tra luồng cơ bản và kết thúc của cả hai game trong Chromium tự động, không phát sinh lỗi JavaScript trong các bước đó. Đã kiểm tra giao diện với viewport di động 390px không tràn ngang. Nhóm vẫn nên kiểm tra trên điện thoại thật, đặc biệt phần nhấn giữ khi bác bột và âm thanh.
+```js
+const SETTINGS={beaconsUrl:'https://beacons.ai/ten-trang-cua-nhom'};
+```
+
+## Nguyên liệu và luật game
+
+Bộ nguyên liệu được báo Quân đội nhân dân (2025) mô tả gồm gạo nếp, gấc, đậu xanh, mỡ lợn, đường, vừng. Trong game có thêm các món gây nhiễu. Game chỉ **mô phỏng thử thách**, không xác nhận tỷ lệ nguyên liệu, công thức định lượng, nhiệt độ thực, cách bác bột thực tế hoặc hướng dẫn an toàn trong bếp.
+
+Điều kiện để thắng khi dâng vua: đúng 6 nguyên liệu, hoàn thành bác bột không cháy quá 3 lần, xếp đúng lớp và cuộn 3 lần với thao tác đủ chính xác. Chỉ cần có lỗi đáng kể thì vua “chê” và thông báo lý do.
+
+## Lưu ý lịch sử rất quan trọng
+
+**Sự kiện lịch sử có nguồn**: Lý Bí khởi nghĩa năm 542; năm 544 xưng đế, lập nước Vạn Xuân. **Truyền thống địa phương**: các câu chuyện Giang Xá – chùa Linh Bảo và bánh dâng vua. **Hư cấu của trò chơi**: vua ngồi chấm chiếc bánh cụ thể của người chơi, lời thoại khen/chê, đĩa bánh dâng, cửa khóa, mật thư, ấn ký, cảnh kiến trúc minh họa. Tuyệt đối không giới thiệu cảnh dâng bánh là việc đã được sử liệu xác minh.
+
+Chi tiết nguồn trong `SOURCES.md`. Để xuất bản thương mại, nhóm nên kiểm tra lại ảnh, cách gọi tên nhân vật, nội dung truyền thuyết với người làm bánh và tư liệu địa phương.
+
+## Cách đo hiệu quả trong đồ án
+
+Thử người dùng với hai kịch bản: làm bánh đúng và làm bánh lỗi, quan sát thời gian hoàn thành, độ thành công khi kéo bằng điện thoại, số lần bật âm, khả năng nhớ tên nguyên liệu và câu chuyện Giang Xá. Website không mặc định thu thập dữ liệu cá nhân hoặc gửi hành vi người chơi lên máy chủ.

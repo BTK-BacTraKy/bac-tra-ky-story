@@ -58,18 +58,204 @@ function closeCodex(){const m=$('#codexModal');m.classList.remove('open');m.setA
 $('#openCodex').onclick=()=>{const s=HIST[historyStage];openCodex(s.title,s.lore,s.refs)};
 $$('[data-close]').forEach(el=>el.onclick=closeCodex);document.addEventListener('keydown',e=>{if(e.key==='Escape')closeCodex()});
 
-// BÁNH BÁC GAME – ingredient assembly, heat management, layer placement.
-const ingredients=[['Nếp','🍚',1],['Gấc','🍊',1],['Đậu xanh','🫘',1],['Vừng','🌾',1],['Cà phê','☕',0],['Kem tươi','🥛',0],['Socola','🍫',0],['Phô mai','🧀',0]];
-let cakeStep=0,cakeSelected=new Set(),heat=54,skillProgress=0,scorches=0,holding=false,cookTimer=null,chosenLayer=null,layers=[null,null,null],cooldowns=0;
-function stopCook(){holding=false;clearInterval(cookTimer);cookTimer=null}
-function resetCake(){stopCook();cakeStep=0;cakeSelected=new Set();heat=54;skillProgress=0;scorches=0;chosenLayer=null;layers=[null,null,null];renderCake()}
-$('#cakeRestart').onclick=()=>{if(confirm('Bạn muốn làm lại chiếc Bánh Bác từ đầu?'))resetCake()};
-$('#cakeHintBtn').onclick=()=>{const msgs=['Chọn đúng bốn nguyên liệu tiêu biểu, không phải toàn bộ công thức.','Giữ nhiệt trong vùng xanh. Nhấn giữ nút “Bác bột” khi mức nhiệt phù hợp; thêm/hạ lửa nếu lệch.','Tư liệu nghề bánh ghi nhận lớp đỏ trước, tiếp đến lớp trắng, rồi đến phần nhân đậu xanh.'];$('#cakeFeedback').textContent=msgs[Math.min(cakeStep,2)]};
-function cakeMessage(msg){$('#cakeFeedback').textContent=msg}
-function renderCake(){stopCook();$('#cakeChapter').textContent=cakeStep<3?`GIAN BẾP • CHẶNG ${cakeStep+1}/3`:'GIAN BẾP • THÀNH PHẨM';$$('#cakeProgress span').forEach((el,i)=>el.classList.toggle('active',i<=Math.min(cakeStep,2)));$('#cakeFeedback').textContent='';const mount=$('#cakePuzzle');if(cakeStep===0){$('#cakeStepTitle').textContent='01 • Chọn nguyên liệu';$('#cakeWorkLabel').textContent='MÂM NGUYÊN LIỆU';$('#cakeNarrative p').textContent='Hãy chọn đúng bốn thành phần tiêu biểu từ mâm nguyên liệu. Công thức thật còn có các nguyên liệu khác và cần tay nghề của người thợ.';mount.innerHTML=`<p>Chạm để bỏ nguyên liệu vào mâm. Nhầm đồ sẽ bị đánh dấu và phải chọn lại.</p><div class="ingredient-pick" id="ingredientPick"></div><div class="bowl">Mâm của bạn: <strong id="bowlText">Chưa có nguyên liệu</strong></div><button class="action-btn" id="ingProceed">Mang nguyên liệu tới chảo →</button>`;ingredients.forEach(([name,emoji,ok],i)=>{const b=document.createElement('button');b.className='ing-btn'+(cakeSelected.has(i)?' active':'');b.setAttribute('aria-pressed',String(cakeSelected.has(i)));b.innerHTML=`<span class="emoji">${emoji}</span><strong>${name}</strong>`;b.onclick=()=>{if(cakeSelected.has(i))cakeSelected.delete(i);else{if(cakeSelected.size>=4){cakeMessage('Mâm chỉ đủ bốn ô, hãy bỏ bớt một nguyên liệu trước.');return}cakeSelected.add(i)}tone(470,.08);renderCake()};$('#ingredientPick').appendChild(b)});$('#bowlText').textContent=[...cakeSelected].map(i=>ingredients[i][0]).join(' · ')||'Chưa có nguyên liệu';$('#ingProceed').onclick=()=>{if(cakeSelected.size===4&&[0,1,2,3].every(i=>cakeSelected.has(i))){soundWin();cakeStep=1;renderCake()}else cakeMessage('Chưa chính xác: hãy chọn Nếp, Gấc, Đậu xanh và Vừng.')};}
-else if(cakeStep===1){$('#cakeStepTitle').textContent='02 • Giữ lửa, bác bột';$('#cakeWorkLabel').textContent='THỬ TÀI GIỮ NHIỆT';$('#cakeNarrative p').textContent='Công đoạn “bác” bột truyền thống đòi hỏi cảm nhận nhiệt và thao tác khéo léo trên chảo mỡ. Game mô phỏng thử thách giữ nhiệt; tuyệt đối không thử tay trực tiếp lên chảo nóng.';mount.innerHTML=`<p>Giữ kim ở vùng xanh (42–68), rồi nhấn giữ nút <strong>BÁC BỘT</strong> để hoàn thiện lớp bánh. Kim tự giảm theo thời gian. Quá ba lần giữ sai nhiệt, bạn phải làm lại chặng.</p><div class="heat-meter"><div id="heatMarker" class="heat-marker"></div></div><div class="heat-controls"><button class="ghost-btn" id="decreaseHeat">− Hạ lửa</button><strong id="heatValue">54°</strong><button class="ghost-btn" id="increaseHeat">+ Thêm lửa</button></div><div class="cook-row"><button class="hold-btn" id="holdBake">NHẤN GIỮ<br>BÁC BỘT</button><div class="cook-readout"><strong>Độ hoàn thiện: <span id="skillValue">0</span>%</strong><div class="skill-progress"><span id="skillFill"></span></div><p>Số lần sai nhiệt: <span id="scorchValue">0</span>/3</p></div></div>`;$('#increaseHeat').onclick=()=>{heat=Math.min(100,heat+9);updateHeatUI()};$('#decreaseHeat').onclick=()=>{heat=Math.max(0,heat-9);updateHeatUI()};const btn=$('#holdBake');btn.addEventListener('pointerdown',e=>{e.preventDefault();holding=true;btn.setPointerCapture?.(e.pointerId)});['pointerup','pointercancel','lostpointercapture','pointerleave'].forEach(ev=>btn.addEventListener(ev,()=>holding=false));updateHeatUI();let badCounter=0;cookTimer=setInterval(()=>{heat=Math.max(0,heat-.26);if(holding){if(heat>=42&&heat<=68){skillProgress=Math.min(100,skillProgress+1.05);badCounter=0;tone(280+skillProgress*2,.025)}else{badCounter++;if(badCounter>=9){scorches++;badCounter=0;holding=false;cakeMessage('Nhiệt chưa hợp. Hãy điều chỉnh trước khi nhấn giữ tiếp.')}}}updateHeatUI();if(scorches>=3){stopCook();cakeMessage('Bột bị lỗi do nhiệt không đều. Chặng này bắt đầu lại.');setTimeout(()=>{heat=54;skillProgress=0;scorches=0;renderCake()},1250)}else if(skillProgress>=100){stopCook();soundWin();cakeMessage('Bạn giữ nhiệt rất khéo! Đến bước xếp lớp.');setTimeout(()=>{cakeStep=2;renderCake()},900)}},90);}
-else if(cakeStep===2){$('#cakeStepTitle').textContent='03 • Xếp lớp & cuộn bánh';$('#cakeWorkLabel').textContent='HOÀN THIỆN LỚP BÁNH';$('#cakeNarrative p').textContent='Theo lời thợ bánh được báo Quân đội nhân dân ghi nhận, công đoạn cuộn bánh theo nguyên tắc đỏ trước, trắng sau; phần nhân đậu xanh nằm bên trong. Bây giờ bạn hãy sắp lớp bằng thao tác chọn rồi đặt.';mount.innerHTML=`<p>Chọn một thẻ và chạm vào vị trí để đặt, hoặc kéo thả trên máy tính. Hãy đi từ <strong>lớp ngoài</strong> đến <strong>lớp trong</strong>.</p><div class="layer-board"><div class="layer-pieces" id="layerPieces"></div><div class="layer-swatches"><span class="swatch" style="background:#b54842"></span><span class="swatch" style="background:#f4e2c5"></span><span class="swatch" style="background:#d9b24c"></span></div><div id="layerSlots" style="display:grid;gap:8px"></div><button class="action-btn" id="submitLayers">Cuộn và hoàn thiện chiếc bánh →</button> <button class="ghost-btn" id="clearLayers">Đặt lại</button></div>`;renderLayers();$('#submitLayers').onclick=()=>{if(layers.join('|')==='ĐỎ|TRẮNG|ĐẬU'){soundWin();cakeStep=3;renderCake()}else cakeMessage('Thứ tự chưa đúng. Gợi ý: đỏ trước, trắng sau, nhân vàng ở giữa.')};$('#clearLayers').onclick=()=>{layers=[null,null,null];chosenLayer=null;renderLayers()};}
-else{$('#cakeStepTitle').textContent='HOÀN THÀNH • THÀNH PHẨM';$('#cakeWorkLabel').textContent='CHIẾC BÁNH BÁC CỦA BẠN';$('#cakeNarrative p').textContent='Bạn đã thử lựa chọn nguyên liệu, điều khiển nhiệt và cuộn các lớp bánh. Những thao tác ngoài đời thực đòi hỏi kỹ năng chuyên môn của người làm bánh Giang Xá.';mount.innerHTML=`<div class="cake-reward"><img src="assets/products.png" alt="Hình ảnh Bánh Bác của thương hiệu"><h3 class="serif">Một chiếc bánh, một ký ức</h3><p>Bạn đã hoàn thành ba thử thách. Cùng khám phá câu chuyện về Bánh Bác và truyền thuyết dâng vua tại Giang Xá.</p><button class="action-btn" id="cakeLore">Mở sớ chuyện Bánh Bác</button><p><button class="ghost-btn" id="cakeAgain">Chơi lại</button> <button class="ghost-btn" id="cakeToHistory">Theo bước Lý Nam Đế</button></p></div>`;$('#cakeLore').onclick=()=>openCodex('Truyền thuyết Bánh Bác dâng vua','Theo lời kể của nghệ nhân được báo Quân đội nhân dân ghi nhận, Bánh Bác gắn với câu chuyện một người con gái trong làng làm bánh tỏ lòng biết ơn Lý Nam Đế. Đây là truyền thuyết địa phương, không phải sự kiện đã được chứng minh. Kỹ thuật bác bột trên chảo mỡ và cuộn lớp đỏ – trắng là nội dung được người thợ mô tả trong bài báo.',[3]);$('#cakeAgain').onclick=resetCake;$('#cakeToHistory').onclick=()=>{historyStage=0;reinitializePuzzles();renderHistory();showView('history')}}}
-function updateHeatUI(){if(!$('#heatMarker'))return;$('#heatMarker').style.left=heat+'%';$('#heatValue').textContent=Math.round(heat)+'°';$('#skillValue').textContent=Math.round(skillProgress);$('#skillFill').style.width=skillProgress+'%';$('#scorchValue').textContent=scorches}
-function renderLayers(){const names=['ĐỎ','TRẮNG','ĐẬU'],labels=['Sắc đỏ gấc','Lớp nếp trắng','Nhân đậu xanh'];$('#layerPieces').innerHTML='';names.forEach((n,i)=>{const b=document.createElement('button');b.className='layer-btn'+(chosenLayer===n?' active':'');b.textContent=labels[i];b.draggable=true;b.onclick=()=>{chosenLayer=n;renderLayers()};b.ondragstart=e=>{e.dataTransfer.setData('text/plain',n)};$('#layerPieces').appendChild(b)});$('#layerSlots').innerHTML='';layers.forEach((n,i)=>{const el=document.createElement('button');el.className='layer-slot'+(n?' filled':'');el.textContent=n?({ĐỎ:'🟥 Lớp đỏ',TRẮNG:'⬜ Lớp trắng',ĐẬU:'🟨 Nhân đậu xanh'})[n]:`${i+1}. ${['Lớp ngoài','Lớp giữa','Phần nhân'][i]} · chạm để đặt`;el.onclick=()=>{if(chosenLayer){layers=layers.map(v=>v===chosenLayer?null:v);layers[i]=chosenLayer;chosenLayer=null;renderLayers()}else{layers[i]=null;renderLayers()}};el.ondragover=e=>e.preventDefault();el.ondrop=e=>{e.preventDefault();const val=e.dataTransfer.getData('text/plain');if(names.includes(val)){layers=layers.map(v=>v===val?null:v);layers[i]=val;renderLayers()}};$('#layerSlots').appendChild(el)})}
+// -----------------------------------------------------------------------------
+// GIAN BẾP V4 – actual drag-and-drop picture interaction and royal judgement.
+// This is an educational game inspired by the LOCAL LEGEND, not verified history.
+// -----------------------------------------------------------------------------
+const INGREDIENTS=[
+ {id:'nep',name:'Gạo nếp',img:'assets/ingredients/nep.png',good:true},
+ {id:'gac',name:'Gấc nếp',img:'assets/ingredients/gac.png',good:true},
+ {id:'dau',name:'Đậu xanh',img:'assets/ingredients/dau.png',good:true},
+ {id:'vung',name:'Vừng',img:'assets/ingredients/vung.png',good:true},
+ {id:'duong',name:'Đường kính',img:'assets/ingredients/duong.png',good:true},
+ {id:'mo',name:'Mỡ lợn',img:'assets/ingredients/mo.png',good:true},
+ {id:'phomai',name:'Phô mai',img:'assets/ingredients/phomai.png',good:false},
+ {id:'botmi',name:'Bột mì',img:'assets/ingredients/botmi.png',good:false},
+ {id:'cacao',name:'Ca cao',img:'assets/ingredients/cacao.png',good:false},
+ {id:'dua',name:'Dừa nạo',img:'assets/ingredients/dua.png',good:false}
+];
+const LAYER_ASSETS=[
+ {id:'ĐỎ',name:'Lớp gấc đỏ',img:'assets/layers/red.png'},
+ {id:'TRẮNG',name:'Lớp nếp trắng',img:'assets/layers/white.png'},
+ {id:'ĐẬU',name:'Nhân đậu xanh',img:'assets/layers/bean.png'}
+];
+let cakeStep=0, cakeBag=[], cakeLayers=[null,null,null], chosenLayer=null;
+let heat=54,skillProgress=0,scorches=0,heatMistakes=0,holding=false,cookTimer=null;
+let rollStrokes=0,rollMistakes=0,rollDrag=null,ceremonyActive=false,verdict=null;
+let dragGhost=null, cakeLocked=false, resultDetails=[];
+const sfxCache={};
+function foley(name){if(!audioOn)return;try{const audio=(sfxCache[name]||new Audio(`assets/sfx/${name}.wav`)).cloneNode();audio.volume=name==='gong'?.58:.4;audio.play().catch(()=>{});}catch(e){}}
+function cleanupGhost(){if(dragGhost){dragGhost.remove();dragGhost=null;}$$('.drop-basket.is-over,.layer-target.is-over,.royal-target.is-over').forEach(x=>x.classList.remove('is-over'));}
+function stopCook(){holding=false;clearInterval(cookTimer);cookTimer=null;}
+function cakeMessage(msg,kind=''){const t=$('#cakeFeedback');t.textContent=msg;t.dataset.kind=kind;}
+function resetCake(){stopCook();cleanupGhost();cakeStep=0;cakeBag=[];cakeLayers=[null,null,null];chosenLayer=null;heat=54;skillProgress=0;scorches=0;heatMistakes=0;rollStrokes=0;rollMistakes=0;rollDrag=null;ceremonyActive=false;verdict=null;cakeLocked=false;resultDetails=[];renderCake();}
+$('#cakeRestart').onclick=()=>{if(confirm('Bắt đầu lại hành trình làm bánh và dâng vua?'))resetCake()};
+$('#cakeHintBtn').onclick=()=>{
+ const tips=[
+  'Báo Quân đội nhân dân (2025) ghi nhận 6 nguyên liệu: gạo nếp, gấc, đỗ xanh, mỡ lợn, đường kính và vừng. Kéo ảnh vào giỏ. Đây là game, không phải toàn bộ định lượng công thức.',
+  'Chờ kim ở vùng vàng-xanh rồi nhấn giữ BÁC BỘT. Nếu kim quá cao hoặc quá thấp, chỉnh lửa trước khi tiếp tục.',
+  'Theo lời thợ bánh: vừng phủ ngoài, lớp đỏ bên ngoài lớp trắng, nhân đậu xanh ở giữa. Hãy đặt hình vào khay theo thứ tự từ ngoài vào trong.',
+  'Vuốt trên dải bột từ trái qua phải ba lần. Vuốt quá nhanh hoặc lệch đường làm bánh mất độ chắc tay.',
+  'Lúc dâng vua, những gì bạn đã làm mới quyết định kết quả. Cảnh vua chấm bánh là hư cấu dựa trên truyền thuyết.'
+ ];cakeMessage(tips[Math.min(cakeStep,4)],'hint');
+};
+function cakeSkin(step){
+ const art=$('.cake-art');art.dataset.cakeStage=String(step);
+ const bg=art.querySelector(':scope > img');
+ bg.src=step===0?'assets/kitchen.webp':step<=3?'assets/bep.webp':'assets/royal-court.webp';
+ bg.alt=step>=4?'Minh họa điện vua tưởng tượng, không phải phục dựng lịch sử':'Minh họa gian bếp và thao tác làm Bánh Bác';
+ const artCake=$('#cakeIllustration');
+ artCake.style.opacity=step===0?'.25':step===1?'.48':step===2?'.9':step===3?'.95':'0';
+ let fire=$('#gameFire');if(!fire){fire=document.createElement('div');fire.id='gameFire';fire.className='game-fire';art.appendChild(fire)}
+ fire.style.display=step===1?'block':'none';
+}
+function cakeProgress(){const prog=$('#cakeProgress');if(prog.children.length!==5)prog.innerHTML='<span></span>'.repeat(5);[...prog.children].forEach((el,i)=>el.classList.toggle('active',i<=Math.min(cakeStep,4)));
+ $('#cakeChapter').textContent=cakeStep<4?`GIAN BẾP • CHẶNG ${cakeStep+1}/4`:cakeStep===4?'NGỰ THIỆN • DÂNG BÁNH':'NGỰ THIỆN • LỜI PHÁN';
+}
+// A Pointer Events drag helper: the artwork follows mouse OR finger, not text.
+function dragPicture(e,imgSrc,opts={}){
+ if(e.button!==undefined&&e.button!==0)return;
+ if(dragGhost)return;
+ e.preventDefault();
+ const startX=e.clientX,startY=e.clientY;
+ let moved=false;
+ const ghost=document.createElement('div');ghost.className='picture-ghost';
+ const img=document.createElement('img');img.src=imgSrc;img.alt='';img.draggable=false;ghost.appendChild(img);document.body.appendChild(ghost);dragGhost=ghost;
+ function position(x,y){ghost.style.left=x+'px';ghost.style.top=y+'px'}position(startX,startY);
+ foley('pickup');
+ function move(p){if(p.pointerId!==e.pointerId)return;p.preventDefault();position(p.clientX,p.clientY);if(Math.hypot(p.clientX-startX,p.clientY-startY)>9)moved=true;if(p.clientY<62)window.scrollBy(0,-17);else if(p.clientY>window.innerHeight-62)window.scrollBy(0,17);
+  const target=opts.findTarget?.(p.clientX,p.clientY);$$('.drop-basket,.layer-target,.royal-target').forEach(x=>x.classList.toggle('is-over',x===target));
+ }
+ function off(){document.removeEventListener('pointermove',move);document.removeEventListener('pointerup',up);document.removeEventListener('pointercancel',cancel);cleanupGhost()}
+ function up(p){if(p.pointerId!==e.pointerId)return;const target=opts.findTarget?.(p.clientX,p.clientY);off();if(target||(!moved&&opts.tapFallback)){opts.onDrop?.(target||null);foley('drop')}else{foley('click');cakeMessage('Hãy kéo hình và thả vào đúng giỏ / vị trí có viền sáng.')}}
+ function cancel(p){if(p.pointerId!==e.pointerId)return;off()}
+ document.addEventListener('pointermove',move,{passive:false});document.addEventListener('pointerup',up);document.addEventListener('pointercancel',cancel);
+}
+function hitRect(el,x,y){if(!el)return false;const r=el.getBoundingClientRect();return x>=r.left&&x<=r.right&&y>=r.top&&y<=r.bottom}
+function addBag(id){if(cakeBag.includes(id))return;if(cakeBag.length>=6){cakeMessage('Giỏ chỉ chứa 6 phần nguyên liệu. Chạm một món trong giỏ để lấy ra.');foley('fail');return}cakeBag.push(id);renderIngredients();cakeMessage(`Đã xếp ${cakeBag.length}/6 phần vào giỏ. Hãy tự cân nhắc thành phần trước khi mang bánh đi dâng.`, 'ok');}
+function renderIngredients(){
+ const cards=$('#ingredientPictures');if(!cards)return;cards.innerHTML='';
+ INGREDIENTS.forEach(ing=>{const b=document.createElement('button');b.className='ingredient-picture'+(cakeBag.includes(ing.id)?' packed':'');b.type='button';b.disabled=cakeBag.includes(ing.id);
+  b.innerHTML=`<span class="ingredient-image"><img src="${ing.img}" alt="Bát ${ing.name}" draggable="false"></span><span class="ingredient-name">${ing.name}</span><span class="ingredient-mark">${cakeBag.includes(ing.id)?'✓ Đã vào giỏ':'Kéo ảnh ↗'}</span>`;
+  b.addEventListener('pointerdown',e=>dragPicture(e,ing.img,{findTarget:(x,y)=>hitRect($('#dropBasket'),x,y)?$('#dropBasket'):null,onDrop:()=>addBag(ing.id),tapFallback:true}));b.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();addBag(ing.id)}});
+  cards.appendChild(b);
+ });
+ const slot=$('#basketContents');if(!slot)return;slot.innerHTML='';
+ for(let i=0;i<6;i++){
+  const ing=INGREDIENTS.find(g=>g.id===cakeBag[i]);const b=document.createElement('button');b.type='button';b.className='basket-slot'+(ing?' filled':'');b.title=ing?`Bỏ ${ing.name} ra khỏi giỏ`:'Ô trống';
+  b.innerHTML=ing?`<img src="${ing.img}" alt="${ing.name}"><span>${ing.name}</span><b class="basket-x">×</b>`:'<span class="basket-placeholder">+</span>';
+  if(ing)b.onclick=()=>{cakeBag=cakeBag.filter(v=>v!==ing.id);foley('click');renderIngredients();cakeMessage(`Đã bỏ ${ing.name} khỏi giỏ.`)};
+  slot.appendChild(b);
+ }
+ $('#basketAmount').textContent=cakeBag.length+'/6';
+ $('#ingProceed').disabled=cakeBag.length!==6;
+}
+function renderCake(){
+ stopCook();cleanupGhost();cakeProgress();cakeSkin(cakeStep);cakeMessage('');
+ const mount=$('#cakePuzzle');
+ if(cakeStep===0){
+  $('#cakeStepTitle').textContent='01 • Xếp ảnh nguyên liệu vào giỏ';$('#cakeWorkLabel').textContent='GIỎ NGỰ THIỆN';
+  $('#cakeNarrative p').textContent='Kéo từng hình nguyên liệu vào giỏ bằng chuột hoặc ngón tay. Giỏ chứa đúng sáu phần; sai một thành phần, bánh sẽ không đạt khi dâng vua.';
+  mount.innerHTML=`<p class="game-lead">KÉO <strong>HÌNH BÁT NGUYÊN LIỆU</strong> VÀO GIỎ. Không kéo chữ. Có thể chạm để chọn trên thiết bị hỗ trợ trợ năng.</p><div class="drop-basket" id="dropBasket"><div class="basket-heading"><span>🧺 Giỏ nguyên liệu</span><b id="basketAmount">0/6</b></div><div class="basket-contents" id="basketContents"></div><div class="basket-guidance">Thả vào đây • Chạm món đã chọn để lấy ra</div></div><div class="ingredient-images" id="ingredientPictures"></div><button class="action-btn recipe-next" id="ingProceed" disabled>Mang giỏ tới gian bếp →</button><p class="mini-disclaimer">Các hình bát nguyên liệu là tranh minh họa tạo cho game. Lựa chọn không biểu thị định lượng thực tế.</p>`;
+  renderIngredients();
+  $('#ingProceed').onclick=()=>{foley('gong');cakeStep=1;renderCake()};
+ } else if(cakeStep===1){renderHeat();}
+ else if(cakeStep===2){renderLayerStage();}
+ else if(cakeStep===3){renderRollStage();}
+ else if(cakeStep===4){renderRoyalStage();}
+ else{renderJudgement();}
+}
+function renderHeat(){
+ $('#cakeStepTitle').textContent='02 • Giữ lửa – bác bột';$('#cakeWorkLabel').textContent='LỬA & BỘT';
+ $('#cakeNarrative p').textContent='Kỹ thuật bác bột trên chảo mỡ nóng đòi hỏi kinh nghiệm của người thợ. Bạn đang chơi mô phỏng điều chỉnh nhiệt, tuyệt đối không thử bằng tay trên chảo nóng.';
+ const m=$('#cakePuzzle');m.innerHTML=`<p>Điều chỉnh kim về vùng xanh <b>42–68</b>. Nhấn giữ để “bác bột”. Nhiệt giảm dần. Mỗi lần giữ sai nhiệt làm giảm chất lượng bánh.</p><div class="heat-meter"><div id="heatMarker" class="heat-marker"></div></div><div class="heat-controls"><button class="ghost-btn" id="decreaseHeat">− Hạ lửa</button><strong id="heatValue">54</strong><button class="ghost-btn" id="increaseHeat">+ Thêm lửa</button></div><div class="cook-row"><button class="hold-btn" id="holdBake">GIỮ ĐỂ<br>BÁC BỘT</button><div class="cook-readout"><strong>Độ hoàn thiện: <span id="skillValue">0</span>%</strong><div class="skill-progress"><span id="skillFill"></span></div><p>Nhiệt lỗi: <span id="scorchValue">0</span>/3</p></div></div><div class="mini-disclaimer">Lửa và kim nhiệt chỉ là thông số game. Công thức thực tế xem nguồn Quân đội nhân dân (2025).</div>`;
+ $('#increaseHeat').onclick=()=>{heat=Math.min(100,heat+9);updateHeatUI();foley('click')};
+ $('#decreaseHeat').onclick=()=>{heat=Math.max(0,heat-9);updateHeatUI();foley('click')};
+ const btn=$('#holdBake');const holdStart=e=>{e.preventDefault();holding=true;btn.setPointerCapture?.(e.pointerId);foley('fire')};
+ btn.addEventListener('pointerdown',holdStart);
+ ['pointerup','pointercancel','lostpointercapture','pointerleave'].forEach(ev=>btn.addEventListener(ev,()=>{holding=false}));
+ updateHeatUI();let badCounter=0;
+ cookTimer=setInterval(()=>{
+  heat=Math.max(0,heat-.23);
+  if(holding){
+   if(heat>=42&&heat<=68){skillProgress=Math.min(100,skillProgress+1.15);badCounter=0}
+   else {badCounter++;if(badCounter>=8){scorches++;heatMistakes++;badCounter=0;holding=false;cakeMessage('Nhiệt vượt ngưỡng. Bột đang kém dẻo, hãy chỉnh lửa!', 'warn');foley('fail')}}
+  }
+  updateHeatUI();
+  if(scorches>=3){stopCook();cakeMessage('Mẻ bột đã hỏng do giữ nhiệt sai nhiều lần. Hãy mang chiếc bánh lỗi đi dâng để xem phán quyết.','warn');cakeLocked=true;setTimeout(()=>{cakeStep=4;renderCake()},1200)}
+  else if(skillProgress>=100){stopCook();foley('pickup');cakeStep=2;setTimeout(()=>renderCake(),530)}
+ },90);
+}
+function updateHeatUI(){if(!$('#heatMarker'))return;$('#heatMarker').style.left=heat+'%';$('#heatValue').textContent=Math.round(heat)+'°';$('#skillValue').textContent=Math.round(skillProgress);$('#skillFill').style.width=skillProgress+'%';$('#scorchValue').textContent=scorches;
+ const f=$('#gameFire');if(f)f.style.setProperty('--fire-intensity',String(.3+heat/100*.7));
+}
+function renderLayerStage(){
+ $('#cakeStepTitle').textContent='03 • Kéo từng lớp bánh';$('#cakeWorkLabel').textContent='XẾP LỚP';
+ $('#cakeNarrative p').textContent='Theo lời người thợ, cuộn bánh theo nguyên tắc đỏ trước, trắng sau, nhân đậu xanh ở giữa, vừng bên ngoài. Hãy kéo hình từng lớp vào khay từ ngoài tới trong.';
+ $('#cakePuzzle').innerHTML=`<p>Kéo <strong>HÌNH LỚP BÁNH</strong> vào 3 vị trí. Bạn có thể thay đổi lựa chọn trước khi cuộn.</p><div class="layer-picture-row" id="layerPictures"></div><div id="layerSlots" class="layer-picture-slots"></div><button id="submitLayers" class="action-btn">Xác nhận và bắt đầu cuộn →</button><button id="clearLayers" class="ghost-btn">Xếp lại</button><p class="mini-disclaimer">Thứ tự cuộn được đơn giản hóa để chơi; không thay thế kỹ thuật làm bánh thực tế.</p>`;
+ drawLayerPics();
+ $('#submitLayers').onclick=()=>{if(cakeLayers.some(x=>x===null)){cakeMessage('Bạn chưa xếp đủ ba lớp.');return}foley('roll');cakeStep=3;renderCake()};
+ $('#clearLayers').onclick=()=>{cakeLayers=[null,null,null];chosenLayer=null;drawLayerPics()};
+}
+function dropLayer(id,slot){if(slot===null){chosenLayer=id;drawLayerPics();cakeMessage('Đã cầm một lớp bánh. Chạm vào vị trí để đặt, hoặc kéo ảnh vào khay.');return}
+ cakeLayers=cakeLayers.map((v,i)=>(v===id?null:v));cakeLayers[slot]=id;chosenLayer=null;foley('drop');drawLayerPics();cakeMessage('Đã xếp một lớp. Bạn có thể thay đổi vị trí nếu cần.');}
+function drawLayerPics(){const src=$('#layerPictures'),dest=$('#layerSlots');if(!src||!dest)return;src.innerHTML='';
+ LAYER_ASSETS.forEach(l=>{const b=document.createElement('button');b.className='layer-picture'+(chosenLayer===l.id?' selected':'');b.disabled=cakeLayers.includes(l.id);b.innerHTML=`<img src="${l.img}" alt="${l.name}" draggable="false"><span>${l.name}</span>`;
+  b.addEventListener('pointerdown',e=>dragPicture(e,l.img,{findTarget:(x,y)=>$$('.layer-target').find(t=>hitRect(t,x,y)),tapFallback:true,onDrop:t=>dropLayer(l.id,t?Number(t.dataset.slot):null)}));b.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();dropLayer(l.id,null)}});
+  src.appendChild(b);
+ });
+ dest.innerHTML='';
+ for(let i=0;i<3;i++){
+  const l=LAYER_ASSETS.find(x=>x.id===cakeLayers[i]);const b=document.createElement('button');b.className='layer-target'+(l?' filled':'');b.dataset.slot=i;
+  b.innerHTML=`<span class="layer-num">0${i+1}</span>${l?`<img src="${l.img}" alt="${l.name}"><span>${l.name}</span>`:`<span class="layer-empty">${['Lớp ngoài (đỏ)','Lớp giữa (trắng)','Nhân bên trong'][i]} · thả ảnh vào đây</span>`}`;
+  b.onclick=()=>{if(chosenLayer)dropLayer(chosenLayer,i);else if(l){cakeLayers[i]=null;drawLayerPics()}};
+  dest.appendChild(b);
+ }
+}
+function renderRollStage(){
+ $('#cakeStepTitle').textContent='04 • Cuộn chiếc bánh';$('#cakeWorkLabel').textContent='CUỘN BÁNH';
+ $('#cakeNarrative p').textContent='Người làm bánh cuộn các lớp cho đều và chắc tay. Trong game, bạn phải vuốt theo đúng hướng ba lần để hoàn thiện trước khi dâng vua.';
+ $('#cakePuzzle').innerHTML=`<p>Đặt ngón tay hoặc chuột lên dải bột rồi <strong>VUỐT TỪ TRÁI SANG PHẢI</strong>. Cần 3 đường vuốt đủ dài và đều.</p><div class="roll-arena" id="rollArena"><div class="roll-guide"><span>KHỞI ĐẦU ◉</span><span>→ → →</span><span>ĐÍCH ✦</span></div><div class="roll-dough" id="rollDough"><img src="assets/layers/red.png" alt="Dải bột bánh cuộn" draggable="false"></div><div class="roll-track"><div id="rollBar"></div></div></div><div class="roll-status">Số lượt vuốt chuẩn: <b id="rollCount">0/3</b> <span id="rollWarning"></span></div><div class="mini-disclaimer">Động tác kéo trên màn hình là game, không mô phỏng chính xác lực cuộn ngoài đời.</div>`;
+ const arena=$('#rollArena');
+ arena.addEventListener('pointerdown',e=>{if(e.button!==undefined&&e.button!==0)return;e.preventDefault();arena.setPointerCapture?.(e.pointerId);const rect=arena.getBoundingClientRect();rollDrag={x:e.clientX,y:e.clientY,t:performance.now()};foley('roll');});
+ arena.addEventListener('pointermove',e=>{if(!rollDrag)return;e.preventDefault();const dx=Math.max(0,e.clientX-rollDrag.x);arena.style.setProperty('--roll-offset',Math.min(85,dx/4)+'px');});
+ const finish=e=>{if(!rollDrag)return;e.preventDefault();const dx=e.clientX-rollDrag.x,dy=Math.abs(e.clientY-rollDrag.y),duration=performance.now()-rollDrag.t;rollDrag=null;arena.style.setProperty('--roll-offset','0px');
+  if(dx>=Math.min(100,arena.getBoundingClientRect().width*.3)&&dy<90&&duration>=125){rollStrokes++;foley('pickup');cakeMessage(`Vuốt thành công ${rollStrokes}/3!`,'ok')}
+  else{rollMistakes++;foley('fail');cakeMessage('Cuộn chưa đều! Hãy vuốt dài hơn từ trái sang phải, chậm và thẳng tay.','warn')}
+  $('#rollCount').textContent=rollStrokes+'/3';$('#rollBar').style.width=Math.min(100,rollStrokes/3*100)+'%';
+  if(rollStrokes>=3){foley('gong');cakeStep=4;setTimeout(renderCake,650)}
+ };
+ arena.addEventListener('pointerup',finish);arena.addEventListener('pointercancel',()=>{rollDrag=null;arena.style.setProperty('--roll-offset','0px')});
+}
+function evaluateCake(){
+ resultDetails=[];
+ const goodIngredients=cakeBag.length===6&&INGREDIENTS.filter(x=>x.good).every(x=>cakeBag.includes(x.id));
+ const correctLayers=cakeLayers.join('|')==='ĐỎ|TRẮNG|ĐẬU';
+ const cooked=skillProgress>=99&&scorches<3;
+ const rolled=rollStrokes===3&&rollMistakes<=2;
+ if(!goodIngredients)resultDetails.push('Nguyên liệu trong giỏ chưa đúng với nguyên liệu truyền thống.');
+ if(!cooked)resultDetails.push('Bột không đạt vì điều khiển nhiệt chưa tốt.');
+ if(!correctLayers)resultDetails.push('Thứ tự cuộn lớp đỏ – trắng – nhân đậu xanh chưa đúng.');
+ if(!rolled)resultDetails.push('Thao tác cuộn chưa chắc và đều.');
+ return goodIngredients&&cooked&&correctLayers&&rolled;
+}
+function renderRoyalStage(){
+ $('#cakeStepTitle').textContent='ĐEM BÁNH VÀO NGỰ ĐIỆN';$('#cakeWorkLabel').textContent='NGỰ ĐIỆN VẠN XUÂN · HƯ CẤU';
+ $('#cakeNarrative p').textContent='Trong lời kể dân gian, Bánh Bác gắn với câu chuyện dâng vua Lý Nam Đế. Màn vua nếm và đưa ra phán quyết này là một tình huống sáng tạo, KHÔNG phải sự kiện lịch sử đã được xác minh.';
+ $('#cakePuzzle').innerHTML=`<div class="royal-board" id="royalBoard"><div class="royal-flags" aria-hidden="true">✦　✦　✦</div><div class="king-frame"><img src="assets/lybi-face.webp" alt="Chân dung minh họa Lý Nam Đế do game sáng tạo"><span class="king-caption">LÝ NAM ĐẾ · MINH HỌA</span></div><div class="royal-message">“Ngươi đã đem đến thức bánh gì của làng Giang Xá?”<small>Lời thoại tưởng tượng trong game</small></div><div id="royalTarget" class="royal-target">✦ NGỰ ÁN · THẢ BÁNH VÀO ĐÂY ✦</div><div class="royal-offer" id="royalOffer"><img src="assets/products.png" alt="Kéo hình đĩa Bánh Bác vào ngự án" draggable="false"><small>GIỮ HÌNH BÁNH VÀ KÉO LÊN NGỰ ÁN</small></div><button class="action-btn court-submit" id="presentCake">✦ Dâng bánh bằng nút (nếu khó kéo) ✦</button></div><p class="mini-disclaimer">Vua khen hoặc chê tùy kết quả chơi. Cảnh nếm bánh, lời vua nói và ngự điện đều hư cấu trên nền truyền thuyết địa phương.</p>`;
+ function offerToKing(){if(ceremonyActive)return;ceremonyActive=true;$('#presentCake').disabled=true;$('#presentCake').textContent='Vua đang nếm bánh...';$('#royalTarget').textContent='ĐÃ NHẬN BÁNH · VUA ĐANG NẾM...';foley('gong');$('#royalBoard').classList.add('offering');
+  setTimeout(()=>{verdict=evaluateCake();foley(verdict?'gong':'fail');cakeStep=5;ceremonyActive=false;renderCake()},2150);
+ }
+ $('#presentCake').onclick=offerToKing;
+ $('#royalOffer').addEventListener('pointerdown',e=>dragPicture(e,'assets/products.png',{findTarget:(x,y)=>hitRect($('#royalTarget'),x,y)?$('#royalTarget'):null,onDrop:offerToKing,tapFallback:false}));
+}
+function renderJudgement(){
+ const good=!!verdict;$('#cakeStepTitle').textContent=good?'VUA KHEN • CHÚC MỪNG!':'VUA CHÊ • BÁNH CHƯA ĐẠT';$('#cakeWorkLabel').textContent=good?'THẮNG · NGỰ THIỆN ĐẠT':'THUA · CẦN LÀM LẠI';
+ $('#cakeNarrative p').textContent='Đây là kết thúc tưởng tượng của trò chơi, lấy cảm hứng từ câu chuyện dân gian Bánh Bác dâng Lý Nam Đế tại Giang Xá.';
+ $('#cakePuzzle').innerHTML=`<div class="royal-verdict ${good?'good':'bad'}"><div class="verdict-shine"></div><div class="verdict-icon">${good?'✦':'✕'}</div><div class="verdict-king"><img src="assets/lybi-face.webp" alt="Tranh minh họa vua Lý Nam Đế"></div><span class="verdict-kicker">${good?'NGỰ PHÊ: ĐẠT':'NGỰ PHÊ: CHƯA ĐẠT'}</span><h3 class="serif">${good?'VUA KHEN — BẠN ĐÃ THẮNG!':'VUA CHÊ — BẠN ĐÃ THUA!'}</h3><p class="verdict-speech">${good?'“Bánh có sắc gấc đẹp, nếp dẻo, nhân đậu bùi. Tấm lòng và tay nghề đều đáng quý!”':'“Bánh này chưa đúng vị, chưa trọn kỹ thuật. Hãy trở về gian bếp và luyện thêm!”'}</p><small>Câu nói trên do trò chơi sáng tác; không phải sử liệu.</small>${good?'<div class="royal-ribbon">✿ DANH HIỆU: NGƯỜI GIỮ VỊ XƯA ✿</div>':`<div class="loss-reasons">${resultDetails.map(d=>`<div>⚠ ${d}</div>`).join('')}</div>`}<div class="victory-actions"><button class="action-btn" id="retryCake">↻ ${good?'Chơi thêm lần nữa':'Thử làm bánh lại'}</button><button class="ghost-btn" id="royalSource">▤ Đọc nguồn truyền thuyết</button><button class="ghost-btn" id="royalHistory">◈ Theo bước Lý Nam Đế</button></div></div>`;
+ const board=$('.royal-verdict');if(good){for(let i=0;i<18;i++){const c=document.createElement('i');c.className='confetti';c.style.left=(5+Math.random()*90)+'%';c.style.animationDelay=(Math.random()*1)+'s';c.style.background=['#f9d48d','#c66c55','#d7b05b','#a5b479'][i%4];board.appendChild(c)}}
+ $('#retryCake').onclick=resetCake;
+ $('#royalSource').onclick=()=>openCodex('Chuyện bánh dâng vua – truyền thuyết Giang Xá','Báo Quân đội nhân dân (2025) ghi lời thợ làm bánh Nguyễn Thị Điều kể rằng bánh xưa được làm để bày tỏ lòng biết ơn vua Lý Nam Đế. Không có cơ sở chứng minh vua trực tiếp nếm hay khen/chê đúng như tình huống game. Công đoạn bác bột, nguyên liệu và nguyên tắc đỏ–trắng–nhân đậu được mô tả trong phóng sự.',[3]);
+ $('#royalHistory').onclick=()=>{historyStage=0;reinitializePuzzles();renderHistory();showView('history')};
+}
 resetCake();
