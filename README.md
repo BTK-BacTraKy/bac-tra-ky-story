@@ -1,71 +1,75 @@
-# BÁC TRÀ KÝ — V4.5 STABLE
+# Bác Trà Ký — Mở Bánh, Mở Chuyện · V4.7 Hành Quân
 
-Đây là bản **phục hồi nền và mỹ thuật V4**, không sử dụng thiết kế sáng màu của V5. Mục đích của bản này là trở về phiên bản người dùng thích và sửa lỗi có chọn lọc.
+**Bản này đã sẵn sàng để tải lên GitHub Pages.** Giữ nguyên bối cảnh làng Giang Xá và hai tuyến game ổn định của V4.6, nhưng làm lại hoàn toàn câu đố **Mở đường hành quân**.
 
-## Giữ nguyên từ V4
+## 1. Những gì đã nâng cấp
 
-- Nền toàn màn hình làng Giang Xá xưa (`assets/village.webp`), tông màu nâu trầm và chữ vàng ngà.
-- Hai lựa chọn: **Theo bước Lý Nam Đế** và **Tự tay làm Bánh Bác**.
-- Game lịch sử: nhặt tín vật, ấn ký, trượt tranh 3×3, xoay đường 3×3 và mở sớ Vạn Xuân.
-- Game bánh: kéo hình nguyên liệu vào giỏ, giữ nhiệt, xếp lớp, cuộn bánh, dâng lên vua để thắng/thua.
-- Logo bảng trắng đúng file cũ (`assets/official-logo.png`).
+- Sa bàn 3×3 được vẽ lại theo tông **giấy cổ / bản đồ quân cơ**, giữ nguyên cảnh doanh trại mưa và nền tối của bản V4.
+- Các mảnh đường có nét vẽ nhiều lớp, đường đất, vết mực giấy cũ. Chạm/click để xoay 90°.
+- Một **nhóm lính mang cờ** di chuyển từ mảnh này sang mảnh khác theo tuyến nối khít; cờ động đậy, quân có bước chân và hiệu ứng bụi.
+- Sau khi **Xuất quân**, quân tự tiến; người chơi vẫn được xoay những mảnh chưa đi qua để cứu đường.
+- Nếu quân sắp gặp đường cụt, có cảnh báo khẩn trong 2,8 giây (chế độ khó 1,9 giây). Không cứu kịp sẽ mất 1 mạng/ Game Over.
+- Chế độ **3 mạng** mặc định; chế độ **Một sai lầm** (chỉ 1 mạng) cho người chơi muốn khó hơn.
+- Có màn thắng, thua, nút chơi lại và nút tiếp tục sang chương Vạn Xuân; có âm thanh theo nút **Âm** trên đầu trang.
+- Các phần khác như khám phá Giang Xá, tìm tín vật, ghép tranh, mini-game làm Bánh Bác và dâng vua vẫn được giữ lại.
 
-## Các điểm sửa có chọn lọc
+## 2. Cách đăng lên GitHub Pages
 
-1. Sửa đếm chặng game bánh từ **1/4 → 1/5**, khớp 5 chặng thật.
-2. Không làm mất vị trí lời thoại Lý Bí mỗi khi nhặt tín vật trong tranh.
-3. Thêm phần tử liên kết **Beacons** vào header, mặc định ẩn nếu chưa cấu hình; không làm lỗi khi có link.
-4. Chỉ bổ sung CSS nhỏ cho ẩn/hiện link, thao tác chạm và thứ tự hiển thị; **không ghi đè nền, màu hoặc layout của V4 bằng CSS V5**.
-5. Tăng phiên bản CSS/JS thành `v=4.5.1` để giảm trường hợp trình duyệt giữ mã cũ.
+1. Giải nén **file ZIP**.
+2. Mở thư mục vừa giải nén. Chọn **toàn bộ file và thư mục bên trong**, đặc biệt là `index.html`, `styles.css`, `march.css`, `game.js`, `march.js`, `assets/` và `.nojekyll`.
+3. Vào repository GitHub đang chạy website BTK, chọn **Add file → Upload files** và tải lên **thư mục gốc** của repository. Nếu GitHub hiển thị các file cũ trùng tên, hãy đảm bảo phiên bản mới đã được commit thay thế.
+4. GitHub → **Settings → Pages** → Source: `Deploy from a branch`; Branch: `main`; Folder: `/(root)`.
+5. Kiểm tra **Actions** đã build thành công. Mở website ở chế độ ẩn danh hoặc dùng `Ctrl + Shift + R` để tránh dùng mã CSS/JS cũ.
 
-## Kiểm thử tự động trong trình duyệt Chromium
+Mã QR đã in → Beacons → link thứ hai → GitHub Pages **không cần thay đổi** nếu vẫn dùng repository và URL hiện tại.
 
-- Vào game lịch sử, nhặt đủ 3 tín vật, nhập ấn ký, chuyển từ chương 1 sang 2.
-- Mở/đóng sổ tư liệu, xác nhận có liên kết nguồn.
-- Đưa một màn ghép hình gần hoàn thành về đúng trạng thái, kiểm tra chuyển sang chương tiếp theo.
-- Hoàn thành cơ chế nối đường, kiểm tra tới chương 4.
-- Kéo ảnh nguyên liệu bằng chuột vào giỏ: vật phẩm đi theo con trỏ và giỏ nhận đúng 1 vật phẩm.
-- Đưa đúng nguyên liệu, hoàn thành quy trình thử nghiệm và dâng bánh: **WIN**.
-- Thay một nguyên liệu bằng phô mai rồi dâng bánh: **LOSE**, có giải thích nguyên liệu sai.
-- Sau khi kết thúc, bấm thử lại: game trở về 0/6 nguyên liệu.
-- Mô phỏng viewport 390 px cho trang chủ và game bánh: không có tràn ngang.
-- Các kịch bản trên không xuất hiện lỗi JavaScript (`pageerror`).
+## 3. Link Beacons
 
-**Giới hạn kiểm thử:** Trình duyệt được kiểm tra bằng bản dựng HTML/CSS/JS nội tuyến trong Chromium do môi trường kiểm thử không cho mở URL cục bộ. Kéo-thả trên điện thoại vật lý và toàn bộ hành trình giữ nhiệt theo thời gian thực vẫn cần nhóm kiểm tra trước khi công khai.
-
-## Đăng lên GitHub Pages (đúng thư mục ROOT)
-
-Giải nén `BTK-V4-5-STABLE-GitHub-ROOT.zip` rồi upload **các file bên trong** (không upload nguyên ZIP, không đặt thêm một thư mục bọc ngoài) vào repository đang dùng:
-
-```
-index.html
-styles.css
-game.js
-.nojekyll
-README.md
-SOURCES.md
-QA-CHECKLIST.md
-assets/
-```
-
-Trong GitHub: **Settings → Pages → Deploy from a branch → main → /(root)**. Sau khi **Actions** báo thành công, kiểm tra bằng tab ẩn danh hoặc `Ctrl + F5`.
-
-## Kết nối Beacons
-
-Trong `game.js` ở đầu file:
+Mở `game.js` tìm:
 
 ```js
 const SETTINGS={beaconsUrl:''};
 ```
 
-Đổi sang link Beacons **thật** của BTK, ví dụ theo cấu trúc:
+Điền URL Beacons đang sử dụng (dùng liên kết thật, không phải ví dụ):
 
 ```js
-const SETTINGS={beaconsUrl:'https://beacons.ai/ten-trang-thuc-te'};
+const SETTINGS={beaconsUrl:'https://beacons.ai/DUONG-DAN-THAT'};
 ```
 
-Khi cấu hình đúng URL bắt đầu bằng `https://`, header sẽ hiển thị nút mở Beacons.
+Nếu bỏ trống, nút quay về Beacons được ẩn để tránh dẫn tới link `#` vô nghĩa.
 
-## Giới hạn lịch sử
+## 4. Luật chơi màn hành quân
 
-Sự kiện 542 và 544 có tư liệu; chuyện Bánh Bác dâng vua và một số tình tiết Giang Xá là truyền tụng địa phương. Cảnh vua nếm/chấm bánh, vật phẩm, mật thư, lời thoại và giải đố là hư cấu cho game. Xem `SOURCES.md`.
+- Xoay bản đồ tùy ý trước khi **Xuất quân**.
+- **Quân tiến tự động** trên những đoạn đường đã khớp, mỗi bước có chuyển động.
+- Quân **khóa mảnh đã đi qua**. Bạn chỉ có thể xoay mảnh phía trước.
+- Tắc đường trong thời gian cảnh báo mà chưa cứu được → mất 1 mạng, quân lui về xuất phát; có thể chỉnh lại bản đồ và xuất quân tiếp.
+- Hết mạng → Game Over, dùng **Chơi lại màn này**.
+- Tới cờ đích → WIN, nhấn **Tiếp tục câu chuyện** để sang chương cuối về Vạn Xuân.
+
+**Mẹo cho nhóm test:** có một đường đúng đi qua các ô **1 → 2 → 5 → 8 → 9** (đánh số từ trái qua phải, trên xuống dưới). Đường đúng vẫn phải xoay các góc cho khớp cả hai đầu.
+
+## 5. Phân biệt lịch sử với trò chơi
+
+Các sự kiện cuộc khởi nghĩa năm 542, việc Lý Bí xưng đế, thành lập nước Vạn Xuân năm 544 có tài liệu tham khảo trong `SOURCES.md`. **Địa đồ 3×3, tuyến hành quân, binh sĩ, cờ, lời thoại và cảnh dâng bánh lên vua là minh họa và hư cấu gameplay**, không phải bản đồ trận đánh hay bản ghi lịch sử.
+
+## 6. Kiểm thử và giới hạn
+
+Xem `QA-V4-7.md` để biết các bài kiểm thử đã chạy. Chúng tôi đã kiểm tra chương hành quân trong Chromium mô phỏng cả desktop và màn hình nhỏ; trước khi dùng tại sự kiện, nhóm nên thử thực tế trên điện thoại Android và iPhone, kiểm tra độ trễ âm thanh và thao tác cảm ứng.
+
+## 7. Cấu trúc file
+
+```text
+index.html           # Trang chính
+styles.css           # Giao diện chung của V4.6
+march.css            # Thiết kế sa bàn và lính mới
+game.js              # Các mini-game và tuyến lịch sử
+march.js             # Cơ chế hành quân V4.7
+assets/              # Ảnh, tranh, âm thanh, thành phần game
+.nojekyll
+README.md
+SOURCES.md
+QA-CHECKLIST.md
+QA-V4-7.md
+```

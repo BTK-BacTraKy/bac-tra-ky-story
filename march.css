@@ -1,0 +1,94 @@
+/* BÁC TRÀ KÝ · Mở đường hành quân (V4.7). Scoped to .march-game; keeps V4.6 background untouched. */
+.march-game{font-family:inherit;color:#67432e;isolation:isolate}
+.march-heading{margin:0 0 17px}
+.march-eyebrow{display:block;color:#a16e3a;font-size:10px;font-weight:900;letter-spacing:.18em;margin-bottom:8px}
+.march-heading h4{font-size:clamp(21px,2.2vw,29px)!important;line-height:1.15;margin:0 0 8px!important;color:#7e3029!important}
+.march-heading p{font-size:12px;line-height:1.8;margin:0;color:#79604a}
+.march-hud{display:grid;grid-template-columns:1.25fr .65fr .7fr;gap:8px;margin-bottom:12px}
+.march-stat{padding:12px 10px;background:linear-gradient(160deg,#fffaf0,#eddbbd);border:1px solid #c69d70;border-radius:9px;box-shadow:0 4px 14px #79502d12;min-width:0}
+.march-stat small{display:block;white-space:nowrap;color:#8f6646;font-size:9px;font-weight:850;letter-spacing:.09em;margin-bottom:6px}
+.march-stat strong{display:block;color:#763728;font-size:clamp(12px,1.1vw,15px);line-height:1.3}
+.march-modes{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:13px 0}
+.march-modes>span,.march-lives>span{font-size:10px;font-weight:850;letter-spacing:.12em;color:#8c623a;margin-right:auto}
+.march-mode{font:700 11px inherit;border:1px solid #c49b6b;background:#fff8e9;border-radius:999px;color:#82523b;padding:7px 11px;cursor:pointer;transition:.2s}
+.march-mode.active{color:#ffefd6;background:#81352a;border-color:#81352a;box-shadow:0 4px 11px #62352433}
+.march-mode:disabled{opacity:.6;cursor:not-allowed}
+.march-lives{display:flex;align-items:center;gap:9px;margin:5px 0 16px;padding:8px 0;border-top:1px solid #d9b98a;border-bottom:1px solid #d9b98a}
+.march-lives #marchLifeIcons{display:flex;gap:4px;align-items:center}
+.march-shield{display:inline-grid;place-items:center;font-size:18px;color:#a34337;filter:drop-shadow(0 2px 2px #a9634633);transition:filter .2s,opacity .2s}
+.march-shield.lost{color:#ac9b83;opacity:.42;filter:grayscale(1)}
+.march-lives small{font-size:10px;color:#94724c;min-width:80px;text-align:right}
+.march-board-frame{position:relative;padding:11px;border-radius:14px;border:2px solid #8f5d3b;background:repeating-linear-gradient(93deg,#6e422b 0,#8e5c39 9px,#805030 23px,#73452b 30px);box-shadow:inset 0 0 0 3px #b88b58,0 12px 30px #4a301c33;transition:box-shadow .24s}
+.march-board-frame::before{content:'';position:absolute;inset:5px;border:1px solid #d9b17c85;pointer-events:none;z-index:4;border-radius:10px}
+.march-board-top,.march-board-bottom{background:linear-gradient(180deg,#e9d2a7,#d4b486);padding:8px 10px;display:flex;justify-content:space-between;align-items:center;gap:6px;color:#7b4c2e;font-weight:800;letter-spacing:.12em;font-size:10px;text-align:center;border-left:2px solid #9f7043;border-right:2px solid #9f7043}
+.march-board-top{border-radius:6px 6px 0 0;border-top:2px solid #ae7a4c}
+.march-board-bottom{border-radius:0 0 6px 6px;border-bottom:2px solid #ae7a4c;font-size:8px;letter-spacing:.06em}
+.march-board-symbol,.march-compass{font-size:20px;color:#a76435}
+.march-board-area{display:flex;align-items:center;justify-content:center;gap:5px;padding:12px 2px;background:
+ radial-gradient(ellipse at 30% 17%,#c69c64aa,transparent 30%),repeating-linear-gradient(45deg,#e5c99a 0,#ecd6ae 4px,#e6cda0 9px);border:2px solid #a47446;position:relative}
+.march-marker{display:flex;flex-direction:column;align-items:center;gap:5px;flex:none;width:34px;overflow:visible;color:#743c2b;position:relative;z-index:5}
+.march-marker svg{display:block;width:26px;height:32px;filter:drop-shadow(0 2px 3px #57352044)}
+.march-marker span{font-size:8px;font-weight:900;letter-spacing:.09em;text-align:center;writing-mode:vertical-rl;transform:rotate(180deg);max-height:70px}
+.march-marker-goal span{transform:none}
+.march-tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(3,minmax(0,1fr));gap:2px;position:relative;width:100%;aspect-ratio:1/1;background:#9c6b45;border:3px ridge #b68e61;box-shadow:inset 0 5px 15px #794b2966,0 8px 16px #75431f33;min-width:0;max-width:520px;margin:0}
+.march-tile{display:block;position:relative;min-width:0;min-height:0;overflow:hidden;border:1px solid #a88150;outline-offset:-5px;border-radius:1px;cursor:pointer;padding:0;background:
+ radial-gradient(circle at 15% 20%,#f4e2bb 0%,transparent 43%),
+ radial-gradient(circle at 90% 70%,#b6854f40 0%,transparent 45%),
+ repeating-linear-gradient(25deg,#e6cca0 0,#e8cea4 5px,#dfbf8e 12px,#dfbf8e 17px);transition:filter .2s,box-shadow .2s}
+.march-tile::before{content:'';position:absolute;inset:0;pointer-events:none;opacity:.17;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 130 130' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.55' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.2'/%3E%3C/svg%3E");mix-blend-mode:multiply}
+.march-tile:hover:not(:disabled){filter:brightness(1.085);z-index:2;box-shadow:inset 0 0 0 2px #f5dcab,0 0 12px #fbdfa8a8}
+.march-tile:focus-visible{outline:3px solid #7f4634;z-index:5}
+.march-tile.locked{cursor:default;filter:saturate(.9)}
+.march-tile.trodden::after{content:'';position:absolute;inset:3px;pointer-events:none;border:2px solid #6b8b5e80;box-shadow:inset 0 0 14px #b4d8a655}
+.march-tile .march-tile-ink{position:absolute;inset:0;transition:transform .24s cubic-bezier(.2,.7,.2,1);display:block}
+.march-road-svg{display:block;width:100%;height:100%;overflow:visible}
+.march-road-svg .map-etch{fill:none;stroke:#937044;stroke-width:1.5;opacity:.23;stroke-dasharray:2 5}
+.march-road-svg .map-stain{fill:#a1744712;stroke:#a1744727;stroke-width:1}
+.march-road-svg .road-under{stroke:#785239;stroke-width:30;stroke-linecap:butt;fill:none;opacity:.88}
+.march-road-svg .road-main{stroke:#bb965f;stroke-width:21;stroke-linecap:butt;fill:none}
+.march-road-svg .road-rut{stroke:#e9d2a6;stroke-width:1.9;stroke-linecap:round;stroke-dasharray:3 10;fill:none;opacity:.86}
+.march-road-svg .road-hub{fill:#d1ad76;stroke:#966c42;stroke-width:2}
+.march-cell-no{position:absolute;top:5px;left:5px;color:#906b42;font:700 10px Georgia,serif;z-index:2;opacity:.72}
+.march-tile-burn{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 50%,transparent 32%,#94623f27 90%);mix-blend-mode:multiply}
+.march-unit{position:absolute;left:-6.5%;top:16.666%;width:28%;max-width:116px;height:auto;aspect-ratio:1.25;z-index:10;pointer-events:none;transform:translate(-50%,-50%);opacity:0;transition:left .7s cubic-bezier(.23,.68,.21,1),top .7s cubic-bezier(.23,.68,.21,1),opacity .2s}
+.march-unit.visible{opacity:1}
+.march-unit .march-army-svg{display:block;width:100%;height:100%;filter:drop-shadow(0 5px 3px #3a251d88)}
+.march-unit .march-banner{transform-origin:61px 5px;animation:marchBanner 1.25s ease-in-out infinite alternate}
+.march-unit.marching .troop-leader,.march-unit.marching .troop-rear{animation:marchStep .37s ease-in-out infinite alternate}
+.march-unit.marching .troop-rear{animation-delay:.18s}
+@keyframes marchBanner{to{transform:skewY(3deg) scaleX(.96)}}
+@keyframes marchStep{to{transform:translateY(-4px)}}
+.march-dust{position:absolute;width:16px;height:16px;border-radius:50%;transform:translate(-50%,-10%);pointer-events:none;z-index:9;box-shadow:0 0 9px #b9966c,10px 1px 9px #b9966c,-10px 2px 7px #b9966c;animation:marchDust .7s ease-out forwards}
+@keyframes marchDust{from{opacity:.7;transform:translate(-50%,-10%) scale(.6)}to{opacity:0;transform:translate(-50%,-150%) scale(1.6)}}
+.march-message{margin-top:12px;padding:12px;display:flex;align-items:flex-start;gap:11px;border:1px solid #c69f73;border-radius:8px;background:linear-gradient(100deg,#f4e6ca,#f9edda);color:#78543a;font-size:11px;line-height:1.6}
+.march-message-icon{color:#94572b;font-size:18px;line-height:1}
+.march-message[data-kind="warn"]{background:#f9dfc3;border-color:#b76c4c;color:#943d2e}
+.march-message[data-kind="fail"]{background:#f2d6c4;border-color:#9d4239;color:#823326}
+.march-message[data-kind="win"]{background:#e9efd8;border-color:#79905c;color:#46613a}
+.march-message[data-kind="hint"]{background:#f1e6d0}
+.march-actions{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 0}
+.march-actions .action-btn,.march-actions .ghost-btn{font-size:11px;line-height:1.35;cursor:pointer}
+.march-actions .march-launch{flex:1 1 155px;padding:13px}
+.march-actions .ghost-btn{padding:12px 9px}
+.march-actions .march-launch:disabled{opacity:.55;cursor:not-allowed}
+.march-help{color:#866a4c;font-size:11px;line-height:1.7;margin-top:12px;padding-top:10px;border-top:1px dashed #c7a073}
+.march-help strong{display:inline-block;color:#873e2d;letter-spacing:.08em;margin-right:7px}
+.march-board-frame.march-danger{animation:marchDangerPulse .62s infinite alternate}
+@keyframes marchDangerPulse{to{box-shadow:inset 0 0 0 3px #b88b58,0 0 0 4px #a6423480,0 13px 36px #5d211a55}}
+.march-board-frame.march-victory{box-shadow:0 0 0 3px #98a56b99,0 12px 30px #4a301c33}
+.march-board-frame.march-defeat{filter:saturate(.55)}
+.march-overlay{position:absolute;inset:0;z-index:35;display:grid;place-items:center;background:#24120fbd;backdrop-filter:blur(3px);padding:18px;border-radius:11px;animation:marchOverlayIn .3s ease}
+.march-overlay[hidden]{display:none!important}
+@keyframes marchOverlayIn{from{opacity:0}to{opacity:1}}
+.march-modal-card{width:100%;background:linear-gradient(180deg,#fffae8,#e9cf9e);border:5px double #b0834e;border-radius:12px;padding:18px 14px;text-align:center;box-shadow:0 18px 32px #1f100e90;animation:marchModalPop .33s cubic-bezier(.2,.8,.2,1)}
+@keyframes marchModalPop{from{transform:translateY(12px) scale(.92);opacity:.5}to{transform:none;opacity:1}}
+.march-result-mark{width:54px;height:54px;border-radius:50%;background:#793528;color:#ffe9bd;display:grid;place-items:center;margin:0 auto 10px;font-size:30px}
+.march-overlay[data-kind="win"] .march-result-mark{background:#567444}
+.march-result-kicker{font-size:9px;color:#956b3d;letter-spacing:.18em;font-weight:900}
+.march-modal-card h4{font:700 clamp(19px,2vw,26px) Georgia,serif!important;color:#7b3228;margin:8px 0!important}
+.march-modal-card p{color:#74553c;font-size:12px;line-height:1.65;margin:0 0 14px}
+.march-modal-actions{display:flex;gap:7px;flex-wrap:wrap;justify-content:center}
+.march-modal-actions button{cursor:pointer}
+@media(max-width:1150px){.march-hud{grid-template-columns:repeat(3,minmax(0,1fr))}.march-board-area{max-width:610px;margin:auto}}
+@media(max-width:690px){.march-game{max-width:540px;margin:auto}.march-board-frame{padding:8px}.march-board-area{padding:8px 1px;gap:3px}.march-marker{width:22px}.march-marker svg{width:19px;height:24px}.march-marker span{font-size:6px;max-height:50px}.march-hud{gap:5px}.march-stat{padding:9px 7px}.march-stat small{font-size:7.5px}.march-stat strong{font-size:11px}.march-board-top{font-size:8px}.march-board-bottom{font-size:7px}.march-unit{width:30%}.march-cell-no{font-size:8px}.march-actions .ghost-btn{flex:1}.march-message{font-size:11px}}
+@media(prefers-reduced-motion:reduce){.march-unit,.march-tile-ink,.march-mode,.march-shield{transition:none!important}.march-unit .march-banner,.march-unit .troop-leader,.march-unit .troop-rear,.march-dust,.march-board-frame.march-danger{animation:none!important}}
