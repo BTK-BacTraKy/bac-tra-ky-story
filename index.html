@@ -1,21 +1,255 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#281c19"><meta name="description" content="Mở Bánh – Mở Chuyện: game giải đố lịch sử theo bước Lý Bí tại Giang Xá và trải nghiệm làm Bánh Bác của Bác Trà Ký.">
-<title>Bác Trà Ký | Theo bước Lý Nam Đế & Dâng bánh tiến vua</title>
-<link rel="stylesheet" href="styles.css?v=4.0">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#281c19">
+<meta name="description" content="Mở Bánh – Mở Chuyện: trải nghiệm tương tác về Giang Xá, Lý Nam Đế và Bánh Bác của Bác Trà Ký.">
+<title>Bác Trà Ký | Mở Bánh – Mở Chuyện</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="styles.css?v=5.0">
 </head>
 <body>
 <div class="grain" aria-hidden="true"></div>
-<header class="header"><a class="logo-link" href="#home" aria-label="Trang chủ Bác Trà Ký"><img src="assets/official-logo.png" alt="FPT Education và Bác Trà Ký" /></a><div class="header-center"><span class="serif">BÁC TRÀ KÝ</span><small>GÌN GIỮ TINH HOA – TIẾP NỐI GIÁ TRỊ</small></div><div class="header-actions"><button id="audioToggle" class="icon-btn" aria-label="Bật hoặc tắt âm thanh" aria-pressed="false">♪ <span>Âm tắt</span></button><a class="header-back" href="#home">⌂ Trang chủ</a></div></header>
+<div class="page-glow" aria-hidden="true"></div>
+<header class="header">
+  <a class="logo-link" href="#home" aria-label="Trang chủ Bác Trà Ký">
+    <img src="assets/official-logo.png" alt="Trường Đại học FPT và Bác Trà Ký">
+  </a>
+  <div class="header-center">
+    <span class="serif">BÁC TRÀ KÝ</span>
+    <small>GÌN GIỮ TINH HOA – TIẾP NỐI GIÁ TRỊ</small>
+  </div>
+  <nav class="header-nav" aria-label="Điều hướng nhanh">
+    <a href="#home" class="nav-link">Trang chủ</a>
+    <a href="#history" class="nav-link" id="navStory">Giang Xá xưa</a>
+    <a href="#cake" class="nav-link" id="navCake">Game làm bánh</a>
+    <a href="#about" class="nav-link" id="navAbout">Tư liệu</a>
+  </nav>
+  <div class="header-actions">
+    <button id="audioToggle" class="icon-btn" aria-label="Bật hoặc tắt âm thanh" aria-pressed="false">♪ <span>Âm tắt</span></button>
+    <a class="header-back" href="#home">⌂ Trang chủ</a>
+  </div>
+</header>
+
 <main>
-<section id="home" class="view active" aria-labelledby="homeTitle"><div class="home-scene"><div class="home-tint"></div><div class="ambient cloud-a"></div><div class="ambient cloud-b"></div><div class="home-content"><span class="eyebrow">BÁC TRÀ KÝ • TƯƠNG TÁC VĂN HÓA</span><h1 id="homeTitle" class="serif">MỞ BÁNH <em>—</em> MỞ CHUYỆN</h1><p class="home-poem serif">Có những dấu xưa không nằm yên trong sách.<br>Hãy mở một cánh cửa và tự mình tìm lời giải.</p><div class="portal-grid"><button class="portal" id="startHistory"><span class="portal-icon">◈</span><span class="portal-no">HÀNH TRÌNH I · GIẢI ĐỐ</span><strong class="serif">THEO BƯỚC<br>LÝ NAM ĐẾ</strong><span>Đi qua Giang Xá xưa, tìm mật vật, phục dựng trang thư và nối đường khởi nghĩa.</span><span class="portal-go">BƯỚC VÀO KÝ SỰ ↗</span></button><button class="portal" id="startCake"><span class="portal-icon">❀</span><span class="portal-no">HÀNH TRÌNH II · THỬ TÀI</span><strong class="serif">TỰ TAY LÀM<br>BÁNH BÁC</strong><span>Kéo hình nguyên liệu vào giỏ, điều khiển lửa, cuộn bánh rồi dâng lên vua Lý Nam Đế để nhận phán quyết.</span><span class="portal-go">VÀO GIAN BẾP ↗</span></button></div><p class="disclaimer-home">Tranh và cơ chế trò chơi là tái hiện nghệ thuật; những sự kiện, địa danh và truyền thuyết được chú giải bằng nguồn tham khảo ở cuối trang.</p></div></div></section>
-<section id="history" class="view" aria-label="Game theo bước Lý Nam Đế"><div class="game-top"><div><span class="chapter-index" id="chapterIndex">CHƯƠNG 01 / 04</span><h2 class="serif" id="chapterTitle">Bí mật Linh Bảo</h2></div><div class="game-top-actions"><button class="small-btn" id="hintBtn">✧ Gợi ý</button><button class="small-btn" id="openCodex">▤ Sổ tư liệu</button><button class="small-btn" id="historyHome">⌂ Thoát</button></div></div><div class="game-layout"><div class="stage"><div class="art-stage"><img id="sceneArt" src="assets/village.webp" alt="Minh họa cảnh làng cổ" /><div class="art-vignette"></div><div class="stage-light"></div><div class="hotspot-layer" id="hotspotLayer"></div><div class="art-label" id="artLabel">GIANG XÁ • HÌNH MINH HỌA</div></div><div class="dialogue"><div class="avatar"><img src="assets/lybi-face.webp" alt="Minh họa nhân vật Lý Bí" /></div><div class="dialogue-text"><div class="dialogue-name" id="dialogueName">LÝ BÍ · LỜI THOẠI HƯ CẤU</div><p id="dialogueBody">Từng mảnh ký ức của làng đều mang một dấu hiệu. Tìm đủ ba tín vật trước khi mở cửa.</p></div><button class="dialogue-next" id="dialogueNext" title="Đọc tiếp">›</button></div></div><aside class="play-panel"><div class="panel-heading"><span class="label">NHIỆM VỤ HIỆN TẠI</span><h3 class="serif" id="objectiveTitle">Ba dấu tích trong làng</h3><p id="objectiveText">Quan sát tranh, chạm vào vật thể có ánh sáng để thu thập tín vật.</p></div><div class="inventory"><div class="label">TÚI VẬT PHẨM <span id="inventoryCount">0/3</span></div><div id="inventoryItems" class="inventory-items"></div></div><div id="puzzleMount" class="puzzle-mount"></div><div class="foot-controls"><button id="historyRestart" class="line-btn">↻ Chơi lại</button><button id="historySource" class="line-btn">◈ Tư liệu & độ xác thực</button></div></aside></div><div id="historyToast" class="toast" aria-live="polite"></div></section>
-<section id="cake" class="view" aria-label="Game làm Bánh Bác"><div class="game-top cake-top"><div><span class="chapter-index" id="cakeChapter">GIAN BẾP • CHẶNG 1/4</span><h2 class="serif">THỬ TÀI LÀM BÁNH BÁC</h2></div><div class="game-top-actions"><button class="small-btn" id="cakeHintBtn">✧ Mẹo làm bánh</button><button class="small-btn" id="cakeRestart">↻ Làm lại</button><button class="small-btn" id="cakeHome">⌂ Thoát</button></div></div><div class="cake-layout"><div class="cake-workspace"><div class="cake-art"><img src="assets/hands2.webp" alt="Minh họa bàn tay chế biến bột bánh" /><div class="cake-art-layer"><div class="cake-illustration" id="cakeIllustration"><div class="plate"><div class="cake-outer"><div class="cake-white"><div class="cake-inner"></div></div></div></div></div><div class="cake-work-label" id="cakeWorkLabel">MÂM NGUYÊN LIỆU</div></div></div><div class="bake-tutorial" id="cakeNarrative"><span class="story-kicker">LỜI NGƯỜI DẪN CHUYỆN</span><p>Muốn có chiếc Bánh Bác dẻo ngon, trước hết hãy nhớ nguyên liệu truyền thống. Bạn sẽ kéo thả hình nguyên liệu, giữ nhiệt, xếp lớp, cuộn bánh và mang thành phẩm đi dâng vua.</p></div></div><div class="cake-controls"><div class="progress-track" id="cakeProgress"><span class="active"></span><span></span><span></span><span></span><span></span></div><div class="cake-step-title" id="cakeStepTitle">01 • Kéo ảnh nguyên liệu vào giỏ</div><div id="cakePuzzle"></div><p class="cake-feedback" id="cakeFeedback" role="status"></p></div></div></section>
-<section id="about" class="view content-page" aria-label="Tư liệu tham khảo"><div class="content-shell"><span class="eyebrow">TƯ LIỆU & PHƯƠNG PHÁP</span><h2 class="serif">Lịch sử có nguồn, hư cấu có ranh giới</h2><p>Đây là trò chơi tương tác lấy cảm hứng từ lịch sử Lý Bí/Lý Nam Đế và ký ức văn hóa Giang Xá. Các mật thư, tín vật, cơ chế mở khóa, lời thoại và tranh bối cảnh đều do nhóm sáng tạo phục vụ game; <strong>chúng không phải hiện vật khảo cổ, bản đồ hành quân thật hay lời nói được ghi lại của Lý Nam Đế</strong>.</p><div class="source-grid"><article><strong>Giang Xá – Linh Bảo</strong><p>Giang Xá gắn với những truyền thuyết về tuổi trẻ, sự học và con đường dựng nghiệp của Lý Bí. Chùa Linh Bảo được nhắc trong tư liệu địa phương; chi tiết về thời niên thiếu cần đọc như truyền thống ghi nhớ, không phải tất cả đều được xác thực độc lập.</p><a href="https://thegioidisan.vn/vi/ly-nam-de-trong-doi-song-van-hoa-cua-nguoi-dan-lang-giang-xa-huyen-hoai-duc-ha-noi.html" target="_blank" rel="noopener">Tạp chí Thế giới Di sản (2016) ↗</a></article><article><strong>Khởi nghĩa năm 542</strong><p>Lý Bí lãnh đạo cuộc khởi nghĩa chống nhà Lương vào năm 542; Giang Xá và Lưu Xá được nghiên cứu như những địa điểm gắn với giai đoạn đầu của sự nghiệp.</p><a href="https://thanhuyhanoi.vn/tin-tuc/huyen-hoai-duc/hoi-thao-khoa-hoc-dau-an-cua-ly-nam-de-va-nha-nuoc-van-xuan-tren-dia-ban-huyen-hoai-duc-10037123.html" target="_blank" rel="noopener">Thành ủy Hà Nội (2024) ↗</a></article><article><strong>Vạn Xuân năm 544</strong><p>Năm 544, Lý Bí xưng đế, lấy hiệu Lý Nam Đế, đặt quốc hiệu Vạn Xuân và niên hiệu Thiên Đức. Những tranh vẽ cảnh cung điện, quân doanh chỉ thể hiện không khí tượng trưng.</p><a href="https://baotanglichsuquocgia.vn/vi/Articles/2001/68142/thang-2-544-ly-nam-dje-tuyen-bo-dung-nuoc-djoc-lap-quoc-hieu-van-xuan.html" target="_blank" rel="noopener">Bảo tàng Lịch sử Quốc gia (2014) ↗</a></article><article><strong>Bánh Bác và lời kể dâng vua</strong><p>Thợ bánh Giang Xá kể về liên hệ của Bánh Bác với Lý Nam Đế như truyền thuyết địa phương. Bài báo mô tả công đoạn “bác” bột trên chảo mỡ, cuộn lớp đỏ trước lớp trắng sau và ủ lá chuối.</p><a href="https://www.qdnd.vn/du-lich/cac-van-de/ky-cong-mon-banh-tien-vua-cua-lang-giang-xa-809665" target="_blank" rel="noopener">Báo Quân đội nhân dân (2025) ↗</a></article></div><p class="note">Các quan điểm về nơi sinh của Lý Bí và một số chi tiết cuộc đời còn khác nhau giữa nguồn. Game chỉ khẳng định những mốc lịch sử được nguồn chính thống thống nhất; các chi tiết dân gian được ghi rõ tính chất truyền thuyết.</p><div class="content-actions"><button id="aboutBack" class="big-btn">← Quay lại trải nghiệm</button></div></div></section>
+  <section id="home" class="view active" aria-labelledby="homeTitle">
+    <div class="home-scene">
+      <div class="home-tint"></div>
+      <div class="ambient cloud-a"></div>
+      <div class="ambient cloud-b"></div>
+      <div class="ambient ink-a"></div>
+      <div class="ambient ink-b"></div>
+      <div class="home-content home-shell">
+        <div class="home-grid">
+          <div class="home-copy">
+            <span class="eyebrow">BÁC TRÀ KÝ • MICROSITE TƯƠNG TÁC</span>
+            <h1 id="homeTitle" class="serif">MỞ BÁNH <em>—</em><br>MỞ CHUYỆN</h1>
+            <p class="home-poem serif">Từ một vùng đất mang dấu xưa của Giang Xá, mở ra câu chuyện về Lý Nam Đế, rồi trở về căn bếp với chiếc Bánh Bác mang vị ký ức.</p>
+            <p class="home-lead">Đây là một trải nghiệm tương tác gồm <strong>2 hành trình chính</strong>: một hành trình giải đố kể chuyện theo cảm hứng lịch sử – văn hóa Giang Xá, và một hành trình thao tác làm Bánh Bác để cuối cùng <strong>dâng bánh lên vua</strong>. Phần lịch sử được chú giải nguồn rõ ràng; phần game và lời thoại hư cấu được ghi chú tách biệt.</p>
+            <div class="portal-grid">
+              <button class="portal portal-story" id="startHistory">
+                <span class="portal-badge">HÀNH TRÌNH I</span>
+                <strong class="serif">Theo bước<br>Lý Nam Đế</strong>
+                <span>Khám phá Giang Xá xưa qua chuỗi cảnh truyện, giải đố theo kiểu story game, thu thập tín vật và mở cuộn sớ Vạn Xuân.</span>
+                <span class="portal-go">BẮT ĐẦU KÝ SỰ ↗</span>
+              </button>
+              <button class="portal portal-cake" id="startCake">
+                <span class="portal-badge">HÀNH TRÌNH II</span>
+                <strong class="serif">Tự tay làm<br>Bánh Bác</strong>
+                <span>Kéo thả nguyên liệu bằng hình ảnh, giữ lửa, xếp lớp, cuộn bánh và mang dâng vua để nhận lời phán quyết thắng – thua.</span>
+                <span class="portal-go">VÀO GIAN BẾP ↗</span>
+              </button>
+            </div>
+            <div class="home-facts">
+              <div class="fact-card"><b>02</b><span>hành trình chơi</span></div>
+              <div class="fact-card"><b>04+</b><span>nguồn tư liệu</span></div>
+              <div class="fact-card"><b>100%</b><span>thiết kế theo màu BTK</span></div>
+            </div>
+            <p class="disclaimer-home">Lưu ý: tranh minh họa, cơ chế game, lời thoại và các câu đố là phần sáng tạo của nhóm. Các chi tiết lịch sử được đối chiếu bằng nguồn chính thống và ghi ở mục <strong>Tư liệu</strong>.</p>
+          </div>
+          <div class="home-showcase">
+            <div class="showcase-card">
+              <div class="showcase-kicker">KHÔNG GIAN THƯƠNG HIỆU</div>
+              <img src="assets/brand-art.png" alt="Tranh thương hiệu Bác Trà Ký với cảnh làng cổ và kiến trúc truyền thống">
+            </div>
+            <div class="showcase-mini-grid">
+              <div class="mini-panel">
+                <span class="mini-kicker">CHẤT LIỆU</span>
+                <strong>Tranh cổ<br>& cuộn sớ</strong>
+              </div>
+              <div class="mini-panel">
+                <span class="mini-kicker">GAMEPLAY</span>
+                <strong>Giải đố<br>& thao tác</strong>
+              </div>
+              <div class="mini-panel wide">
+                <span class="mini-kicker">CẢM HỨNG</span>
+                <strong>Giang Xá – Lý Nam Đế – Bánh Bác</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="history" class="view" aria-label="Game theo bước Lý Nam Đế">
+    <div class="game-top">
+      <div>
+        <span class="chapter-index" id="chapterIndex">CHƯƠNG 01 / 04</span>
+        <h2 class="serif" id="chapterTitle">Bí mật Linh Bảo</h2>
+      </div>
+      <div class="game-top-actions">
+        <button class="small-btn" id="hintBtn">✧ Gợi ý</button>
+        <button class="small-btn" id="openCodex">▤ Sổ tư liệu</button>
+        <button class="small-btn" id="historyHome">⌂ Thoát</button>
+      </div>
+    </div>
+
+    <div class="story-intro">
+      <div class="story-chip">TRUYỆN TƯƠNG TÁC</div>
+      <p>Hành trình này không đi theo kiểu trắc nghiệm. Bạn quan sát tranh, tương tác với vật thể, ghép mảnh, xoay đường và mở từng lớp chuyện để theo bước Lý Nam Đế qua ký ức văn hóa Giang Xá.</p>
+    </div>
+
+    <div class="game-layout">
+      <div class="stage">
+        <div class="art-stage">
+          <img id="sceneArt" src="assets/village.webp" alt="Minh họa cảnh làng cổ">
+          <div class="art-vignette"></div>
+          <div class="stage-light"></div>
+          <div class="hotspot-layer" id="hotspotLayer"></div>
+          <div class="art-label" id="artLabel">GIANG XÁ • HÌNH MINH HỌA</div>
+        </div>
+        <div class="dialogue">
+          <div class="avatar"><img src="assets/lybi-face.webp" alt="Minh họa nhân vật Lý Bí"></div>
+          <div class="dialogue-text">
+            <div class="dialogue-name" id="dialogueName">LÝ BÍ · LỜI THOẠI HƯ CẤU</div>
+            <p id="dialogueBody">Từng mảnh ký ức của làng đều mang một dấu hiệu. Tìm đủ ba tín vật trước khi mở cửa.</p>
+          </div>
+          <button class="dialogue-next" id="dialogueNext" title="Đọc tiếp">›</button>
+        </div>
+      </div>
+
+      <aside class="play-panel">
+        <div class="panel-heading">
+          <span class="label">NHIỆM VỤ HIỆN TẠI</span>
+          <h3 class="serif" id="objectiveTitle">Ba dấu tích trong làng</h3>
+          <p id="objectiveText">Quan sát tranh, chạm vào vật thể có ánh sáng để thu thập tín vật.</p>
+        </div>
+        <div class="inventory">
+          <div class="label">TÚI VẬT PHẨM <span id="inventoryCount">0/3</span></div>
+          <div id="inventoryItems" class="inventory-items"></div>
+        </div>
+        <div id="puzzleMount" class="puzzle-mount"></div>
+        <div class="foot-controls">
+          <button id="historyRestart" class="line-btn">↻ Chơi lại</button>
+          <button id="historySource" class="line-btn">◈ Tư liệu & độ xác thực</button>
+        </div>
+      </aside>
+    </div>
+    <div id="historyToast" class="toast" aria-live="polite"></div>
+  </section>
+
+  <section id="cake" class="view" aria-label="Game làm Bánh Bác">
+    <div class="game-top cake-top">
+      <div>
+        <span class="chapter-index" id="cakeChapter">GIAN BẾP • CHẶNG 1/4</span>
+        <h2 class="serif">THỬ TÀI LÀM BÁNH BÁC</h2>
+      </div>
+      <div class="game-top-actions">
+        <button class="small-btn" id="cakeHintBtn">✧ Mẹo làm bánh</button>
+        <button class="small-btn" id="cakeRestart">↻ Làm lại</button>
+        <button class="small-btn" id="cakeHome">⌂ Thoát</button>
+      </div>
+    </div>
+
+    <div class="cake-intro">
+      <div class="story-chip">GAME THAO TÁC</div>
+      <p>Bạn không chỉ đọc hay chọn đáp án. Hãy thật sự thao tác: kéo thả hình nguyên liệu, giữ nhiệt để “bác” bột, xếp lớp, cuộn bánh rồi dâng lên vua. Nếu làm sai, bạn vẫn có thể hoàn thành — nhưng sẽ bị chê khi trình bánh.</p>
+    </div>
+
+    <div class="cake-layout">
+      <div class="cake-workspace">
+        <div class="cake-art">
+          <img src="assets/hands2.webp" alt="Minh họa bàn tay chế biến bột bánh">
+          <div class="cake-art-layer">
+            <div class="cake-illustration" id="cakeIllustration">
+              <div class="plate"><div class="cake-outer"><div class="cake-white"><div class="cake-inner"></div></div></div></div>
+            </div>
+            <div class="cake-work-label" id="cakeWorkLabel">MÂM NGUYÊN LIỆU</div>
+          </div>
+        </div>
+        <div class="bake-tutorial" id="cakeNarrative">
+          <span class="story-kicker">LỜI NGƯỜI DẪN CHUYỆN</span>
+          <p>Muốn có chiếc Bánh Bác dẻo ngon, trước hết hãy nhớ nguyên liệu truyền thống. Bạn sẽ kéo thả hình nguyên liệu, giữ nhiệt, xếp lớp, cuộn bánh và mang thành phẩm đi dâng vua.</p>
+        </div>
+      </div>
+      <div class="cake-controls">
+        <div class="progress-track" id="cakeProgress"><span class="active"></span><span></span><span></span><span></span><span></span></div>
+        <div class="cake-step-title" id="cakeStepTitle">01 • Kéo ảnh nguyên liệu vào giỏ</div>
+        <div id="cakePuzzle"></div>
+        <p class="cake-feedback" id="cakeFeedback" role="status"></p>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="view content-page" aria-label="Tư liệu tham khảo">
+    <div class="content-shell">
+      <span class="eyebrow">TƯ LIỆU & PHƯƠNG PHÁP</span>
+      <h2 class="serif">Lịch sử có nguồn, hư cấu có ranh giới</h2>
+      <p>Microsite này được xây theo hướng <strong>kể chuyện có chú thích nguồn</strong>. Điều đó nghĩa là: mốc sự kiện, địa danh và những thông tin có thể kiểm chứng sẽ dẫn về nguồn; còn tranh minh họa, lời thoại, tín vật, thử thách, ngự điện và phần vua trực tiếp nếm bánh là <strong>hư cấu gameplay</strong>.</p>
+      <div class="source-grid">
+        <article>
+          <strong>Giang Xá – dấu ấn Lý Nam Đế</strong>
+          <p>Giang Xá là nơi lưu giữ mạnh mẽ ký ức văn hóa về Lý Nam Đế qua cụm di tích, lễ hội và truyền thống địa phương. Một số chi tiết gắn với thời niên thiếu nên được đọc như ký ức văn hóa địa phương, không nên coi là dữ kiện độc lập tuyệt đối.</p>
+          <a href="https://thegioidisan.vn/vi/ly-nam-de-trong-doi-song-van-hoa-cua-nguoi-dan-lang-giang-xa-huyen-hoai-duc-ha-noi.html" target="_blank" rel="noopener">Tạp chí Thế giới Di sản (2016) ↗</a>
+        </article>
+        <article>
+          <strong>Khởi nghĩa năm 542 và nước Vạn Xuân</strong>
+          <p>Lý Bí lãnh đạo khởi nghĩa chống nhà Lương năm 542; đến năm 544 xưng đế, lập nước Vạn Xuân. Đây là khung lịch sử cốt lõi được dùng cho phần dẫn chuyện.</p>
+          <a href="https://baotanglichsuquocgia.vn/vi/Articles/2001/68142/thang-2-544-ly-nam-dje-tuyen-bo-dung-nuoc-djoc-lap-quoc-hieu-van-xuan.html" target="_blank" rel="noopener">Bảo tàng Lịch sử Quốc gia (2014) ↗</a>
+        </article>
+        <article>
+          <strong>Hoài Đức và lễ hội Giang Xá</strong>
+          <p>Những bài viết của cơ quan văn hóa Hà Nội và Hoài Đức giúp bổ sung bối cảnh hiện nay của di tích, lễ hội và vai trò ký ức cộng đồng quanh Lý Nam Đế.</p>
+          <a href="https://sovhtt.hanoi.gov.vn/le-hoi-giang-xa-huyen-hoai-duc-lan-dau-tien-duoc-to-chuc-quy-mo-cap-huyen/" target="_blank" rel="noopener">Sở Văn hóa & Thể thao Hà Nội (2024) ↗</a>
+        </article>
+        <article>
+          <strong>Bánh Bác và truyền thuyết dâng vua</strong>
+          <p>Bài báo của Quân đội nhân dân ghi lời người thợ địa phương về nguyên liệu, kỹ thuật “bác” bột và câu chuyện bánh tiến vua. Phần vua nếm bánh trong game là tình huống sáng tạo dựa trên lời kể này.</p>
+          <a href="https://www.qdnd.vn/du-lich/cac-van-de/ky-cong-mon-banh-tien-vua-cua-lang-giang-xa-809665" target="_blank" rel="noopener">Báo Quân đội nhân dân (2025) ↗</a>
+        </article>
+      </div>
+      <p class="note">Nếu nhóm muốn phát triển thành sản phẩm dùng công khai, nên tiếp tục bổ sung chú thích, thuyết minh nguồn và phân biệt rõ hơn giữa sử liệu – truyền thuyết – sáng tạo thương hiệu.</p>
+      <div class="content-actions"><button id="aboutBack" class="big-btn">← Quay lại trải nghiệm</button></div>
+    </div>
+  </section>
 </main>
-<div id="codexModal" class="modal" aria-hidden="true"><div class="modal-backdrop" data-close></div><div class="scroll" role="dialog" aria-modal="true" aria-labelledby="codexTitle"><div class="scroll-pole pole-left"></div><div class="scroll-paper"><button class="modal-close" data-close aria-label="Đóng">×</button><div class="scroll-topline">SỔ TƯ LIỆU • BÁC TRÀ KÝ</div><h2 id="codexTitle" class="serif">Một mảnh ký ức</h2><div id="codexText"></div><div class="codex-linkline" id="codexLinks"></div></div><div class="scroll-pole pole-right"></div></div></div>
-<script src="game.js?v=4.0"></script>
+
+<div id="codexModal" class="modal" aria-hidden="true">
+  <div class="modal-backdrop" data-close></div>
+  <div class="scroll" role="dialog" aria-modal="true" aria-labelledby="codexTitle">
+    <div class="scroll-pole pole-left"></div>
+    <div class="scroll-paper">
+      <button class="modal-close" data-close aria-label="Đóng">×</button>
+      <div class="scroll-topline">SỔ TƯ LIỆU • BÁC TRÀ KÝ</div>
+      <h2 id="codexTitle" class="serif">Một mảnh ký ức</h2>
+      <div id="codexText"></div>
+      <div class="codex-linkline" id="codexLinks"></div>
+    </div>
+    <div class="scroll-pole pole-right"></div>
+  </div>
+</div>
+
+<div id="transitionCurtain" class="transition-curtain" aria-hidden="true">
+  <div class="curtain-inner">
+    <div class="curtain-kicker">BÁC TRÀ KÝ</div>
+    <h3 id="curtainTitle" class="serif">Mở chuyện</h3>
+    <p id="curtainText">Một hành trình đang bắt đầu…</p>
+  </div>
+</div>
+
+<script src="game.js?v=5.0"></script>
 </body>
 </html>

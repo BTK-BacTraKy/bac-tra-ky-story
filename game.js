@@ -4,27 +4,52 @@
    Deploy by uploading index.html, styles.css, game.js and assets/ to repo root.
 */
 const SETTINGS={beaconsUrl:''};
-if(SETTINGS.beaconsUrl.startsWith('https://')){document.addEventListener('DOMContentLoaded',()=>{const back=document.getElementById('beaconsReturn');back.href=SETTINGS.beaconsUrl;back.hidden=false;});}
+if(SETTINGS.beaconsUrl.startsWith('https://')){
+  document.addEventListener('DOMContentLoaded',()=>{
+    const back=document.getElementById('beaconsReturn');
+    if(back){back.href=SETTINGS.beaconsUrl;back.hidden=false;}
+  });
+}
 const $=s=>document.querySelector(s),$$=s=>Array.from(document.querySelectorAll(s));
-let lastMode='home', audioOn=false, ctx=null, toastTimeout;
+let lastMode='home', audioOn=false, ctx=null, toastTimeout, curtainTimer;
 function tone(freq=440,duration=.11){if(!audioOn)return;try{ctx=ctx||new (window.AudioContext||window.webkitAudioContext)();const o=ctx.createOscillator(),g=ctx.createGain();o.type='sine';o.frequency.value=freq;g.gain.setValueAtTime(.0001,ctx.currentTime);g.gain.exponentialRampToValueAtTime(.12,ctx.currentTime+.018);g.gain.exponentialRampToValueAtTime(.0001,ctx.currentTime+duration);o.connect(g).connect(ctx.destination);o.start();o.stop(ctx.currentTime+duration+.02);}catch(e){}}
 function soundWin(){tone(440,.12);setTimeout(()=>tone(587,.16),115);setTimeout(()=>tone(784,.28),245)}
 function toast(msg){const t=$('#historyToast');t.textContent=msg;t.classList.add('show');clearTimeout(toastTimeout);toastTimeout=setTimeout(()=>t.classList.remove('show'),2500)}
-function showView(id){if(id!=='about')lastMode=id;$$('.view').forEach(v=>v.classList.toggle('active',v.id===id));window.scrollTo({top:0,behavior:'instant'});document.title=`Bác Trà Ký | ${id==='history'?'Theo bước Lý Nam Đế':id==='cake'?'Thử tài làm Bánh Bác':id==='about'?'Nguồn tư liệu':'Mở Bánh – Mở Chuyện'}`;if(id!=='cake')stopCook();}
-$('#startHistory').onclick=()=>{historyStage=0;reinitializePuzzles();renderHistory();showView('history')};
-$('#startCake').onclick=()=>{resetCake();showView('cake')};
+function showTransition(title,text='Một hành trình đang bắt đầu…',duration=950){
+  const curtain=$('#transitionCurtain');
+  if(!curtain)return;
+  $('#curtainTitle').textContent=title;
+  $('#curtainText').textContent=text;
+  curtain.classList.add('show');
+  curtain.setAttribute('aria-hidden','false');
+  clearTimeout(curtainTimer);
+  curtainTimer=setTimeout(()=>{curtain.classList.remove('show'); curtain.setAttribute('aria-hidden','true');},duration);
+}
+function showView(id){
+  if(id!=='about')lastMode=id;
+  $$('.view').forEach(v=>v.classList.toggle('active',v.id===id));
+  window.scrollTo({top:0,behavior:'auto'});
+  document.title=`Bác Trà Ký | ${id==='history'?'Theo bước Lý Nam Đế':id==='cake'?'Thử tài làm Bánh Bác':id==='about'?'Nguồn tư liệu':'Mở Bánh – Mở Chuyện'}`;
+  if(id!=='cake')stopCook();
+}
+$('#startHistory').onclick=()=>{historyStage=0;reinitializePuzzles();renderHistory();showTransition('Theo bước Lý Nam Đế','Bước vào hành trình giải đố tại Giang Xá.');showView('history')};
+$('#startCake').onclick=()=>{resetCake();showTransition('Tự tay làm Bánh Bác','Kéo thả, giữ lửa, cuộn bánh và dâng vua.');showView('cake')};
 $('#historyHome').onclick=()=>showView('home');$('#cakeHome').onclick=()=>showView('home');
-$('#historyRestart').onclick=()=>{if(!confirm('Bắt đầu lại toàn bộ hành trình lịch sử?'))return;historyStage=0;reinitializePuzzles();renderHistory()};
+$('#historyRestart').onclick=()=>{if(!confirm('Bắt đầu lại toàn bộ hành trình lịch sử?'))return;historyStage=0;reinitializePuzzles();renderHistory();showTransition('Khởi động lại ký sự','Mọi dấu tích được đưa về điểm bắt đầu.')};
 $('#historySource').onclick=()=>showView('about');$('#aboutBack').onclick=()=>showView(lastMode==='about'?'home':lastMode);
 $('#audioToggle').onclick=()=>{audioOn=!audioOn;$('#audioToggle').setAttribute('aria-pressed',String(audioOn));$('#audioToggle span').textContent=audioOn?'Âm bật':'Âm tắt';tone(530,.15)};
 $$('.header a[href="#home"]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();showView('home')}));
 $$('.header-back').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();showView('home')}));
+$('#navStory')?.addEventListener('click',e=>{e.preventDefault();historyStage=0;reinitializePuzzles();renderHistory();showTransition('Giang Xá xưa','Khám phá câu chuyện lịch sử – văn hóa.');showView('history')});
+$('#navCake')?.addEventListener('click',e=>{e.preventDefault();resetCake();showTransition('Game làm Bánh Bác','Bắt đầu hành trình gian bếp và ngự điện.');showView('cake')});
+$('#navAbout')?.addEventListener('click',e=>{e.preventDefault();showView('about')});
 
 const SOURCES=[
   {label:'Thế giới Di sản (2016) – Lý Nam Đế trong đời sống Giang Xá',href:'https://thegioidisan.vn/vi/ly-nam-de-trong-doi-song-van-hoa-cua-nguoi-dan-lang-giang-xa-huyen-hoai-duc-ha-noi.html'},
   {label:'Thành ủy Hà Nội (2024) – Hội thảo dấu ấn Lý Nam Đế và Vạn Xuân ở Hoài Đức',href:'https://thanhuyhanoi.vn/tin-tuc/huyen-hoai-duc/hoi-thao-khoa-hoc-dau-an-cua-ly-nam-de-va-nha-nuoc-van-xuan-tren-dia-ban-huyen-hoai-duc-10037123.html'},
   {label:'Bảo tàng Lịch sử Quốc gia (2014) – Vạn Xuân năm 544',href:'https://baotanglichsuquocgia.vn/vi/Articles/2001/68142/thang-2-544-ly-nam-dje-tuyen-bo-dung-nuoc-djoc-lap-quoc-hieu-van-xuan.html'},
-  {label:'Quân đội nhân dân (2025) – Kỳ công món Bánh Bác Giang Xá',href:'https://www.qdnd.vn/du-lich/cac-van-de/ky-cong-mon-banh-tien-vua-cua-lang-giang-xa-809665'}
+  {label:'Quân đội nhân dân (2025) – Kỳ công món Bánh Bác Giang Xá',href:'https://www.qdnd.vn/du-lich/cac-van-de/ky-cong-mon-banh-tien-vua-cua-lang-giang-xa-809665'},
+  {label:'Sở VHTT Hà Nội (2024) – Lễ hội Giang Xá cấp huyện',href:'https://sovhtt.hanoi.gov.vn/le-hoi-giang-xa-huyen-hoai-duc-lan-dau-tien-duoc-to-chuc-quy-mo-cap-huyen/'}
 ];
 const HIST=[
  {name:'CỔNG LÀNG GIANG XÁ',title:'Dấu hiệu ở Linh Bảo',objective:'Ba tín vật trong làng',desc:'Tìm ba tín vật đang tỏa sáng trong tranh. Chạm để thu thập; dùng câu gợi ý khắc trên phiến đá để mở sớ.',art:'assets/village.webp',tag:'GIANG XÁ • TRUYỀN THỐNG ĐỊA PHƯƠNG',dialogue:['Ta là Lý Bí. Có lời kể rằng Giang Xá từng là nơi ta học tập và nuôi chí lớn.','Một cuốn sớ cũ được giấu trong làng. Muốn tìm nó, trước hết cần ba dấu hiệu.','Hãy để ý trong bức tranh. Không phải mọi vật đều đứng yên.'],lore:'Những thần tích và truyền thuyết địa phương gắn tuổi trẻ Lý Bí với chùa Linh Bảo ở Giang Xá. Chi tiết ông từng ở và học tại đây được nhắc trong nghiên cứu văn hóa địa phương, nhưng cách dựng cảnh và các tín vật là hoàn toàn hư cấu.',refs:[0,1]},
@@ -44,14 +69,14 @@ reinitializePuzzles();
 function renderHistory(){const scene=HIST[historyStage];dialoguePos=0;$('#chapterIndex').textContent=`CHƯƠNG 0${historyStage+1} / 04`;$('#chapterTitle').textContent=scene.title;$('#sceneArt').src=scene.art;$('#sceneArt').alt='Minh họa nghệ thuật: '+scene.name;$('#artLabel').textContent=scene.tag;$('#objectiveTitle').textContent=scene.objective;$('#objectiveText').textContent=scene.desc;$('#inventoryCount').textContent=`${found.size}/3`;$('#inventoryItems').innerHTML=[0,1,2].map(i=>`<div class="item-slot ${found.has(i)?'got':''}" title="${found.has(i)?relics[i].name:'Vật phẩm chưa tìm thấy'}">${found.has(i)?relics[i].symbol:'?'}</div>`).join('');$('#hotspotLayer').innerHTML='';renderDialogue();if(historyStage===0)renderFind();else if(historyStage===1)renderSlide();else if(historyStage===2)renderPipes();else renderVictory();}
 function renderDialogue(){const s=HIST[historyStage];$('#dialogueName').textContent=historyStage===3?'NGƯỜI KỂ CHUYỆN':'LÝ BÍ • LỜI THOẠI HƯ CẤU';$('#dialogueBody').textContent=s.dialogue[dialoguePos]}
 $('#dialogueNext').onclick=()=>{dialoguePos=(dialoguePos+1)%HIST[historyStage].dialogue.length;renderDialogue();tone(450,.05)};
-function advanceHistory(){if(historyStage>=3)return;historyStage++;soundWin();renderHistory()}
+function advanceHistory(){if(historyStage>=3)return;historyStage++;soundWin();renderHistory();showTransition(`Chương 0${historyStage+1}`,[ 'Một cánh cửa ký ức vừa mở ra.','Tiếp tục lần theo dấu chuyện xưa.','Đường đi đã thông — tiến gần đến Vạn Xuân.','Chạm tới cột mốc lịch sử năm 544.' ][Math.min(historyStage,3)],860)}
 function renderFind(){const layer=$('#hotspotLayer');relics.forEach((it,i)=>{if(found.has(i))return;const b=document.createElement('button');b.className='hotspot';b.style.left=it.x+'%';b.style.top=it.y+'%';b.setAttribute('aria-label','Nhặt '+it.name);b.title='Khám phá vật phẩm';b.textContent=it.symbol;b.onclick=()=>{found.add(i);tone(540+i*110,.13);toast('Nhặt được: '+it.name);renderHistory();};layer.appendChild(b)});const mount=$('#puzzleMount');mount.innerHTML=`<h4>✦ Ấn ký Linh Bảo</h4><p>Phiến đá có lời dẫn: <em>“Lá lay trước gió — chuông ngân vọng — thư mới tìm đường”.</em> Sau khi nhặt đủ, hãy chạm các dấu theo thứ tự.</p><div class="rune-clue">${found.size===3?'Ba tín vật đã hiện đủ. Hãy nhập thứ tự.':'Nhặt đủ 3 vật phẩm trên bức tranh.'}</div><div class="rune-buttons">${relics.map(it=>`<button class="rune-btn" data-rune="${it.symbol}" ${found.size<3?'disabled':''}>${it.symbol}</button>`).join('')}</div><div class="rune-input" id="runeInput">${runeSequence.join('  ')||'○ ○ ○'}</div><button class="ghost-btn" id="clearRunes">Xóa dấu</button>`;$$('[data-rune]').forEach(b=>b.onclick=()=>{if(runeSequence.length===3)return;runeSequence.push(b.dataset.rune);tone(490+runeSequence.length*110,.07);$('#runeInput').textContent=runeSequence.join('  ');if(runeSequence.length===3){if(runeSequence.join(',')===runeOrder.join(',')){toast('Ấn ký đã mở.');setTimeout(advanceHistory,750)}else{toast('Dấu ấn chưa đúng trật tự.');setTimeout(()=>{runeSequence=[];if($('#runeInput'))$('#runeInput').textContent='○ ○ ○'},800)}}});$('#clearRunes').onclick=()=>{runeSequence=[];$('#runeInput').textContent='○ ○ ○'};}
 function renderSlide(){const mount=$('#puzzleMount');const blank=slideArr.indexOf(8);mount.innerHTML=`<h4>✦ Khôi phục mật thư</h4><div class="tile-grid" id="tileGrid"></div><div class="tile-hint">Lượt di chuyển: <b id="moveNumber">${slideMoves}</b><br>Chỉ ô viền sáng sát ô trống mới trượt được.</div><p><button class="ghost-btn" id="referenceArt">Xem tranh gốc ◈</button> <button class="ghost-btn" id="slideReset">Xáo lại</button></p>`;const g=$('#tileGrid');slideArr.forEach((v,i)=>{const b=document.createElement('button');const movable=Math.abs(Math.floor(blank/3)-Math.floor(i/3))+Math.abs((blank%3)-(i%3))===1;b.className='puzzle-tile'+(v===8?' blank':'')+(movable&&v!==8?' movable':'');b.setAttribute('aria-label',v===8?'Ô trống':'Mảnh '+(v+1));if(v!==8){b.style.backgroundPosition=`${(v%3)*50}% ${Math.floor(v/3)*50}%`;if(movable)b.onclick=()=>{[slideArr[i],slideArr[blank]]=[slideArr[blank],slideArr[i]];slideMoves++;tone(400,.08);if(slideArr.every((n,j)=>n===j)){toast(`Đã ghép bức tranh sau ${slideMoves} lượt!`);setTimeout(advanceHistory,750)}else renderSlide()}}g.appendChild(b)});$('#referenceArt').onclick=()=>openCodex('Bức tranh hoàn chỉnh','Hãy quan sát các đường nét trong tranh trước khi trở lại sắp xếp ô. Đây là tranh minh họa phong cách cổ, không phải một “mật thư” khảo cổ.',[1],'<img src="assets/temple.webp" alt="Tranh gốc cho trò ghép hình" style="width:100%;border:4px solid #a47c48">');$('#slideReset').onclick=()=>{shuffleSlide();renderSlide()};}
 function pipeDirs(i){return basePipe[i].map(d=>rotateDir(d,pipeState[i]))}
 function pipeConnected(a,b){const diff=b-a;let d;if(diff===-3)d=0;else if(diff===1&&Math.floor(a/3)===Math.floor(b/3))d=1;else if(diff===3)d=2;else if(diff===-1&&Math.floor(a/3)===Math.floor(b/3))d=3;else return false;return pipeDirs(a).includes(DIR[d])&&pipeDirs(b).includes(DIR[opposite[d]])}
 function checkPipe(){if(!pipeDirs(0).includes('W')||!pipeDirs(8).includes('E'))return false;const seen=new Set([0]),q=[0];while(q.length){const a=q.shift();if(a===8)return true;for(const b of [a-3,a+1,a+3,a-1])if(b>=0&&b<9&&!seen.has(b)&&pipeConnected(a,b)){seen.add(b);q.push(b)}}return false}
 function renderPipes(){const mount=$('#puzzleMount');mount.innerHTML=`<h4>✦ Mở đường hành trình</h4><div class="map-ports"><span>◉ Cổng xuất phát</span><span>Điểm đến ⚑</span></div><div class="pipe-grid" id="pipeGrid"></div><div class="map-message">Mỗi lần chạm, một mảnh đường xoay 90°. Cần nối thông từ lối bên trái của ô đầu tiên sang lối bên phải ô cuối cùng. <b id="turnCount">Lượt xoay: ${pipeTurns}</b></div><p><button class="ghost-btn" id="mapReset">Đổi thế cờ</button></p>`;const grid=$('#pipeGrid');for(let i=0;i<9;i++){const dirs=basePipe[i];const paths=dirs.map(d=>({N:'M 50 50 L 50 5',E:'M 50 50 L 95 50',S:'M 50 50 L 50 95',W:'M 50 50 L 5 50'})[d]).map(d=>`<path d="${d}" stroke="#713720" stroke-width="24" stroke-linecap="round" fill="none" />`).join('');const b=document.createElement('button');b.className='pipe';b.dataset.num=String(i+1);b.title='Chạm để xoay';b.innerHTML=`<svg viewBox="0 0 100 100" aria-hidden="true" style="transform:rotate(${pipeState[i]*90}deg)"><circle cx="50" cy="50" r="16" fill="#d8ab68" />${paths}</svg>`;b.onclick=()=>{pipeState[i]=(pipeState[i]+1)%4;pipeTurns++;tone(350,.07);if(checkPipe()){b.classList.add('solved');toast(`Đã mở đường sau ${pipeTurns} lần xoay!`);setTimeout(advanceHistory,850)}else renderPipes()};grid.appendChild(b)}$('#mapReset').onclick=()=>{pipeState=[1,2,1,0,1,1,3,2,1];pipeTurns=0;renderPipes()};}
-function renderVictory(){$('#puzzleMount').innerHTML=`<div class="victory"><div class="sigil">✺</div><h3 class="serif">VẠN XUÂN</h3><p>Năm 544, Lý Bí xưng đế, lấy niên hiệu <strong>Thiên Đức</strong> và đặt tên nước là <strong>Vạn Xuân</strong>. Hành trình giải đố khép lại ở một cột mốc lịch sử được ghi nhận.</p><button class="action-btn" id="finalScroll">Mở cuộn sớ lịch sử</button><p><button class="ghost-btn" id="toCake">Tiếp tục: làm Bánh Bác ❀</button></p></div>`;$('#finalScroll').onclick=()=>openCodex(HIST[3].title,HIST[3].lore,HIST[3].refs,'<p><strong>Sự kiện xác thực:</strong> Lý Bí dựng nước Vạn Xuân năm 544. Đây là dấu mốc lịch sử; cảnh họa và lời thoại trong game là minh họa sáng tạo.</p>');$('#toCake').onclick=()=>{resetCake();showView('cake')};}
+function renderVictory(){$('#puzzleMount').innerHTML=`<div class="victory"><div class="sigil">✺</div><h3 class="serif">VẠN XUÂN</h3><p>Năm 544, Lý Bí xưng đế, lấy niên hiệu <strong>Thiên Đức</strong> và đặt tên nước là <strong>Vạn Xuân</strong>. Hành trình giải đố khép lại ở một cột mốc lịch sử được ghi nhận.</p><button class="action-btn" id="finalScroll">Mở cuộn sớ lịch sử</button><p><button class="ghost-btn" id="toCake">Tiếp tục: làm Bánh Bác ❀</button></p></div>`;$('#finalScroll').onclick=()=>openCodex(HIST[3].title,HIST[3].lore,HIST[3].refs,'<p><strong>Sự kiện xác thực:</strong> Lý Bí dựng nước Vạn Xuân năm 544. Đây là dấu mốc lịch sử; cảnh họa và lời thoại trong game là minh họa sáng tạo.</p>');$('#toCake').onclick=()=>{resetCake();showTransition('Từ sử chuyện sang vị bánh','Bây giờ hãy bước vào gian bếp Bánh Bác.');showView('cake')};}
 $('#hintBtn').onclick=()=>{const hints=['Có ba vật thể tỏa sáng trong tranh. Dòng trên phiến đá nói thẳng thứ tự: lá → chuông → thư.','Bạn chỉ di chuyển ô sát ô trống. Xem tranh gốc và đưa các góc về đúng vị trí trước.','Chú ý hai cổng ngoài biên: từ bên trái ô 1 sang bên phải ô 9. Xoay các đoạn cho liền mạch.','Nhấn mở cuộn sớ cuối để đọc nguồn lịch sử.'];toast(hints[historyStage])};
 function openCodex(title,body,ids=[0],extra=''){const modal=$('#codexModal');$('#codexTitle').textContent=title;$('#codexText').innerHTML=`<p>${body}</p>${extra}<p><em>Tranh, vật phẩm, hành động và lời thoại được hư cấu cho trải nghiệm; không phải chứng cứ lịch sử.</em></p>`;$('#codexLinks').innerHTML=ids.map(i=>`<a href="${SOURCES[i].href}" target="_blank" rel="noopener">↗ ${SOURCES[i].label}</a>`).join('');modal.classList.add('open');modal.setAttribute('aria-hidden','false');$('#codexTitle').focus?.();}
 function closeCodex(){const m=$('#codexModal');m.classList.remove('open');m.setAttribute('aria-hidden','true')}
@@ -89,7 +114,7 @@ function cleanupGhost(){if(dragGhost){dragGhost.remove();dragGhost=null;}$$('.dr
 function stopCook(){holding=false;clearInterval(cookTimer);cookTimer=null;}
 function cakeMessage(msg,kind=''){const t=$('#cakeFeedback');t.textContent=msg;t.dataset.kind=kind;}
 function resetCake(){stopCook();cleanupGhost();cakeStep=0;cakeBag=[];cakeLayers=[null,null,null];chosenLayer=null;heat=54;skillProgress=0;scorches=0;heatMistakes=0;rollStrokes=0;rollMistakes=0;rollDrag=null;ceremonyActive=false;verdict=null;cakeLocked=false;resultDetails=[];renderCake();}
-$('#cakeRestart').onclick=()=>{if(confirm('Bắt đầu lại hành trình làm bánh và dâng vua?'))resetCake()};
+$('#cakeRestart').onclick=()=>{if(confirm('Bắt đầu lại hành trình làm bánh và dâng vua?')){resetCake();showTransition('Làm lại mẻ bánh','Bắt đầu lại từ khâu chọn nguyên liệu.')}};
 $('#cakeHintBtn').onclick=()=>{
  const tips=[
   'Báo Quân đội nhân dân (2025) ghi nhận 6 nguyên liệu: gạo nếp, gấc, đỗ xanh, mỡ lợn, đường kính và vừng. Kéo ảnh vào giỏ. Đây là game, không phải toàn bộ định lượng công thức.',
@@ -110,7 +135,7 @@ function cakeSkin(step){
  fire.style.display=step===1?'block':'none';
 }
 function cakeProgress(){const prog=$('#cakeProgress');if(prog.children.length!==5)prog.innerHTML='<span></span>'.repeat(5);[...prog.children].forEach((el,i)=>el.classList.toggle('active',i<=Math.min(cakeStep,4)));
- $('#cakeChapter').textContent=cakeStep<4?`GIAN BẾP • CHẶNG ${cakeStep+1}/4`:cakeStep===4?'NGỰ THIỆN • DÂNG BÁNH':'NGỰ THIỆN • LỜI PHÁN';
+ $('#cakeChapter').textContent=cakeStep===0?'GIAN BẾP • CHẶNG 1/5':cakeStep===1?'GIAN BẾP • CHẶNG 2/5':cakeStep===2?'GIAN BẾP • CHẶNG 3/5':cakeStep===3?'GIAN BẾP • CHẶNG 4/5':cakeStep===4?'NGỰ THIỆN • CHẶNG 5/5':'NGỰ THIỆN • LỜI PHÁN';
 }
 // A Pointer Events drag helper: the artwork follows mouse OR finger, not text.
 function dragPicture(e,imgSrc,opts={}){
@@ -158,7 +183,7 @@ function renderCake(){
   $('#cakeNarrative p').textContent='Kéo từng hình nguyên liệu vào giỏ bằng chuột hoặc ngón tay. Giỏ chứa đúng sáu phần; sai một thành phần, bánh sẽ không đạt khi dâng vua.';
   mount.innerHTML=`<p class="game-lead">KÉO <strong>HÌNH BÁT NGUYÊN LIỆU</strong> VÀO GIỎ. Không kéo chữ. Có thể chạm để chọn trên thiết bị hỗ trợ trợ năng.</p><div class="drop-basket" id="dropBasket"><div class="basket-heading"><span>🧺 Giỏ nguyên liệu</span><b id="basketAmount">0/6</b></div><div class="basket-contents" id="basketContents"></div><div class="basket-guidance">Thả vào đây • Chạm món đã chọn để lấy ra</div></div><div class="ingredient-images" id="ingredientPictures"></div><button class="action-btn recipe-next" id="ingProceed" disabled>Mang giỏ tới gian bếp →</button><p class="mini-disclaimer">Các hình bát nguyên liệu là tranh minh họa tạo cho game. Lựa chọn không biểu thị định lượng thực tế.</p>`;
   renderIngredients();
-  $('#ingProceed').onclick=()=>{foley('gong');cakeStep=1;renderCake()};
+  $('#ingProceed').onclick=()=>{foley('gong');cakeStep=1;renderCake();showTransition('Gian bếp mở lửa','Bây giờ hãy giữ nhiệt để bác bột cho khéo.')} ;
  } else if(cakeStep===1){renderHeat();}
  else if(cakeStep===2){renderLayerStage();}
  else if(cakeStep===3){renderRollStage();}
@@ -183,7 +208,7 @@ function renderHeat(){
   }
   updateHeatUI();
   if(scorches>=3){stopCook();cakeMessage('Mẻ bột đã hỏng do giữ nhiệt sai nhiều lần. Hãy mang chiếc bánh lỗi đi dâng để xem phán quyết.','warn');cakeLocked=true;setTimeout(()=>{cakeStep=4;renderCake()},1200)}
-  else if(skillProgress>=100){stopCook();foley('pickup');cakeStep=2;setTimeout(()=>renderCake(),530)}
+  else if(skillProgress>=100){stopCook();foley('pickup');cakeStep=2;setTimeout(()=>{renderCake();showTransition('Bột đã đạt','Tiếp theo là xếp đúng lớp bánh theo lời người thợ.')},530)}
  },90);
 }
 function updateHeatUI(){if(!$('#heatMarker'))return;$('#heatMarker').style.left=heat+'%';$('#heatValue').textContent=Math.round(heat)+'°';$('#skillValue').textContent=Math.round(skillProgress);$('#skillFill').style.width=skillProgress+'%';$('#scorchValue').textContent=scorches;
@@ -194,7 +219,7 @@ function renderLayerStage(){
  $('#cakeNarrative p').textContent='Theo lời người thợ, cuộn bánh theo nguyên tắc đỏ trước, trắng sau, nhân đậu xanh ở giữa, vừng bên ngoài. Hãy kéo hình từng lớp vào khay từ ngoài tới trong.';
  $('#cakePuzzle').innerHTML=`<p>Kéo <strong>HÌNH LỚP BÁNH</strong> vào 3 vị trí. Bạn có thể thay đổi lựa chọn trước khi cuộn.</p><div class="layer-picture-row" id="layerPictures"></div><div id="layerSlots" class="layer-picture-slots"></div><button id="submitLayers" class="action-btn">Xác nhận và bắt đầu cuộn →</button><button id="clearLayers" class="ghost-btn">Xếp lại</button><p class="mini-disclaimer">Thứ tự cuộn được đơn giản hóa để chơi; không thay thế kỹ thuật làm bánh thực tế.</p>`;
  drawLayerPics();
- $('#submitLayers').onclick=()=>{if(cakeLayers.some(x=>x===null)){cakeMessage('Bạn chưa xếp đủ ba lớp.');return}foley('roll');cakeStep=3;renderCake()};
+ $('#submitLayers').onclick=()=>{if(cakeLayers.some(x=>x===null)){cakeMessage('Bạn chưa xếp đủ ba lớp.');return}foley('roll');cakeStep=3;renderCake();showTransition('Bắt đầu cuộn bánh','Vuốt đúng hướng để chiếc bánh thật chắc tay.')};
  $('#clearLayers').onclick=()=>{cakeLayers=[null,null,null];chosenLayer=null;drawLayerPics()};
 }
 function dropLayer(id,slot){if(slot===null){chosenLayer=id;drawLayerPics();cakeMessage('Đã cầm một lớp bánh. Chạm vào vị trí để đặt, hoặc kéo ảnh vào khay.');return}
@@ -223,7 +248,7 @@ function renderRollStage(){
   if(dx>=Math.min(100,arena.getBoundingClientRect().width*.3)&&dy<90&&duration>=125){rollStrokes++;foley('pickup');cakeMessage(`Vuốt thành công ${rollStrokes}/3!`,'ok')}
   else{rollMistakes++;foley('fail');cakeMessage('Cuộn chưa đều! Hãy vuốt dài hơn từ trái sang phải, chậm và thẳng tay.','warn')}
   $('#rollCount').textContent=rollStrokes+'/3';$('#rollBar').style.width=Math.min(100,rollStrokes/3*100)+'%';
-  if(rollStrokes>=3){foley('gong');cakeStep=4;setTimeout(renderCake,650)}
+  if(rollStrokes>=3){foley('gong');cakeStep=4;setTimeout(()=>{renderCake();showTransition('Đã đến ngự điện','Mang thành phẩm đi dâng vua Lý Nam Đế.')},650)}
  };
  arena.addEventListener('pointerup',finish);arena.addEventListener('pointercancel',()=>{rollDrag=null;arena.style.setProperty('--roll-offset','0px')});
 }
@@ -244,7 +269,7 @@ function renderRoyalStage(){
  $('#cakeNarrative p').textContent='Trong lời kể dân gian, Bánh Bác gắn với câu chuyện dâng vua Lý Nam Đế. Màn vua nếm và đưa ra phán quyết này là một tình huống sáng tạo, KHÔNG phải sự kiện lịch sử đã được xác minh.';
  $('#cakePuzzle').innerHTML=`<div class="royal-board" id="royalBoard"><div class="royal-flags" aria-hidden="true">✦　✦　✦</div><div class="king-frame"><img src="assets/lybi-face.webp" alt="Chân dung minh họa Lý Nam Đế do game sáng tạo"><span class="king-caption">LÝ NAM ĐẾ · MINH HỌA</span></div><div class="royal-message">“Ngươi đã đem đến thức bánh gì của làng Giang Xá?”<small>Lời thoại tưởng tượng trong game</small></div><div id="royalTarget" class="royal-target">✦ NGỰ ÁN · THẢ BÁNH VÀO ĐÂY ✦</div><div class="royal-offer" id="royalOffer"><img src="assets/products.png" alt="Kéo hình đĩa Bánh Bác vào ngự án" draggable="false"><small>GIỮ HÌNH BÁNH VÀ KÉO LÊN NGỰ ÁN</small></div><button class="action-btn court-submit" id="presentCake">✦ Dâng bánh bằng nút (nếu khó kéo) ✦</button></div><p class="mini-disclaimer">Vua khen hoặc chê tùy kết quả chơi. Cảnh nếm bánh, lời vua nói và ngự điện đều hư cấu trên nền truyền thuyết địa phương.</p>`;
  function offerToKing(){if(ceremonyActive)return;ceremonyActive=true;$('#presentCake').disabled=true;$('#presentCake').textContent='Vua đang nếm bánh...';$('#royalTarget').textContent='ĐÃ NHẬN BÁNH · VUA ĐANG NẾM...';foley('gong');$('#royalBoard').classList.add('offering');
-  setTimeout(()=>{verdict=evaluateCake();foley(verdict?'gong':'fail');cakeStep=5;ceremonyActive=false;renderCake()},2150);
+  setTimeout(()=>{verdict=evaluateCake();foley(verdict?'gong':'fail');cakeStep=5;ceremonyActive=false;renderCake();showTransition(verdict?'Ngự phê: Đạt':'Ngự phê: Chưa đạt', verdict?'Chiếc Bánh Bác của bạn đã được vua khen thưởng.':'Mẻ bánh này vẫn còn lỗi, hãy trở lại gian bếp.')},2150);
  }
  $('#presentCake').onclick=offerToKing;
  $('#royalOffer').addEventListener('pointerdown',e=>dragPicture(e,'assets/products.png',{findTarget:(x,y)=>hitRect($('#royalTarget'),x,y)?$('#royalTarget'):null,onDrop:offerToKing,tapFallback:false}));

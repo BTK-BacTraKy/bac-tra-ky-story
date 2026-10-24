@@ -10,10 +10,12 @@
 
 **Bảo tàng Lịch sử Quốc gia** (2013) ‘Quê hương Lý Bí ở đâu?’, *Bảo tàng Lịch sử Quốc gia*. Available at: https://baotanglichsu.vn/VI/Articles/3091/15342/que-huong-ly-bi-o-djau.html (Accessed: 24 October 2026).
 
+**Sở Văn hóa và Thể thao Hà Nội** (2024) ‘Lễ hội Giang Xá huyện Hoài Đức lần đầu tiên được tổ chức quy mô cấp huyện’, *Cổng thông tin Sở Văn hóa và Thể thao Hà Nội*, 1 March. Available at: https://sovhtt.hanoi.gov.vn/le-hoi-giang-xa-huyen-hoai-duc-lan-dau-tien-duoc-to-chuc-quy-mo-cap-huyen/ (Accessed: 24 October 2026).
+
 ## Phạm vi sử dụng tài liệu
 
 1. **542 và 544**: nguồn bảo tàng lịch sử và hội thảo khoa học.
-2. **Giang Xá, chùa Linh Bảo, tưởng nhớ Lý Nam Đế**: nguồn Thế giới Di sản và hội thảo Hà Nội. Đây là lịch sử địa phương gắn với truyền thuyết, không nên xem mọi chi tiết thời thơ ấu là chứng cứ độc lập.
+2. **Giang Xá, chùa Linh Bảo, tưởng nhớ Lý Nam Đế**: nguồn Thế giới Di sản, hội thảo Hà Nội và bài viết của Sở Văn hóa & Thể thao Hà Nội. Đây là lịch sử địa phương gắn với truyền thuyết, không nên xem mọi chi tiết thời thơ ấu là chứng cứ độc lập.
 3. **Bánh Bác, thao tác bác bột, lớp đỏ–trắng, truyền thuyết dâng vua**: phóng sự Quân đội nhân dân (2025), có ghi lời người làm bánh.
 4. **Nơi sinh Lý Bí còn có quan điểm khác nhau**: nguồn Bảo tàng Lịch sử Quốc gia (2013); game không tuyên bố Giang Xá là quê gốc của ông.
 5. **Tranh, câu nói và trò giải đố**: nội dung hư cấu sáng tạo. Không phải nguồn sử liệu.
@@ -23,3 +25,7 @@
 **Phạm Vy and Nguyễn Đào (2025)** ghi nhận lời thợ bánh Nguyễn Thị Điều về gạo nếp cái hoa vàng, gấc nếp, đỗ xanh, mỡ lợn, đường kính, vừng; thao tác "bác" bột trên chảo mỡ, và nguyên tắc "đỏ trước, trắng sau", nhân đậu xanh ở giữa. Cũng tại đây, câu chuyện chiếc bánh được làm để tỏ lòng biết ơn Lý Nam Đế được ghi nhận dưới dạng **lời kể của người dân**.
 
 Trong V4, hình ảnh vua Lý Nam Đế trực tiếp thử bánh, nói lời khen/chê và quyết định thắng/thua **là tình huống giả tưởng nhằm tạo gameplay**, không phải sự kiện sử liệu. Thông số nhiệt và thao tác kéo vuốt cũng là quy tắc trò chơi, không phải hướng dẫn chế biến bánh ngoài đời thực.
+
+## Ghi chú bổ sung cho V5
+
+V5 bổ sung nguồn của **Sở Văn hóa và Thể thao Hà Nội (2024)** để hỗ trợ phần giới thiệu về lễ hội, cụm di tích Đền – Đình Giang Xá và vai trò của ký ức cộng đồng đương đại quanh Lý Nam Đế. Nguồn này không được dùng để khẳng định mọi chi tiết huyền tích là dữ kiện lịch sử độc lập, mà nhằm làm rõ bối cảnh văn hóa – lễ hội hiện nay của địa phương.
