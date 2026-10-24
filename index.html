@@ -42,8 +42,8 @@
     .header{position:sticky; top:0; z-index:40; background:rgba(247,241,232,.88); backdrop-filter:blur(10px); border-bottom:1px solid rgba(214,196,170,.55)}
     .nav{display:flex; align-items:center; justify-content:space-between; gap:18px; min-height:78px}
     .brand{display:flex; align-items:center; gap:14px; min-width:0}
-    .brand-mark{background:#fff; border:1px solid #e8dcc9; border-radius:18px; padding:10px 14px; box-shadow:0 8px 18px rgba(90,63,41,.08)}
-    .brand-mark img{width:170px; height:auto; object-fit:contain}
+    .brand-mark{background:transparent; border:none; border-radius:0; padding:0; box-shadow:none}
+    .brand-mark img{width:220px; height:auto; object-fit:contain}
     .brand-text{min-width:0}
     .brand-title{margin:0; color:var(--wine); font-size:1.45rem; font-weight:700; line-height:1.05}
     .brand-sub{font-size:.72rem; color:#7d6e63; letter-spacing:.16em; text-transform:uppercase; margin-top:4px}
@@ -68,9 +68,9 @@
     .hero-actions{display:flex; flex-wrap:wrap; gap:12px}
     .hero-side{display:flex; justify-content:flex-end}
     .hero-card{width:min(540px,100%); background:rgba(255,250,244,.84); border:1px solid #e5d6c2; border-radius:32px; box-shadow:var(--shadow); overflow:hidden; padding:20px}
-    .hero-card .logo-board{background:#fff; border:1px solid #ebdfcf; border-radius:22px; padding:22px 26px; display:flex; justify-content:center; box-shadow:0 10px 22px rgba(88,60,38,.08)}
-    .hero-card .logo-board img{width:min(100%, 380px); object-fit:contain}
-    .hero-card .slogan{padding:18px 10px 6px; text-align:center; color:#77685c; font-size:clamp(1rem, 2.3vw, 1.35rem); letter-spacing:.22em; text-transform:uppercase; line-height:1.35; word-break:break-word}
+    .hero-card .logo-board{background:transparent; border:none; border-radius:0; padding:8px 6px 0; display:flex; justify-content:center; box-shadow:none}
+    .hero-card .logo-board img{width:min(100%, 500px); object-fit:contain}
+    .hero-card .slogan{padding:12px 10px 6px; text-align:center; color:#77685c; font-size:clamp(1rem, 2.3vw, 1.35rem); letter-spacing:.22em; text-transform:uppercase; line-height:1.35; word-break:break-word}
     .hero-card .artshot{margin-top:14px; border-radius:22px; overflow:hidden; border:1px solid #eadccc}
     .hero-card .artshot img{width:100%; aspect-ratio:16/10; object-fit:cover}
 
@@ -238,7 +238,7 @@
   <header class="header">
     <div class="container nav">
       <a href="#top" class="brand" aria-label="Trang chủ Bác Trà Ký">
-        <div class="brand-mark"><img src="assets/official-logo.png" alt="Logo FPT Education và Bác Trà Ký trên nền trắng" /></div>
+        <div class="brand-mark"><img src="assets/official-logo-clean.png" alt="Logo FPT Education và Bác Trà Ký trên nền trắng" /></div>
         <div class="brand-text">
           <h1 class="brand-title serif">Bác Trà Ký</h1>
           <div class="brand-sub">Gìn giữ tinh hoa – Tiếp nối giá trị</div>
@@ -268,7 +268,7 @@
         </div>
         <div class="hero-side">
           <div class="hero-card">
-            <div class="logo-board"><img src="assets/official-logo.png" alt="Logo chính thức của Bác Trà Ký" /></div>
+            <div class="logo-board"><img src="assets/official-logo-clean.png" alt="Logo chính thức của Bác Trà Ký" /></div>
             <div class="slogan">Gìn giữ tinh hoa – Tiếp nối giá trị</div>
             <div class="artshot"><img src="assets/brand-scene.png" alt="Phong cách mỹ thuật Bác Trà Ký" /></div>
           </div>
