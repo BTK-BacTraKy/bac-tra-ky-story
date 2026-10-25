@@ -164,3 +164,32 @@
 .find-clue.done strong{color:#6a2b20}
 .find-clue .clue-icon{display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:10px;background:#f4ead6;border:1px solid #d2b286}
 @media(max-width:690px){.find-clue{grid-template-columns:30px 1fr;padding:8px 9px}.find-clue .clue-icon{width:30px;height:30px}}
+
+/* V4.9 peak update – rhythm fire stage for Banh Bac */
+.timing-fire-wrap{margin:16px 0 12px;padding:18px;border:1px solid #cfb388;border-radius:18px;background:linear-gradient(180deg,#fffaf2,#f3e5d0);box-shadow:0 14px 26px rgba(80,39,18,.08)}
+.timing-fire-head{display:flex;justify-content:space-between;gap:12px;align-items:center;font-size:13px;color:#7d3a2c;margin-bottom:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+.timing-fire-track{position:relative;height:84px;border-radius:999px;background:linear-gradient(90deg,#7b3d22 0%,#c7662c 25%,#efb84b 50%,#c7662c 75%,#7b3d22 100%);overflow:hidden;border:2px solid #a56f3f;box-shadow:inset 0 0 24px rgba(255,255,255,.25), inset 0 -10px 18px rgba(80,32,8,.22)}
+.timing-fire-track::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(115deg,rgba(255,255,255,.05) 0 18px,rgba(255,255,255,0) 18px 34px)}
+.timing-good-zone{position:absolute;left:46%;width:16%;top:10px;bottom:10px;border-radius:999px;background:linear-gradient(180deg,rgba(166,214,131,.82),rgba(92,149,67,.88));box-shadow:0 0 0 3px rgba(255,251,220,.5),0 0 22px rgba(135,191,101,.4)}
+.timing-fire-glow{position:absolute;inset:0;background:radial-gradient(circle at center,rgba(255,253,235,.22),rgba(255,253,235,0) 60%);pointer-events:none}
+.timing-fire-cursor{position:absolute;top:50%;transform:translate(-50%,-50%);width:44px;height:44px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#fff7d9,#ffd16d 40%,#bd6026 78%,#6e2f15 100%);border:3px solid rgba(255,246,221,.75);box-shadow:0 6px 24px rgba(130,52,12,.42)}
+.timing-fire-cursor::after{content:'✦';position:absolute;inset:0;display:grid;place-items:center;font-size:18px;color:#7a2d1d}
+.timing-fire-scale{display:flex;justify-content:space-between;color:#8b6a53;font-size:11px;margin-top:8px}
+.timing-meter-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
+.timing-score{padding:12px 13px;border-radius:14px;background:#fffdf7;border:1px solid #d4bb93}
+.timing-score.bad{background:#fff8f2}
+.timing-score>div:first-child{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;color:#7d3a2c}
+.skill-progress.bad{background:#f2ddd1}
+.skill-progress.bad span{background:linear-gradient(90deg,#b55e46,#d8946b)}
+.timing-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.strike-btn{min-width:220px;position:relative;overflow:hidden}
+.strike-btn.good-hit{animation:btnPopGood .22s ease}
+.strike-btn.bad-hit{animation:btnShake .24s ease}
+@keyframes btnPopGood{0%{transform:scale(1)}50%{transform:scale(1.04)}100%{transform:scale(1)}}
+@keyframes btnShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}50%{transform:translateX(4px)}75%{transform:translateX(-3px)}}
+.cake-feedback[data-kind="ok"]{color:#295c2e}.cake-feedback[data-kind="warn"]{color:#8b3a2c}.cake-feedback[data-kind="hint"]{color:#7a5d2b}
+.drop-basket{position:relative}
+.drop-basket::after{content:'';position:absolute;inset:10px;border-radius:18px;border:1px dashed rgba(141,82,47,.18);pointer-events:none}
+.ingredient-picture,.layer-picture{transition:transform .18s ease, box-shadow .18s ease}
+.ingredient-picture:hover,.layer-picture:hover{transform:translateY(-2px);box-shadow:0 10px 18px rgba(88,42,18,.1)}
+@media(max-width:780px){.timing-meter-row{grid-template-columns:1fr}.strike-btn{min-width:unset;width:100%}.timing-actions .ghost-btn{width:100%}}
